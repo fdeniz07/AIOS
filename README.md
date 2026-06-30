@@ -1,130 +1,101 @@
 <p align="center">
-  <img src="assets/logo.png" width="320">
+  <img src="assets/logo.png" width="320" alt="AIOS Logo">
 </p>
 
-<h1 align="center">
-AIOS
-</h1>
+<h1 align="center">AIOS</h1>
 
 <p align="center">
-Artificial Intelligence Operating System
+<b>Artificial Intelligence Operating System</b>
 </p>
 
 <p align="center">
 <b>Engineer the workspace, not the prompt.</b>
 </p>
 
----
+<p align="center">
 
-AIOS is an open framework that transforms AI coding assistants into repository-aware engineering partners.
+![Version](https://img.shields.io/badge/version-v1.0.0-blue)
 
-An operating framework for AI coding agents.
+![Status](https://img.shields.io/badge/status-Stable-success)
 
-AI doesn't become better because of longer prompts.
+![License](https://img.shields.io/badge/license-MIT-green)
 
-AI becomes better because of better context.
-
-> **Artificial Intelligence Operating System**
->
-> Build better repositories. Get better AI.
+</p>
 
 ---
 
-## What is AIOS?
+# What is AIOS?
 
-AIOS is an open framework that helps AI coding agents work like professional software engineers instead of simple code generators.
+AIOS (Artificial Intelligence Operating System) is an open framework that transforms AI coding assistants into repository-aware engineering partners.
 
 Instead of relying only on prompts, AIOS provides a structured working environment that teaches AI agents how to:
 
-- understand a repository
+- understand an entire repository
 - follow project conventions
 - analyze before implementing
+- detect conflicts
 - respect coding standards
-- produce consistent documentation
 - review their own work
 - collaborate as long-term project members
 
-AIOS transforms AI from a code generator into a project-aware engineering assistant.
+AIOS helps AI work like an experienced software engineer rather than a simple code generator.
 
 ---
 
-# Why AIOS?
+# The Problem
 
-Modern AI coding assistants are incredibly capable.
+Modern AI coding assistants are powerful.
 
-However, they often suffer from the same problems:
+However, they often:
 
-- inconsistent code style
-- ignoring repository conventions
-- creating duplicate implementations
-- skipping documentation
-- breaking project structure
-- making changes outside the requested scope
+- ignore repository conventions
+- create inconsistent documentation
+- duplicate implementations
+- forget previous project decisions
+- modify unrelated files
+- skip important quality checks
+- generate inconsistent notebook structures
 
 The problem is usually not the AI itself.
 
 The problem is the lack of project context.
 
-AIOS provides that missing context.
-
 ---
 
-# Philosophy
+# The AIOS Philosophy
 
-AIOS is based on one simple idea:
+> AI doesn't become better because of longer prompts.
 
-> **A good AI starts with a good repository.**
+> AI becomes better because of better context.
 
 Instead of writing longer prompts,
 
-design a better workspace.
-
----
-
-# Core Principles
-
-AIOS teaches AI agents to:
-
-✔ Analyze before acting
-
-✔ Think before implementing
-
-✔ Respect repository conventions
-
-✔ Follow project workflows
-
-✔ Detect conflicts
-
-✔ Ask before destructive actions
-
-✔ Review their own work
-
-✔ Improve repository quality over time
+design a better repository.
 
 ---
 
 # Architecture
 
 ```text
-                 User
-                   │
-                   ▼
-              Repository
-                   │
-                   ▼
-             AIOS Kernel
-                   │
-        ┌──────────┼──────────┐
-        │          │          │
-        ▼          ▼          ▼
-    Workflow   Knowledge   Checklists
-        │          │          │
-        └──────────┼──────────┘
-                   ▼
-             AI Coding Agent
-                   │
-                   ▼
-            High Quality Output
+                  User
+                    │
+                    ▼
+               Repository
+                    │
+                    ▼
+              AIOS Kernel
+                    │
+       ┌────────────┼────────────┐
+       │            │            │
+       ▼            ▼            ▼
+   Workflow     Knowledge    Checklists
+       │            │            │
+       └────────────┼────────────┘
+                    ▼
+              AI Coding Agent
+                    │
+                    ▼
+             High Quality Output
 ```
 
 ---
@@ -133,19 +104,25 @@ AIOS teaches AI agents to:
 
 ## AGENTS.md
 
-Defines the AI's behavior.
+Defines how the AI should behave.
 
 ---
 
 ## MANIFEST.md
 
-Defines the project's philosophy.
+Defines the project's philosophy and engineering principles.
+
+---
+
+## PROJECT_STRUCTURE.md
+
+Explains the repository architecture.
 
 ---
 
 ## CHECKLISTS
 
-Standardized quality verification.
+Quality verification before implementation.
 
 ---
 
@@ -157,7 +134,7 @@ Step-by-step implementation processes.
 
 ## KNOWLEDGE
 
-Project-specific knowledge.
+Repository-specific knowledge.
 
 ---
 
@@ -175,13 +152,75 @@ Reusable project templates.
 
 ## TESTS
 
-Behavior validation for AI agents.
+Behavior validation.
 
 ---
 
-# How AIOS Works
+# Features
 
-Traditional workflow:
+✅ Repository Intelligence
+
+✅ Workflow Engine
+
+✅ Repository Memory
+
+✅ Approval Gates
+
+✅ Conflict Detection
+
+✅ Self Review
+
+✅ Definition of Done
+
+✅ Documentation Standards
+
+✅ Educational Standards
+
+✅ Repository Safety
+
+---
+
+# Quick Start
+
+Clone the repository.
+
+```bash
+git clone https://github.com/YOUR_USERNAME/AIOS.git
+```
+
+Copy the AIOS core files into your project.
+
+```
+AGENTS.md
+
+MANIFEST.md
+
+PROJECT_RULES.md
+
+STYLE_GUIDE.md
+
+CHECKLISTS/
+
+WORKFLOWS/
+```
+
+Then tell your AI assistant:
+
+```
+Read the entire repository.
+
+Follow AIOS.
+
+Analyze before implementing.
+
+Wait for approval when required.
+```
+
+---
+
+# AIOS Workflow
+
+Traditional AI workflow
 
 ```text
 Prompt
@@ -195,7 +234,7 @@ AI
 Output
 ```
 
-AIOS workflow:
+AIOS workflow
 
 ```text
 Repository
@@ -227,65 +266,69 @@ Output
 
 ---
 
-# Features
+# Prompt Engineering vs AIOS
 
-- Repository Intelligence
-- Decision Engine
-- Workflow Engine
-- Repository Memory
-- Approval Gates
-- Conflict Detection
-- Self Review
-- Definition of Done
-- Documentation Standards
-- Educational Standards
-- Code Quality Standards
+| Prompt Engineering | AIOS |
+|--------------------|------|
+| Better prompts | Better repositories |
+| Temporary context | Persistent repository context |
+| Conversation memory | Repository memory |
+| User instructions | Engineering workflow |
+| One task | Long-term collaboration |
 
 ---
 
-# Supported AI Agents
+# Validated Behaviors
 
-AIOS is designed to work with repository-aware coding agents, including:
+AIOS has been successfully tested with real-world repositories.
 
-- ChatGPT / Codex
-- Claude Code
-- GitHub Copilot
-- Cursor
-- Windsurf
-- Continue.dev
-- Roo Code
+✔ Repository Analysis
 
-Any AI agent capable of reading repository files can benefit from AIOS.
+✔ Workflow Execution
+
+✔ Repository Memory
+
+✔ Approval Gates
+
+✔ Conflict Detection
+
+✔ Self Review
+
+✔ Repository Rule Enforcement
 
 ---
 
 # Example Projects
 
-Current projects using AIOS:
+Projects currently using AIOS
 
 - Python3_Kurs
 
-More example repositories will be added over time.
+More examples will be added soon.
 
 ---
 
 # Roadmap
 
-Current focus:
+## Version 1.0
 
-- Stable AIOS Core
+- AIOS Core
 - Documentation
-- Workflows
+- AGENTS
+- Manifest
+- Project Structure
+
+## Version 1.1
+
+- Workflow Library
 - Checklists
-- Repository Knowledge
-- Testing Framework
+- Templates
 
-Future versions:
+## Version 2.0
 
-- Community Skills
-- Community Templates
-- AIOS Marketplace
-- Repository Profiles
+- Knowledge System
+- Skills
+- Test Framework
 
 ---
 
@@ -293,9 +336,17 @@ Future versions:
 
 Contributions are welcome.
 
-Ideas, workflows, templates, checklists and improvements are encouraged.
-
 Please open an issue before introducing major architectural changes.
+
+Ideas for:
+
+- Workflows
+- Skills
+- Checklists
+- Templates
+- Documentation
+
+are always appreciated.
 
 ---
 
@@ -311,25 +362,14 @@ AIOS is not another prompt collection.
 
 It is an operating framework for AI-assisted software development.
 
-Our goal is simple:
+Our mission is simple.
 
-> **Engineer the workspace, not the prompt.**
+> Engineer the workspace, not the prompt.
 
+---
 
-## Validated Behaviors
+<p align="center">
 
-AIOS has been tested with real-world repositories.
+Made with ❤️ for the AI Engineering community.
 
-✔ Repository Analysis
-
-✔ Workflow Execution
-
-✔ Repository Memory
-
-✔ Approval Gates
-
-✔ Conflict Detection
-
-✔ Self Review
-
-✔ Repository Rule Enforcement
+</p>
