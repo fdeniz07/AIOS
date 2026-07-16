@@ -109,21 +109,32 @@ before delivering a final result.
 
 ---
 
-## Repository Structure 
+## Repository Structure
 
+```text
 AIOS/
-├── agents/          # AI agent definitions
-├── prompts/         # Reusable prompts
-├── rules/           # AI operating rules
-├── templates/       # Content templates
-├── workflows/       # End-to-end workflows
-├── checklists/      # Quality assurance
-├── knowledge/       # Shared knowledge base
-├── tests/           # Validation tests
-├── assets/          # Images and diagrams
-└── docs/            # Project documentation
+├── agents/              # Specialized AI agents for dedicated tasks
+├── assets/              # Logos, diagrams, banners and visual resources
+├── checklists/          # Quality assurance and validation checklists
+├── docs/                # Project documentation and additional guides
+├── knowledge/           # Shared knowledge base and reference materials
+├── prompts/             # Reusable prompts for AI assistants
+├── rules/               # Operating rules and AI behavior guidelines
+├── templates/           # Standardized content templates
+├── tests/               # Validation and repository tests
+├── workflows/           # End-to-end development workflows
+│
+├── AGENTS.md            # Instructions for AI coding assistants
+├── MANIFEST.md          # Repository manifest and navigation index
+├── PROJECT_STRUCTURE.md # Complete repository layout
+└── README.md            # Project overview and getting started
+```
 
-📄 See PROJECT_STRUCTURE.md for the complete repository layout.
+> 📄 **Looking for the full repository layout?**
+>
+> See **PROJECT_STRUCTURE.md** for a complete overview of all directories, files, and their purpose.
+
+> **Design Principle:** Every directory has a single responsibility, making the repository easy to navigate for both humans and AI assistants.
 
 ---
 
