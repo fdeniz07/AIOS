@@ -19,3 +19,5 @@ Prompts
 Release Process
 
 Versioning
+
+AIOS provides the framework, not the content.
