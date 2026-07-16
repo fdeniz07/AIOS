@@ -1,11 +1,21 @@
 Mission
 
-Vision
+Repository Overview
 
-Values
+Core Documents
 
-Engineering Principles
+Folder Structure
 
-Educational Principles
+AI Rules
 
-AI Principles
+Workflows
+
+Templates
+
+Agents
+
+Prompts
+
+Release Process
+
+Versioning

@@ -40,6 +40,7 @@ AIOS is designed for developers who believe that **better repositories create be
 - Why AIOS
 - Philosophy
 - Architecture
+- Repository Structure
 - Core Components
 - AIOS Workflow
 - Decision Engine
