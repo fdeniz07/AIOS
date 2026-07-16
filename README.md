@@ -4,9 +4,14 @@
 
 <p align="center">
 
-![Version](https://img.shields.io/badge/version-v1.0.0-blue)
-![Status](https://img.shields.io/badge/status-Stable-success)
-![License](https://img.shields.io/badge/license-MIT-green)
+![Version](https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge)
+![License](https://img.shields.io/github/license/fdeniz07/AIOS?style=for-the-badge)
+![GitHub stars](https://img.shields.io/github/stars/fdeniz07/AIOS?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/fdeniz07/AIOS?style=for-the-badge)
+![GitHub repo size](https://img.shields.io/github/repo-size/fdeniz07/AIOS?style=for-the-badge)
+![GitHub issues](https://img.shields.io/github/issues/fdeniz07/AIOS?style=for-the-badge)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)
+![AI Ready](https://img.shields.io/badge/AI-Ready-success?style=for-the-badge)
 
 </p>
 
@@ -30,6 +35,25 @@ AIOS is designed for developers who believe that **better repositories create be
 
 ---
 
+## Table of Contents
+
+- Why AIOS
+- Philosophy
+- Architecture
+- Core Components
+- AIOS Workflow
+- Decision Engine
+- Repository Lifecycle
+- Features
+- Compatible With
+- Quick Start
+- Validation
+- Roadmap
+- Contributing
+- License
+- Vision
+
+---
 # Why AIOS?
 
 Modern AI coding assistants are incredibly powerful.
@@ -82,6 +106,24 @@ Rather than generating code immediately, AIOS encourages the agent to:
 - document
 
 before delivering a final result.
+
+---
+
+## Repository Structure 
+
+AIOS/
+├── agents/          # AI agent definitions
+├── prompts/         # Reusable prompts
+├── rules/           # AI operating rules
+├── templates/       # Content templates
+├── workflows/       # End-to-end workflows
+├── checklists/      # Quality assurance
+├── knowledge/       # Shared knowledge base
+├── tests/           # Validation tests
+├── assets/          # Images and diagrams
+└── docs/            # Project documentation
+
+📄 See PROJECT_STRUCTURE.md for the complete repository layout.
 
 ---
 
@@ -181,36 +223,26 @@ AIOS follows a predictable engineering lifecycle:
 
 AIOS is designed to work with modern AI coding assistants including:
 
-- ChatGPT
-- Codex
-- Claude Code
-- GitHub Copilot
-- Cursor
-- Windsurf
-- Continue.dev
-- Roo Code
+| AI Assistant   | Status        |
+| -------------- | ------------- |
+| ChatGPT        | ✅ Tested     |
+| Codex          | ✅ Tested     |
+| Claude Code    | ✅ Compatible |
+| Cursor         | ✅ Compatible |
+| GitHub Copilot | ✅ Compatible |
+| Windsurf       | ✅ Compatible |
+| Continue.dev   | ✅ Compatible |
+| Roo Code       | ✅ Compatible |
 
 ---
 
 # Quick Start
 
-Clone the repository.
+1. Clone AIOS
 
-```bash
-git clone https://github.com/fdeniz07/AIOS.git
-```
+2. Copy the core files
 
-Copy the AIOS core files into your project.
-
-```text
-AGENTS.md
-MANIFEST.md
-PROJECT_STRUCTURE.md
-
-WORKFLOWS/
-CHECKLISTS/
-KNOWLEDGE/
-```
+3. Ask your AI assistant to read the repository
 
 Then simply tell your AI assistant:
 
@@ -243,7 +275,13 @@ Current validation includes:
 - ✅ Self Review
 - ✅ Repository Rule Enforcement
 
-Additional validation projects will be added over time.
+Future validation repositories will include:
+
+- Spring Boot
+- .NET
+- React
+- DevOps
+- Multi-Agent Projects
 
 ---
 
