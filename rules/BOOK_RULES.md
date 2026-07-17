@@ -201,3 +201,42 @@ Content should require minimal editing before publication.
 Every chapter should feel like it belongs to the same professional textbook.
 
 The reader should never notice where one chapter ends and another begins.
+
+---
+
+## Content Lifecycle and Status Labels
+
+AIOS distinguishes between educational maturity and curriculum placement.
+
+### Legacy
+
+Use **Legacy** only for content that is no longer part of the active curriculum or has been permanently replaced by newer material.
+
+Legacy content is retained only for historical reference or backward compatibility.
+
+### Pending Curriculum Integration
+
+Use **Pending Curriculum Integration** for content that is still valid but has not yet been assigned to its final place within the learning path.
+
+This status indicates that the material will later be integrated into the appropriate chapter.
+
+### Reference Material
+
+Use **Reference Material** for supplementary content that supports the learning experience but is not considered a primary chapter or mandatory learning artifact.
+
+Reference material may include:
+- additional examples
+- historical notes
+- migration guides
+- optional reading
+
+| Status | Meaning |
+|---------|---------|
+| Draft | Initial implementation |
+| In Review | Under editorial review |
+| Published | Official learning material |
+| Reference Material | Supplementary content |
+| Pending Curriculum Integration | Waiting for its final curriculum position |
+| Legacy | Replaced or retired content |
+
+--

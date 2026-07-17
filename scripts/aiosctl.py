@@ -20,6 +20,7 @@ Future:
 from __future__ import annotations
 
 import argparse
+from ast import arg
 import hashlib
 import logging
 from dataclasses import dataclass
@@ -125,17 +126,20 @@ def discover_aios_root() -> Path:
 # Project Validation
 # ----------------------------------------------------
 
-def validate_project(project: Path):
+def validate_project(project: Path) -> Path:
+    project = project.resolve()
 
     if not project.exists():
-
-        raise FileNotFoundError(project)
+        raise FileNotFoundError(
+            f"Project directory not found:\n{project}"
+        )
 
     if not project.is_dir():
-
-        raise RuntimeError(
-            f"{project} is not a directory."
+        raise NotADirectoryError(
+            f"Path is not a directory:\n{project}"
         )
+
+    return project
 
 
 # ----------------------------------------------------
@@ -356,7 +360,10 @@ def command_sync(args):
     log.info("")
 
     log.info(f"AIOS Root : {aios_root}")
-    log.info(f"Project   : {options.project}")
+   
+    project = validate_project(options.project)
+    options.project = project
+    log.info(f"Project   : {project}")
     log.info("")
 
     sync_project(
@@ -374,27 +381,19 @@ def command_sync(args):
 # ----------------------------------------------------
 
 def main():
-
     parser = create_parser()
-
     args = parser.parse_args()
 
     try:
-
         if args.command == "sync":
-
             command_sync(args)
-
         else:
-
             parser.print_help()
 
     except KeyboardInterrupt:
-
         log.error("\nInterrupted.")
 
     except Exception as ex:
-
         log.error("")
         log.error("=" * 60)
         log.error("ERROR")
