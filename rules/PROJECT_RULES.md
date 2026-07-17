@@ -1,0 +1,111 @@
+# PROJECT_RULES.md
+
+# AIOS Project Rules
+
+## Purpose
+
+This document defines the global rules that apply to every project developed using the AIOS framework.
+
+All AI assistants, contributors, and developers must follow these rules unless explicitly instructed otherwise.
+
+---
+
+# General Principles
+
+* Keep the project clean and maintainable.
+* Prefer simplicity over unnecessary complexity.
+* Avoid duplicate documentation.
+* Follow a modular architecture.
+* Keep the repository scalable.
+* Document important decisions.
+* Never break existing functionality without a valid reason.
+
+---
+
+# Documentation Rules
+
+* All documentation must be written in **English**.
+* Use Markdown (`.md`) for documentation.
+* Keep documents concise and easy to read.
+* Avoid duplicated information across multiple files.
+* Update documentation whenever the project structure changes.
+
+---
+
+# Code Rules
+
+* Write clean, readable, and maintainable code.
+* Follow language-specific best practices.
+* Prefer descriptive naming.
+* Keep functions and classes focused on a single responsibility.
+* Remove dead code whenever possible.
+
+---
+
+# Git Rules
+
+* Use meaningful commit messages.
+* Keep commits small and focused.
+* Do not commit generated files unless required.
+* Never commit secrets, passwords, or API keys.
+
+---
+
+# AI Collaboration Rules
+
+When working with AI assistants (ChatGPT, Codex, Copilot, Cursor, Claude, etc.):
+
+* Analyze before modifying.
+* Explain architectural decisions.
+* Prefer incremental changes.
+* Avoid unnecessary file creation.
+* Reuse existing structures whenever possible.
+* Respect the existing project architecture.
+
+---
+
+# Project Structure
+
+Projects should follow a consistent and modular structure.
+
+The exact folder layout may differ depending on the project type, but organization and readability must always be maintained.
+
+---
+
+# Rule Hierarchy
+
+If multiple rule files exist, they should be applied in the following order:
+
+1. PROJECT_RULES.md
+2. Language-specific rules
+3. Style guides
+4. Project-specific instructions
+
+---
+
+# Related Rule Files
+
+Additional rules are located in the `rules/` directory, including:
+
+* STYLE_GUIDE.md
+* GIT_RULES.md
+* CODING_STANDARDS.md
+* AI_RULES.md
+* (other project-specific rule files)
+
+---
+
+# Final Principle
+
+Every improvement should make the project easier to understand, easier to maintain, and easier to extend.
+
+---
+
+## Architecture First
+
+Before implementing new features:
+
+1. Analyze the current architecture.
+2. Identify the best integration point.
+3. Minimize unnecessary changes.
+4. Preserve consistency across the repository.
