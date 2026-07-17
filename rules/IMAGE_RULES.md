@@ -1,15 +1,28 @@
-Whenever possible
+# Diagram Rules
 
-Insert diagrams.
+- Prefer Mermaid over ASCII diagrams.
+- Store reusable images in assets/images/.
+- Store reusable Mermaid source files in assets/diagrams/.
+- Use relative paths only.
+- Every image must have alt text.
+- Every diagram should have a short explanatory caption.
 
-Insert Mermaid charts.
+# Educational Images
 
-Reference local images.
+Images should teach a concept.
 
-Never embed Base64.
+Avoid decorative graphics.
 
-Use relative paths.
+Every image must have a clear educational purpose.
 
-Generate printable layouts.
+# Accessibility
 
-Use GitHub compatible Markdown.
+- Keep diagrams readable in dark and light mode.
+- Avoid color-only distinctions.
+- Prefer labels over legends where possible.
+
+## Relationship to Visual Rules
+
+IMAGE_RULES.md defines how images and diagrams are stored and referenced.
+
+VISUAL_RULES.md defines when and why visual elements should be used during educational content creation.

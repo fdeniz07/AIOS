@@ -25,3 +25,13 @@ Preserve headings.
 Preserve links.
 
 Preserve numbering.
+
+If a chapter exceeds the context window:
+
+Create
+
+Chapter_01_Part_02.md
+
+instead of
+
+Part_02.md
