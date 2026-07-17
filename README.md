@@ -263,25 +263,68 @@ AIOS is model-agnostic and is designed to work with modern AI coding assistants,
 
 # Quick Start
 
-1. Clone AIOS
+# 5-Minute Quick Start
 
-2. Copy the core files
+Get AIOS running in less than five minutes.
 
-3. Ask your AI assistant to read the repository
+## 1. Clone AIOS
 
-Then simply tell your AI assistant:
+```bash
+git clone https://github.com/fdeniz07/AIOS.git
+```
+
+---
+
+## 2. Copy the Core Framework
+
+Copy the AIOS framework into your repository.
+
+At minimum, include:
+
+- AGENTS.md
+- MANIFEST.md
+- PROJECT_STRUCTURE.md
+- agents/
+- rules/
+- workflows/
+
+---
+
+## 3. Open Your Repository
+
+Open the repository in your preferred AI coding assistant.
+
+---
+
+## 4. Initialize the AI
+
+Start with a simple instruction:
 
 ```text
 Read the entire repository.
 
 Follow AGENTS.md.
 
-Analyze before implementing.
+Understand the project before making changes.
 
 Respect repository workflows.
 
 Wait for approval when required.
 ```
+
+---
+
+## 5. Start Building
+
+You're ready to collaborate with AI using repository-driven engineering.
+
+No lengthy prompt engineering required.
+
+The repository now provides the context.
+
+> **Tip**
+>
+> AIOS works best when the repository contains clear documentation, consistent workflows, and project-specific rules.
 
 ---
 
