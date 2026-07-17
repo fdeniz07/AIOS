@@ -229,11 +229,24 @@ AIOS follows a predictable engineering lifecycle:
 
 ✅ Repository Safety
 
+✅ Model-Agnostic Governance 
+
 ---
 
+# Design Principles
+
+AIOS is built around a small set of architectural principles:
+
+- Repository-Driven Engineering
+- Architecture First
+- Model-Agnostic AI
+- Explicit Governance
+- Human-in-the-Loop Decisions
+
+---
 # Compatible With
 
-AIOS is designed to work with modern AI coding assistants including:
+AIOS is model-agnostic and is designed to work with modern AI coding assistants, including:
 
 | AI Assistant   | Status        |
 | -------------- | ------------- |

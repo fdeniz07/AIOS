@@ -188,3 +188,17 @@ These operating modes define AI behaviour.
 They do not replace AIOS project rules.
 
 All applicable AIOS rules remain mandatory regardless of the selected operating mode.
+
+---
+
+Every proposed change must satisfy at least one of the following:
+
+- technical correctness
+- educational clarity
+- AIOS compliance
+- consistency
+- grammar
+
+Do not modify text that already satisfies these criteria.
+
+---
