@@ -10,8 +10,10 @@ on:
       - main
 
   workflow_dispatch:
+
 jobs:
-  repository-check:
+
+  repository-analysis:
 
     runs-on: ubuntu-latest
 
@@ -20,29 +22,29 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Repository Information
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Show Python Version
         run: |
-          echo "Repository : ${{ github.repository }}"
-          echo "Branch     : ${{ github.ref_name }}"
-          echo "Commit     : ${{ github.sha }}"
-          echo "Actor      : ${{ github.actor }}"
+          python --version
 
-      - name: Show Directory Tree
+      - name: Analyze Repository
         run: |
-          pwd
-          ls -la
+          echo "AIOS Repository Report" > repository-report.txt
+          echo "======================" >> repository-report.txt
+          echo "" >> repository-report.txt
+          echo "Repository : ${{ github.repository }}" >> repository-report.txt
+          echo "Branch     : ${{ github.ref_name }}" >> repository-report.txt
+          echo "Commit     : ${{ github.sha }}" >> repository-report.txt
+          echo "Actor      : ${{ github.actor }}" >> repository-report.txt
+          echo "" >> repository-report.txt
+          echo "Markdown Files : $(find . -name '*.md' | wc -l)" >> repository-report.txt
+          echo "Notebook Files : $(find . -name '*.ipynb' | wc -l)" >> repository-report.txt
+          echo "Python Files   : $(find . -name '*.py' | wc -l)" >> repository-report.txt
 
-      - name: Count Markdown Files
+      - name: Show Report
         run: |
-          echo "Markdown Files:"
-          find . -name "*.md" | wc -l
-
-      - name: Verify Important Files
-        run: |
-          test -f README.md
-          test -f LICENSE
-          test -d .github
-          echo "Repository structure looks good."
-
-
-          
+          cat repository-report.txt
