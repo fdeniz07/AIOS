@@ -1,23 +1,44 @@
-name: AIOS CI
+name: AIOS Continuous Integration
 
 on:
   push:
     branches:
       - main
 
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  hello:
-    runs-on: ubuntu-latest
+  repository-check:
+
+    runs-on: windows-latest
 
     steps:
-      - name: Download Repository
+
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Greeting
-        run: echo "Hello AIOS! GitHub Actions are running successfully."
+      - name: Repository Information
+        run: |
+          echo "Repository : ${{ github.repository }}"
+          echo "Branch     : ${{ github.ref_name }}"
+          echo "Commit     : ${{ github.sha }}"
+          echo "Actor      : ${{ github.actor }}"
 
-      - name: Date
-        run: date
+      - name: Show Directory Tree
+        run: |
+          pwd
+          ls -la
 
-      - name: Repository Contents
-        run: ls -la
+      - name: Count Markdown Files
+        run: |
+          echo "Markdown Files:"
+          find . -name "*.md" | wc -l
+
+      - name: Verify Important Files
+        run: |
+          test -f README.md
+          test -f LICENSE
+          test -d .github
+          echo "Repository structure looks good."
