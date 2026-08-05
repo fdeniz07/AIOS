@@ -9,6 +9,7 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
 jobs:
   repository-check:
 
@@ -42,3 +43,6 @@ jobs:
           test -f LICENSE
           test -d .github
           echo "Repository structure looks good."
+
+
+          
