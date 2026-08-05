@@ -1,0 +1,23 @@
+name: AIOS CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Repository
+        uses: actions/checkout@v4
+
+      - name: Greeting
+        run: echo "Hello AIOS! GitHub Actions are running successfully."
+
+      - name: Date
+        run: date
+
+      - name: Repository Contents
+        run: ls -la
