@@ -48,11 +48,29 @@ jobs:
       - name: Show Report
         run: |
           cat repository-report.txt
-      
+
       - name: Upload Repository Report
         uses: actions/upload-artifact@v4
         with:
           name: aios-repository-report
           path: repository-report.txt
 
-          
+
+  report-verification:
+
+    needs: repository-analysis
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Download Repository Report
+        uses: actions/download-artifact@v5
+        with:
+          name: aios-repository-report
+
+      - name: Verify Report
+        run: |
+          ls -la
+          echo "-------------------------"
+          cat repository-report.txt
