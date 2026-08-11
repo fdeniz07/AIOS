@@ -48,3 +48,11 @@ jobs:
       - name: Show Report
         run: |
           cat repository-report.txt
+      
+      - name: Upload Repository Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: aios-repository-report
+          path: repository-report.txt
+
+          
