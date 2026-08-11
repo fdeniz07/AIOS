@@ -20,10 +20,10 @@ jobs:
     steps:
 
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
 
@@ -50,7 +50,7 @@ jobs:
           cat repository-report.txt
 
       - name: Upload Repository Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: aios-repository-report
           path: repository-report.txt
@@ -65,7 +65,7 @@ jobs:
     steps:
 
       - name: Download Repository Report
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v7
         with:
           name: aios-repository-report
 
