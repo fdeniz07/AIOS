@@ -56,6 +56,32 @@ jobs:
           path: repository-report.txt
 
 
+  application-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: lab/aios-demo-api/requirements.txt
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install -r lab/aios-demo-api/requirements.txt
+
+      - name: Run Tests
+        working-directory: lab/aios-demo-api
+        run: |
+          python -m pytest
+
+
   report-verification:
 
     needs: repository-analysis
