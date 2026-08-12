@@ -51,6 +51,7 @@ htmlcov/
 
 # Cache
 .cache/
+.pytest_cache/
 
 # Node (future)
 node_modules/
