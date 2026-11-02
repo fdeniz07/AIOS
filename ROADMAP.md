@@ -198,11 +198,29 @@ Also planned: decide whether `aiosctl.yaml` should become a real config surface.
 
 **Intent:** Provide a small set of stack-agnostic workflows and usable checklists.
 
+**Status:** Completed
+
+Completed means Product Owner–accepted Phase 4 deliverables are implemented in the working tree. It does **not** imply they have already been committed or pushed.
+
+**Conventions (Phase 4.2):** [`docs/WORKFLOW_CHECKLIST_CONVENTIONS.md`](docs/WORKFLOW_CHECKLIST_CONVENTIONS.md) — Markdown-first Workflow and Checklist definition conventions (no execution engine; no YAML frontmatter requirement). Document lifecycle status remains `Draft` until conventions themselves are separately approved.
+
+**Accepted deliverables:**
+
+- Workflow and Checklist authoring conventions
+- Core Feature Development Workflow (`workflows/feature_development.md`)
+- Core Release Workflow (`workflows/release.md`)
+- Core Review Checklist (`checklists/review.md`)
+- Core Release Checklist (`checklists/release_checklist.md`)
+- Workflow–Checklist integration (Feature Development Stage 8 → `review`; Release Stages 7 and 9 → `release`)
+
+**Historical objectives (satisfied):**
+
+- Establish Workflow and Checklist authoring conventions (Phase 4.2)
 - Populate `workflows/` with canonical engineering flows where they are genuinely cross-cutting Core resources; prefer Module-local workflows when capability-specific
 - Complete release / review checklists
 - Keep ceremony adaptive to project size
 
-Does not implement a workflow execution engine.
+Does not implement a workflow or checklist execution engine.
 
 ---
 

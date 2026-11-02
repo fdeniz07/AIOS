@@ -24,6 +24,7 @@ Related entry points:
 - Module metadata field model: [`MODULE_METADATA.md`](MODULE_METADATA.md)
 - Module lifecycle and governance: [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md)
 - Module validation expectations: [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md)
+- Workflow and checklist authoring conventions: [`WORKFLOW_CHECKLIST_CONVENTIONS.md`](WORKFLOW_CHECKLIST_CONVENTIONS.md)
 
 ---
 
@@ -170,7 +171,7 @@ Relationship rules:
 | `rules/` contents | Mixed generic + education | Education items are migration candidates, not permanent Core identity | Pack-based education rules after approved migration |
 | Modules | Not populated; no `modules/` tree | Module Architecture Contract (Section 5); metadata field model in [`MODULE_METADATA.md`](MODULE_METADATA.md); adaptive recommend ≠ auto-apply | Populated modules, parsers/validators, catalog, tooling |
 | Adaptive selection | Manual/human+agent judgment via docs | Architectural recommendation pipeline (Section 5) | Optional assisted discovery — not autonomous apply; engine needs separate approval |
-| Content placement | Root `methodology/` active; root `knowledge/` / `skills/` / `workflows/` empty | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Content migration only under explicit approval |
+| Content placement | Root `methodology/` active; root `workflows/` holds initial Core Workflow definitions (Phase 4 MVP); root `checklists/` holds initial Core Checklist definitions; root `knowledge/` / `skills/` still empty | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Broader knowledge/skills population and further workflow/checklist content under later phases / explicit approval |
 | Pack manifests | None required | Packs may later use an optional manifest; **not** mandatory in this contract | Evaluate `pack.yaml` need; schema deferred |
 
 ---
@@ -418,6 +419,8 @@ This Module Architecture Contract **does not change** the approved precedence mo
 | **Checklist** | Verification list | Review / Done gates | Architecture decisions |
 | **Validation** | Contract conformance checks | Structure/contract checks | Claiming unrun tests as passed |
 
+Authoring conventions for Workflow and Checklist **definitions** (Markdown-first metadata tables, lifecycle `draft` / `active` / `deprecated`, stage and checklist reference rules, definition-versus-instance boundary, and execution non-authority) are specified in [`WORKFLOW_CHECKLIST_CONVENTIONS.md`](WORKFLOW_CHECKLIST_CONVENTIONS.md). That document does not change the meanings in the table above and does not implement an execution engine.
+
 ### Related existing areas
 
 | Area | Path | Status today |
@@ -427,8 +430,10 @@ This Module Architecture Contract **does not change** the approved precedence mo
 | Agent mode rules | `rules/AGENT_RULES.md` | Active (education-leaning content present) |
 | Prompts | `prompts/` | Partial |
 | Templates | `templates/` | Placeholder |
-| Checklists | `checklists/` | Partial |
-| Knowledge / skills / workflows | root directories | Planned |
+| Checklists | `checklists/` | Implemented (initial Core set: `review`, `release`; education-specific notebook checklist remains separate) |
+| Workflows | `workflows/` | Implemented (Phase 4 MVP: Feature Development, Release) |
+| Knowledge | `knowledge/` | Planned |
+| Skills | `skills/` | Planned |
 | Validation suite | `tests/` | Planned |
 | Demo tests | `lab/aios-demo-api/` | Demo |
 
@@ -754,9 +759,10 @@ Always separate:
 | Knowledge | What / why | Planned |
 | Skills | How | Planned |
 | Agents | Role profiles | Partial |
-| Workflows | Multi-step processes | Planned (RDIV method text exists) |
+| Workflows | Multi-step processes | Implemented (Phase 4 MVP; RDIV remains methodology guidance) |
 | Integrations | External tool guidance | Partial |
-| Templates / Checklists | Skeletons / verification lists | Placeholder / partial |
+| Templates | Artifact skeletons | Placeholder |
+| Checklists | Verification lists | Implemented (initial Core set; not an exhaustive catalog) |
 | Module validation | Future Module checks | Expectations in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); not implemented |
 | Framework validation | Contract / CI checks | Demo API CI today; broader tests planned (Phase 8) |
 
