@@ -20,7 +20,6 @@ Future:
 from __future__ import annotations
 
 import argparse
-from ast import arg
 import hashlib
 import logging
 from dataclasses import dataclass
@@ -286,10 +285,16 @@ def sync_project(
         )
 
     log.info("")
-    log.info(f"Copied : {copied}")
-    log.info(f"Skipped: {skipped}")
+    if options.dry_run:
+        log.info(f"Would copy : {copied}")
+        log.info(f"Skipped    : {skipped}")
+    else:
+        log.info(f"Copied : {copied}")
+        log.info(f"Skipped: {skipped}")
     log.info("")
-    # ----------------------------------------------------
+
+
+# ----------------------------------------------------
 # CLI
 # ----------------------------------------------------
 
@@ -380,7 +385,7 @@ def command_sync(args):
 # Main
 # ----------------------------------------------------
 
-def main():
+def main() -> int:
     parser = create_parser()
     args = parser.parse_args()
 
@@ -389,9 +394,11 @@ def main():
             command_sync(args)
         else:
             parser.print_help()
+        return 0
 
     except KeyboardInterrupt:
         log.error("\nInterrupted.")
+        return 130
 
     except Exception as ex:
         log.error("")
@@ -400,6 +407,7 @@ def main():
         log.error("=" * 60)
         log.error(str(ex))
         log.error("")
+        return 1
 
 
 # ----------------------------------------------------
@@ -407,4 +415,4 @@ def main():
 # ----------------------------------------------------
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
