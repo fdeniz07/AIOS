@@ -1,6 +1,6 @@
 # AIOS Framework Contract
 
-Version: 1.0.0
+Version: 1.4.0
 
 Status: Approved
 
@@ -12,6 +12,8 @@ This document defines architectural boundaries, responsibilities, consumption mo
 
 It is not an implementation plan, roadmap substitute, or marketing overview.
 
+Phase 2.2 extends Section 5 with the **Module Architecture Contract** (conceptual architecture). Phase 2.3 adds the Module metadata field model in [`MODULE_METADATA.md`](MODULE_METADATA.md). Phase 2.5 adds Module lifecycle governance in [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md). Phase 2.7 adds future Module validation expectations in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md). This contract does not implement Modules, metadata parsers, validators, CLI commands, lifecycle automation, or an adaptive engine.
+
 Related entry points:
 
 - Product overview: [`../README.md`](../README.md)
@@ -19,6 +21,9 @@ Related entry points:
 - Actual repository layout: [`../PROJECT_STRUCTURE.md`](../PROJECT_STRUCTURE.md)
 - Agent operating manual: [`../AGENTS.md`](../AGENTS.md)
 - Evolution phases: [`../ROADMAP.md`](../ROADMAP.md)
+- Module metadata field model: [`MODULE_METADATA.md`](MODULE_METADATA.md)
+- Module lifecycle and governance: [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md)
+- Module validation expectations: [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md)
 
 ---
 
@@ -37,7 +42,11 @@ Establish a shared contract so that:
 ### In scope
 
 - Architectural boundaries and component responsibilities
-- Adaptive module selection principles (design contract, not runtime)
+- Module Architecture Contract (conceptual; Section 5)
+- Reference to the approved Module metadata field model ([`MODULE_METADATA.md`](MODULE_METADATA.md))
+- Reference to Module lifecycle and governance ([`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md))
+- Reference to future Module validation expectations ([`MODULE_VALIDATION.md`](MODULE_VALIDATION.md))
+- Adaptive module recommendation principles (design contract, not runtime)
 - Consumer ownership and precedence
 - Supported consumption models
 - Current `aiosctl sync` compatibility surface
@@ -46,12 +55,16 @@ Establish a shared contract so that:
 
 ### Out of scope for this document
 
-- Implementing adaptive module selection in code
-- Implementing modules, selective sync, pack sync, or prune behavior
+- Implementing adaptive module selection or recommendation engines in code
+- Populating `modules/`, shipping a Module catalog, or implementing metadata parsers/validators
+- Duplicating the full Module metadata, lifecycle, or validation specifications (see [`MODULE_METADATA.md`](MODULE_METADATA.md), [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md), [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md))
+- Implementing Module validators, schemas, or CI jobs (expectations only in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md))
+- Implementing selective sync, pack sync, module sync, or prune behavior
 - Moving or rewriting files under `rules/`
 - Changing `scripts/aiosctl.py`
 - Modifying any consumer repository
 - Recording consumer product ADRs, backlogs, or roadmaps inside AIOS
+- Dependency resolvers, installers, or package-manager runtimes
 
 ---
 
@@ -155,9 +168,10 @@ Relationship rules:
 |-------|----------------|----------------------------------|--------------------------|
 | Core identity docs | Present | Authoritative for framework intent | Continual refinement |
 | `rules/` contents | Mixed generic + education | Education items are migration candidates, not permanent Core identity | Pack-based education rules after approved migration |
-| Modules | Not populated | Adaptive selection principles + metadata proposal | Populated modules and recommendation tooling |
-| Adaptive selection | Manual/human+agent judgment via docs | Contractual requirement for how recommendations work | Optional assisted discovery — not autonomous apply |
-| Root `knowledge/`, `skills/`, `workflows/` | Empty planned directories | Shared slots until modules mature | Filled shared and/or module-local assets |
+| Modules | Not populated; no `modules/` tree | Module Architecture Contract (Section 5); metadata field model in [`MODULE_METADATA.md`](MODULE_METADATA.md); adaptive recommend ≠ auto-apply | Populated modules, parsers/validators, catalog, tooling |
+| Adaptive selection | Manual/human+agent judgment via docs | Architectural recommendation pipeline (Section 5) | Optional assisted discovery — not autonomous apply; engine needs separate approval |
+| Content placement | Root `methodology/` active; root `knowledge/` / `skills/` / `workflows/` empty | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Content migration only under explicit approval |
+| Pack manifests | None required | Packs may later use an optional manifest; **not** mandatory in this contract | Evaluate `pack.yaml` need; schema deferred |
 
 ---
 
@@ -165,15 +179,19 @@ Relationship rules:
 
 ### Responsibility
 
-AIOS Core is the common engineering foundation every adoption path may rely on.
+AIOS Core is the common, **technology-agnostic** engineering foundation every adoption path may rely on.
+
+Core provides universal operating and governance defaults, cross-cutting engineering principles, shared conventions that genuinely apply across domains, and common framework-level capabilities.
+
+Core **must not** become a container for every methodology, technology, workflow, or domain-specific resource. Capability-specific assets belong in Modules (or Packs when domain-specific). Root shared directories are reserved for genuinely cross-cutting Core resources.
 
 ### Core includes (conceptual)
 
 - Generic agent operating guidance (`AGENTS.md`)
 - Product and structure manifests (`MANIFEST.md`, `PROJECT_STRUCTURE.md`)
-- Engineering methodologies under `methodology/`
-- Syncable governance rules under `rules/` **as they exist today**
-- Lightweight tooling entry point (`scripts/aiosctl.py`)
+- Engineering methodologies under `methodology/` — **Core-owned reference content**, **L6 by default** (not automatically L4 binding rules)
+- Syncable governance rules under `rules/` **as they exist today** (L4 operating/governance defaults in an AIOS adoption context, subject to L0–L3)
+- Lightweight tooling entry point (`scripts/aiosctl.py`) — currently `sync` only
 - Framework documentation such as this contract
 
 ### Core does not include
@@ -181,18 +199,75 @@ AIOS Core is the common engineering foundation every adoption path may rely on.
 - Consumer product ADRs, roadmaps, or backlogs
 - Full educational curricula or vocabulary databases as Core identity
 - Claimed runtime engines that are only documentation
-- Lock-in to one IDE, LLM, cloud, or language stack
+- Lock-in to one IDE, LLM, cloud, vendor agent, or language stack
 - Automatic imposition of Modules or Packs
+- Every specialized engineering capability that can live as a Module
 
 ### Current implementation note
 
-`rules/` currently also contains education-oriented files used by historical synced consumers. They remain for compatibility. They are **not** permanent Core identity; see Section 12.
+`rules/` currently also contains education-oriented files used by historical synced consumers. They remain for compatibility. They are **not** permanent Core identity; see Section 12. This contract does not migrate them.
 
 ---
 
-## 5. Packs, Modules, and Adaptive Selection
+## 5. Module Architecture Contract
 
-### Packs
+This section is the **Module Architecture Contract**. It defines conceptual architecture, boundaries, ownership, composition, content placement, adaptive recommendation rules, and constraints for Modules and Packs.
+
+**Status:** Approved architectural design. **Not** an implemented Module catalog, metadata runtime, installer, resolver, or adaptive engine.
+
+**Architectural ownership versus governance precedence:** This section answers *where things live and who owns them*. Section 7 answers *which instruction wins when guidance conflicts* (L0–L7). Ownership does not rewrite precedence; precedence does not move files or ownership.
+
+### 5.1 Composition model
+
+```text
+Core          → common foundation (governance + cross-cutting principles)
+Modules       → reusable engineering capabilities (optional, recommendable)
+Packs         → optional domain / use-case extensions (may compose Modules)
+Consumer      → product ownership, ADRs, local policy, implementation
+```
+
+- Core provides the foundation.
+- Modules provide reusable engineering capabilities.
+- Packs compose or contextualize Modules for specific domains or use cases.
+- Consumers decide what to reference, adopt, or integrate.
+
+A **Module must not depend on a specific Pack**. Pack-to-Module composition is supported **conceptually**; packaging and manifest mechanics are deferred.
+
+### 5.2 Modules
+
+A **Module** is a reusable, independently understandable engineering capability (for example Architecture, Development, Testing & Quality, Security Engineering, DevOps & Cloud, Data Engineering).
+
+A Module:
+
+- Has a clearly defined responsibility and scope.
+- May contain knowledge, skills, workflows, checklists, templates, examples, and tests.
+- Can be recommended based on project context.
+- Is independent of any particular Pack.
+- Must explain when it applies and when it should not be used.
+- Must not silently impose architectural decisions on consumers.
+
+**Governance:** Module guidance is **non-binding by default (L6)**. When a consumer **explicitly adopts** Module guidance into its own local policy, that adopted policy is **consumer-owned at L3** within the adoption scope. Adoption must not be assumed or performed silently by AIOS.
+
+**Implementation status:** Modules are an approved architectural concept. No Module packages are populated by this document revision. No `modules/` tree is required to exist for this contract to be valid.
+
+#### Illustrative Module layout (proposal only — not a shipped tree)
+
+```text
+modules/<module-id>/
+├── module.yaml      # field model: MODULE_METADATA.md (no Module packages populated yet)
+├── README.md        # human/agent entry point (expected when a Module exists)
+├── knowledge/       # optional — Module-specific
+├── skills/          # optional — Module-specific
+├── workflows/       # optional — Module-specific
+├── checklists/      # optional
+├── templates/       # optional
+├── examples/        # optional
+└── tests/           # optional
+```
+
+Not every Module needs every directory. The approved **`module.yaml` field model** is defined in [`MODULE_METADATA.md`](MODULE_METADATA.md). Module **lifecycle and governance** are defined in [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md). **Future Module validation expectations** (layers, severities, CI fail-on-Error, sync separation) are defined in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md) — not implemented as tooling by this contract. Phase 2.4 dependency and compatibility **design** is completed and embedded (see Section 5.9); machine-readable Module relationship metadata and catalog population remain deferred.
+
+### 5.3 Packs
 
 A **Pack** is an optional domain- or use-case-specific extension.
 
@@ -201,77 +276,132 @@ A **Pack** is an optional domain- or use-case-specific extension.
 | Purpose | Extend AIOS for a domain without forcing that domain into Core |
 | Example | Education (`packs/education/`) |
 | Adoption | Explicit opt-in by the consumer / project owner |
-| May use Modules | Yes — a Pack may compose one or more Modules |
-| Status today | Partial — `packs/education/AGENTS.education.md` exists |
+| May use Modules | Yes — a Pack may compose or reference one or more Modules |
+| Status today | Partial — Education Pack README + preserved historical AGENTS |
 
-Packs are not required to use AIOS Core.
+A Pack:
 
-### Modules
+- Provides contextual guidance for a particular domain or use case.
+- May compose or reference Modules; must not duplicate reusable Module capabilities unnecessarily.
+- Must not redefine Core governance or the L0–L7 model.
+- Applies only when **explicitly adopted** by the consumer.
 
-A **Module** is a reusable engineering capability (for example Architecture, Development, Testing & Quality, Security Engineering, DevOps & Cloud, Data Engineering).
+**Governance:** Explicitly adopted Pack guidance operates at **L5** within adopted scope and cannot override L0–L4. If a consumer further copies Pack guidance into its own local policy, that consumer-owned policy is **L3**. Pack presence in the AIOS repository does not activate the Pack for every consumer.
 
-Modules are **approved as an architectural concept**. No module packages are populated by this document revision.
+Packs are not required to use AIOS Core. Education content must not be automatically migrated into Core or Modules.
 
-#### Lightweight module structure (proposal only)
+#### Optional Pack manifest (`pack.yaml`)
 
-```text
-modules/<module-id>/
-├── module.yaml      # mandatory (metadata proposal)
-├── README.md        # mandatory
-├── knowledge/       # optional
-├── skills/          # optional
-├── workflows/       # optional
-├── checklists/      # optional
-├── templates/       # optional
-├── examples/        # optional
-└── tests/           # optional
-```
+An optional Pack manifest may become useful later to declare identity, Module composition, and adoption hints. This contract **does not** require `pack.yaml`, does **not** define its schema, and does **not** authorize tooling that assumes a Pack manifest exists. Evaluate need in subsequent design work; keep Pack-to-Module composition valid with documentation-only references until then.
 
-#### Proposed `module.yaml` fields (not an implemented runtime schema)
+### 5.4 Consumer ownership
 
-| Field | Intent |
-|-------|--------|
-| `id` | Stable module identifier |
-| `version` | Module package version |
-| `status` | `draft` \| `active` \| `deprecated` |
-| `title` | Human-readable name |
-| `summary` | Short purpose |
-| `applies_when` | Adaptive hints for relevance |
-| `avoid_when` | Hints for disproportionate use |
-| `requires_core` | Minimum Core guidance version (informational) |
-| `tags` | Discovery labels |
+The consumer repository remains the owner of:
 
-Mandatory: `module.yaml`, `README.md`. Other directories are optional.
+- Product requirements and decisions
+- Approved ADRs
+- Product architecture
+- Implementation and source code
+- Local engineering policies
+- Roadmaps and project-specific artifacts
 
-### Adaptive module selection (approved working approach)
+AIOS must not silently overwrite, replace, or modify consumer-owned decisions or artifacts.
 
-**Status:** Approved architectural approach. **Not implemented** as an autonomous module discovery or selection engine, runtime or CLI feature.
+AIOS provides reusable engineering guidance, not ownership of the consumer product. Synced `.agents/` files remain AIOS-derived artifacts; sync does not transfer ownership of consumer ADRs or product decisions (see Sections 7–9).
 
-Modules provide **reusable engineering capabilities**.
+### 5.5 Content organization
 
-AIOS shall work adaptively:
+Default architectural direction:
 
-1. Analyze consumer context (goals, stack, architecture, requirements, maturity, constraints).
-2. Identify relevant Modules (and Packs, when applicable).
-3. Recommend with rationale: why relevant, when to use, when **not** to use.
-4. Keep recommendations proportional to actual need.
-5. Leave important architectural decisions with the project owner.
+| Asset kind | Default placement |
+|------------|-------------------|
+| Module-specific knowledge | Inside the respective Module |
+| Module-specific skills | Inside the respective Module |
+| Module-specific workflows | Inside the respective Module |
+| Cross-cutting resources that genuinely serve multiple Modules or the whole framework | Core / root shared directories |
+| Root `methodology/` | **Core-owned** reference content; **L6 by default** |
 
-Module recommendations (**L6**) do **not** become binding automatically.
+This contract does **not** migrate existing root content, templates, prompts, or Education assets. Migration requires separate approval (Section 12).
 
-If a consumer **explicitly adopts** a Module recommendation as local policy, that adopted policy is consumer-owned at **L3**.
+### 5.6 Adaptive recommendation architecture
 
-#### Adaptive recommendation versus autonomous modification
+**Status:** Approved architectural model. **Not implemented** as an autonomous discovery, selection, installation, adoption, or consumer-modification engine.
+
+Pipeline:
+
+1. Analyze consumer / project context (goals, stack, architecture, requirements, maturity, constraints).
+2. Identify relevant engineering needs.
+3. Recommend applicable Modules or Packs.
+4. Explain the recommendation, rationale, trade-offs, and when **not** to use it.
+5. Request human / consumer-owner approval for durable adoption.
+6. Record adoption in **consumer-owned** artifacts or policies (ADR or local policy).
+7. Apply adopted guidance only within its approved scope (L3 for adopted Module policy; L5 for adopted Pack scope).
+
+Keep recommendations proportional to actual need. Scale ceremony down for small or low-risk work.
 
 | Allowed | Not allowed |
 |---------|-------------|
-| Analyze and recommend Modules/Packs | Automatically impose patterns or technologies |
+| Analyze and recommend Modules/Packs | Automatically impose patterns, Modules, or Packs |
 | Explain trade-offs and alternatives | Silently overwrite consumer ADRs or policies |
 | Wait for owner approval before structural adoption | Autonomously restructure the consumer repository |
-| Scale ceremony down for small/low-risk projects | Treat every project as enterprise-scale |
 | Treat recommendations as L6 advice | Claim an implemented autonomous discovery/selection engine |
+| Record adoption only after explicit consumer decision | Install or “apply” Modules via sync without a separate approved mechanism |
 
-Adaptive selection advises. It does not replace consumer ownership.
+### 5.7 Architecture constraints
+
+- Avoid unnecessary coupling between Modules.
+- Avoid circular Module dependencies.
+- Avoid Pack-specific Module implementations (a Module must remain usable without that Pack).
+- Avoid duplicating Core operating/governance rules inside Modules.
+- Avoid turning Core into a domain-specific content repository.
+- Avoid mandatory adoption of Modules or Packs.
+- Avoid IDE-, agent-, or LLM-vendor-specific architectural dependencies.
+- Avoid premature runtime, resolver, installer, or package-manager assumptions.
+
+Dependency versioning algorithms, compatibility matrices, and automated resolution tooling remain **out of scope** for this section. Phase 2.4 conceptual design is completed (Section 5.9); machine-readable relationship metadata and resolvers remain deferred future work.
+
+### 5.8 Relationship to L0–L7
+
+This Module Architecture Contract **does not change** the approved precedence model in Section 7.
+
+| Level | Role relative to Modules / Packs |
+|-------|----------------------------------|
+| L0 | Non-overridable constraints — never overridden by Modules or Packs |
+| L1 | Explicit user task instructions — within L0; do not silently rewrite durable consumer decisions |
+| L2 | Consumer-approved ADRs / product decisions — outrank generic AIOS defaults |
+| L3 | Consumer local policies — including **explicitly adopted** Module guidance |
+| L4 | AIOS Core binding operating and governance defaults — not ordinary methodologies |
+| L5 | Explicitly adopted Pack guidance — within scope only |
+| L6 | Module and methodology recommendations **by default** |
+| L7 | External knowledge — reference only |
+
+### 5.9 Completed Phase 2 decisions versus deferred work
+
+**Decided elsewhere (do not re-litigate here):**
+
+- Approved Module metadata field model, required/optional fields, `status` / `maturity` enums, `requires_core`, deprecation object, and unknown-field warning policy — [`MODULE_METADATA.md`](MODULE_METADATA.md)
+- Module lifecycle and governance (draft/active/deprecated expectations, maturity expectations, guidance-oriented SemVer, deprecation/migration, ownership outside metadata) — [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md)
+- Module validation expectations (layers, severities, active minimums, `## Migration`, CI fail-on-Error, sync separation) — [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md)
+
+**Phase 2.4 dependency and compatibility design — completed:**
+
+- Conceptual design is **completed**. Do not describe Phase 2.4 design itself as still open or deferred.
+- Metadata v1 has **no** Module-to-Module dependency fields; a `dependencies` key is **forbidden** (validation Error).
+- Circular Module dependencies remain conceptually forbidden (Section 5.7).
+- Pack-to-Module composition is **not** a Module dependency; Module-to-Pack dependencies remain **forbidden**.
+- Companion recommendations remain README-only; required/optional dependency semantics are documented design decisions, not metadata v1 fields.
+- No resolver, installer, or package-manager runtime exists or is authorized.
+- A separate `MODULE_DEPENDENCY.md` is **intentionally not required**; decisions are embedded here and in Module Metadata / Validation docs.
+
+**Still deferred (future work — distinct from completed Phase 2.4 design):**
+
+- Machine-readable Module-to-Module relationship metadata and any additive metadata extension that would enable relationship graphs (until a concrete use case justifies Product Owner approval)
+- Circular-dependency **tooling** checks that require such a machine-readable relationship graph
+- Implementation of Module validators, schemas, CLI validate commands, or Module CI jobs (no Modules yet; sync unchanged)
+- Actual Module catalog population (Phase 7)
+- Pack manifest schema (`pack.yaml`)
+- Adaptive engine implementation
+- Migration of Education content or other existing resources
 
 ---
 
@@ -302,7 +432,7 @@ Adaptive selection advises. It does not replace consumer ownership.
 | Validation suite | `tests/` | Planned |
 | Demo tests | `lab/aios-demo-api/` | Demo |
 
-Templates and checklists may live in shared root areas and/or inside packs or modules. They must not store consumer-specific filled documents.
+Default placement follows Section 5.5: Module-specific knowledge, skills and workflows live **inside Modules**; root shared directories hold only genuinely cross-cutting Core resources. Templates and checklists may live in shared root areas and/or inside Packs or Modules. They must not store consumer-specific filled documents.
 
 Integrations today: README-level compatibility notes only. Dedicated adapters are not implemented.
 
@@ -330,6 +460,8 @@ Validation today: CI report + demo API tests — not a full framework contract v
 This section defines the **authoritative architectural precedence model**.
 
 Root [`AGENTS.md`](../AGENTS.md) §2 **operationalizes** this model for AI agents. Following Phase 1.4.1, the Contract and root AGENTS are **aligned**. They are complementary authorities (meta-document vs operating manual), not competing hierarchy levels.
+
+Section 5 (Module Architecture Contract) defines **architectural ownership and placement**. This section defines **instruction precedence**. Do not conflate the two.
 
 When guidance conflicts, apply:
 
@@ -593,10 +725,15 @@ Direction: [`../ROADMAP.md`](../ROADMAP.md). Expectations only:
 | Contract maintenance | Update this file when boundaries change |
 | `AGENTS.md` alignment | Keep §2 operationalization synchronized with this Section 7 L0–L7 model |
 | Education migration | Only under Section 12 gates |
-| Modules | Populate with README + `module.yaml`; keep adaptive recommend ≠ auto-apply; no autonomous selection engine unless separately implemented and documented |
-| CLI | Preserve sync; add commands only when implemented |
+| Module Architecture Contract | Section 5 remains conceptual architecture; metadata / lifecycle / validation docs are referenced, not duplicated |
+| Module metadata | Field model approved; parsers and real `module.yaml` files not implemented |
+| Module lifecycle | Governance approved in [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md); no lifecycle automation implemented |
+| Module validation | Expectations approved in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); no validator/CI/Module tooling implemented yet |
+| Module deps / catalog / CLI | Phase 2.4 **design** completed (no metadata v1 deps; conceptual constraints binding); machine-readable relationship metadata deferred; catalog (7) and CLI (3) remain future work; sync preserved |
+| Modules (implementation) | Populate later under approved contracts; keep adaptive recommend ≠ auto-apply; no autonomous selection engine unless separately approved and documented |
+| CLI | Preserve sync; Module validation must stay separate from sync; add Module-aware commands only when implemented |
 | Versioning | Formalize Framework / Module-Pack / Consumer Integration versions |
-| Validation | Contract tests for real invariants |
+| Framework validation (Phase 8) | Broader automated contract tests may complement Module validation |
 
 Always separate:
 
@@ -612,15 +749,16 @@ Always separate:
 |-----------|----------------|--------------|
 | AIOS Core | Common engineering foundation | Active (mixed rules legacy) |
 | Packs | Optional domain/use-case extensions | Partial |
-| Modules | Reusable engineering capabilities | Planned (adaptive design approved; packages not populated) |
-| Adaptive selection | Context-based recommend/explain | Approved design; not automated |
+| Modules | Reusable engineering capabilities | Architecture approved (Section 5); metadata / lifecycle / validation docs approved; packages not populated |
+| Adaptive selection | Context-based recommend/explain pipeline | Approved design; not automated; engine not implemented |
 | Knowledge | What / why | Planned |
 | Skills | How | Planned |
 | Agents | Role profiles | Partial |
 | Workflows | Multi-step processes | Planned (RDIV method text exists) |
 | Integrations | External tool guidance | Partial |
 | Templates / Checklists | Skeletons / verification lists | Placeholder / partial |
-| Validation | Contract checks | Demo/CI only; framework validator planned |
+| Module validation | Future Module checks | Expectations in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); not implemented |
+| Framework validation | Contract / CI checks | Demo API CI today; broader tests planned (Phase 8) |
 
 ---
 
@@ -632,4 +770,4 @@ Changes that alter boundaries, precedence, adaptive rules, or sync compatibility
 - consumer/contributor impact notes
 - product-owner awareness for compatibility-sensitive changes
 
-End of Framework Contract v1 (finalized).
+End of Framework Contract v1.4.0 (Module Architecture in §5; metadata, lifecycle, and validation expectations referenced via dedicated docs).

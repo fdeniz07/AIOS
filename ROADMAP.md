@@ -23,7 +23,8 @@ Authoritative governance and precedence: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRA
 - Avoid unnecessary complexity
 - Preserve useful Git history and consumer sync compatibility
 - Provide the framework, not the domain content
-- Do not present planned capabilities (module runtime, discovery engine, automated apply of recommendations, etc.) as already implemented
+- Do not present planned capabilities (module runtime, discovery engine, automated apply of recommendations, populated module catalog, new CLI commands, etc.) as already implemented
+- Protect the existing `aiosctl sync` contract (`rules/*.md` → consumer `.agents/`) unless a versioned migration is explicitly approved
 
 ---
 
@@ -83,9 +84,10 @@ Items listed below remain **Product Owner–approved deferrals** as **future wor
    - Preserve the existing flat `rules/*.md` → consumer `.agents/` sync contract.
    - Do not migrate, rename, remove, or reorganize these rules as part of Phase 1.
    - Handle migration as a separately scoped future task with compatibility analysis and explicit approval.
+   - Education content must not be automatically migrated into Core or Modules.
 
 2. **Skills / workflows contribution standards**
-   - Defer detailed contribution paths and standards to future capability / module development phases (see Phases 3, 4, 6, 8).
+   - Defer detailed contribution paths and standards to later capability phases (see Phases 4, 5, 7 and 9).
    - Do not imply that skills/workflows execution infrastructure already exists.
 
 3. **Release documentation hygiene**
@@ -100,68 +102,142 @@ Items listed below remain **Product Owner–approved deferrals** as **future wor
 
 These remain later-phase direction only — **not implemented** and not Phase 1 incomplete work:
 
-- Adaptive Module selection engines, populated module packages, automated recommendation apply
-- CLI growth beyond `aiosctl sync` (Phase 2)
-- Populated `workflows/`, `skills/`, `knowledge/` and related tooling (Phases 3–6)
-- Broader validation/automation and ecosystem samples (Phases 7–8)
+- Architecture & Module Foundation (Phase 2)
+- CLI growth beyond `aiosctl sync` (Phase 3)
+- Populated `workflows/`, `skills/`, `knowledge/` and related content (Phases 4–5)
+- Adaptive recommendation design (Phase 6) and any future adaptive **engine** (separate approval)
+- Populated Engineering Module catalog / packaging (Phase 7)
+- Broader validation/automation and ecosystem samples (Phases 8–9)
 
 ---
 
-## Phase 2 — CLI Improvements
+## Phase 2 — Architecture & Module Foundation
 
-**Intent:** Grow `aiosctl` beyond rule sync — carefully.
+**Intent:** Define the reusable Module architecture and its contracts with Core, Packs, methodologies, consumers and future adaptive capabilities — **before** CLI growth or catalog population.
 
-Current: `aiosctl sync` copies `rules/*.md` → `<project>/.agents/`
+**Status:** Completed
 
-Proposed commands (planned, not implemented):
+### Closure note
+
+- Architecture & Module Foundation contracts are approved and documented.
+- Final review: Phase 2.8 – PASS WITH FINDINGS (closure adjustments applied).
+- No Module packages, validators, CLI growth, or adaptive engine were implemented in this phase.
+
+### Architectural direction (approved for this phase)
+
+- Root `methodology/` remains **Core-owned L6 reference** content (not automatically L4).
+- **Module-local** knowledge, skills and workflows are the default placement for Module assets.
+- Root shared directories (`knowledge/`, `skills/`, `workflows/`, etc.) are reserved for genuinely **cross-cutting Core** resources.
+- Pack-to-Module composition must remain possible.
+- `pack.yaml` is **not** mandatory; optional Pack manifests remain deferred.
+- Consumer adoption remains a **consumer-owned** ADR or local policy (adopt → L3 for Modules; Pack adopt → L5).
+- Education content must not be automatically migrated into Core or Modules.
+- Module **status** and **maturity** are separate metadata concepts (see `docs/MODULE_METADATA.md` and `docs/MODULE_LIFECYCLE.md`).
+
+### Sub-phases
+
+| ID | Title | Status | Focus |
+|----|-------|--------|--------|
+| **2.1** | Architecture Discovery | **Completed** | Read-only audit of current architecture and Module foundation gaps |
+| **2.2** | Module Architecture Contract | **Completed** | Boundaries, optional directories, Core/Pack/Module interaction; `pack.yaml` not mandatory |
+| **2.3** | Module Metadata Specification | **Completed** | Approved `module.yaml` field model (`docs/MODULE_METADATA.md`) |
+| **2.4** | Dependency & Compatibility Model | **Completed** | Design completed; decisions embedded (see note below) |
+| **2.5** | Module Lifecycle & Governance | **Completed** | Lifecycle, SemVer, deprecation/migration (`docs/MODULE_LIFECYCLE.md`) |
+| **2.6** | Reference Module Design | **Completed** | Conceptual `architecture-engineering` design only (no Module package) |
+| **2.7** | Validation Strategy | **Completed** | Future validation expectations (`docs/MODULE_VALIDATION.md`) |
+| **2.8** | Final Review | **Completed** | Consistency review and closure adjustments |
+
+### Phase 2.4 note (dependency & compatibility)
+
+- Dependency and compatibility **design** is completed.
+- Approved decisions are **embedded** in the Framework Contract, Module Metadata, and Module Validation documentation (for example: no `dependencies` field in metadata v1; presence of `dependencies` is a validation Error; circular Module dependencies remain conceptually forbidden; Pack composition is not a Module dependency; no resolver/installer).
+- A separate `MODULE_DEPENDENCY.md` is **intentionally not required**.
+- Future machine-readable Module relationship metadata remains **deferred** until a concrete use case justifies it.
+
+### In scope for Phase 2 (completed)
+
+- Architecture, contracts, metadata, dependency/compatibility **design**, lifecycle and reference Module **design**
+- Documentation amendments that align with the Framework Contract (without silently changing approved L0–L7 authority)
+- Distinguishing design / planned / implemented language
+
+### Out of scope for Phase 2
+
+- Populated multi-module catalog (see Phase 7)
+- CLI implementation beyond today’s `sync` (see Phase 3)
+- Autonomous adaptive recommendation or selection **engine** (Phase 6 is design-only; engine needs separate future approval)
+- Breaking or replacing `aiosctl sync`
+- Education-rule migration or automatic Education → Core/Module moves
+- Module dependency **resolver** runtime
+- Separate `MODULE_DEPENDENCY.md` (intentionally deferred)
+
+---
+
+## Phase 3 — CLI Improvements
+
+**Intent:** Grow `aiosctl` beyond rule sync — carefully — **after** Module Foundation contracts exist.
+
+**Depends on:** Phase 2 Module contracts (especially metadata and validation strategy) for any Module-aware commands.
+
+Current (implemented): `aiosctl sync` copies `rules/*.md` → `<project>/.agents/`
+
+Proposed commands (**planned, not implemented**):
 
 - `validate`
 - `doctor`
 - `init`
 - `version`
+- Future Module-oriented discovery/validation helpers (for example list/info/validate) — only after Phase 2 schemas are approved
 
 Also planned: decide whether `aiosctl.yaml` should become a real config surface.
 
-**Compatibility rule:** do not break existing sync paths without a versioned migration.
+**Compatibility rule:** do not break existing sync paths without a versioned migration. Sync behavior remains protected.
 
 ---
 
-## Phase 3 — Workflow and Checklist System
+## Phase 4 — Workflow and Checklist System
 
 **Intent:** Provide a small set of stack-agnostic workflows and usable checklists.
 
-- Populate `workflows/` with canonical engineering flows
+- Populate `workflows/` with canonical engineering flows where they are genuinely cross-cutting Core resources; prefer Module-local workflows when capability-specific
 - Complete release / review checklists
 - Keep ceremony adaptive to project size
 
+Does not implement a workflow execution engine.
+
 ---
 
-## Phase 4 — Skills and Knowledge
+## Phase 5 — Skills and Knowledge
 
 **Intent:** Add reusable engineering knowledge without shipping consumer content.
 
-- Skill schema and examples under `skills/`
-- Shared reference material under `knowledge/`
-- Domains such as architecture, testing, security, DevOps, data, documentation
+- Skill schema and examples — prefer Module-local skills; root `skills/` / `knowledge/` only for cross-cutting Core resources
+- Shared reference material under root `knowledge/` only when truly Core-wide
+- Domains such as architecture, testing, security, DevOps, data, documentation (content may later feed Phase 7 packaging)
+
+Does not implement a skills execution infrastructure.
 
 ---
 
-## Phase 5 — Adaptive Project Intelligence
+## Phase 6 — Adaptive Project Intelligence
 
-**Intent:** Help agents detect repository context and adapt process depth.
+**Intent:** Define how agents detect repository context and adapt process depth — **architecture and recommendation design**, not an autonomous runtime engine.
 
 - Project-type signals (library, service, monorepo, docs-only, etc.)
-- Guidance for choosing workflows and skills
-- Still documentation/convention-first unless/until tooling is proven
-- No autonomous module discovery or selection engine is assumed by this phase’s intent alone
+- Guidance for choosing workflows, skills and Modules using approved metadata hints
+- Documentation/convention-first unless/until tooling is separately proven and approved
+- No autonomous module discovery, selection, or consumer-modification engine in this phase
+
+**Explicit boundary:** Actual adaptive **engine** implementation requires a **separate future scope and Product Owner approval**. Phase 6 must not claim that engine as delivered.
 
 ---
 
-## Phase 6 — Engineering Modules
+## Phase 7 — Engineering Module Catalog / Packaging
 
-**Intent:** Package reusable engineering capabilities as optional modules/packs.
+**Intent:** Populate reusable engineering Module packages using the Phase 2 contracts.
 
-Examples of intended domains:
+This phase carries forward the **implementation / packaging** slice formerly associated with “Engineering Modules,” after architecture was moved into Phase 2.
+
+Examples of intended Module domains (catalog targets — **not present today**):
 
 - Architecture Engineering
 - Development Engineering
@@ -171,29 +247,32 @@ Examples of intended domains:
 - Data Engineering
 - Documentation & Governance
 
-Education materials remain optional packs, not Core identity.
+Education materials remain optional **Packs**, not Core identity and not an automatic Module migration.
 
 Module recommendations remain non-binding (**L6**) until a consumer explicitly adopts them as local policy (**L3**).
 
+**Out of scope unless separately approved:** dependency resolver runtime; auto-install into consumer repositories; breaking sync.
+
 ---
 
-## Phase 7 — Validation and Automation
+## Phase 8 — Validation and Automation
 
-**Intent:** Verify framework integrity.
+**Intent:** Verify framework integrity in CI and structural tests.
 
 - Populate `tests/` for structure and contract checks
 - Strengthen CI beyond demo API smoke tests
 - Validate docs references and required entry points
+- Complement (do not replace) any local CLI validation from Phase 3
 
 ---
 
-## Phase 8 — Ecosystem and Integrations
+## Phase 9 — Ecosystem and Integrations
 
 **Intent:** Improve adoption across coding agents and host projects.
 
 - Adoption examples under `examples/` (pointers or minimal samples)
 - Integration notes for major coding assistants
-- Community contribution of skills and workflows
+- Community contribution of skills, workflows and Modules under approved contracts
 
 ---
 
@@ -203,7 +282,8 @@ Module recommendations remain non-binding (**L6**) until a consumer explicitly a
 - Replacing general-purpose coding assistants
 - Building a large runtime “AI OS kernel” before the documentation contract is solid
 - Breaking `aiosctl sync` consumers for cosmetic folder moves
-- Claiming planned Modules or adaptive tooling as shipped Core features
+- Claiming planned Modules, adaptive tooling, module resolvers, or new CLI commands as shipped Core features
+- Treating Phase 6 adaptive **design** as delivery of an adaptive **engine**
 
 ---
 
