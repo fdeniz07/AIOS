@@ -228,11 +228,39 @@ Does not implement a workflow or checklist execution engine.
 
 **Intent:** Add reusable engineering knowledge without shipping consumer content.
 
+**Status:** Completed
+
+Completed means Product Owner–accepted Phase 5 deliverables are implemented in the working tree. It does **not** imply they have already been committed or pushed. It does **not** promote Skill or conventions lifecycles, populate Knowledge, or deliver Skill execution / retrieval infrastructure.
+
+### Accepted progress
+
+| Step | Outcome |
+|------|---------|
+| **5.1** Discovery | Accepted — Skill/Knowledge boundaries, Markdown-first approach, and placement rules clarified |
+| **5.2** Conventions | [`docs/SKILL_KNOWLEDGE_CONVENTIONS.md`](docs/SKILL_KNOWLEDGE_CONVENTIONS.md) created and Product Owner–accepted; document lifecycle remains **Draft** (Markdown-first; no YAML frontmatter; definition lifecycle `draft` / `active` / `deprecated`; no Skill execution or Knowledge retrieval engine) |
+| **5.3** Core Skill | Repository Analysis Skill (`skills/repository_analysis.md`, `id` `repository-analysis`) created and Product Owner–accepted; artifact lifecycle remains **`draft`** (`version` `0.1.0`); directory population ≠ active lifecycle or complete Skill catalog |
+| **5.4** Documentation alignment | Framework Contract, ROADMAP, and PROJECT_STRUCTURE updated to reflect the above maturity without changing artifact lifecycles |
+| **5.5** Final audit | PASS WITH FINDINGS — foundation sufficient to close; illustrative conventions path and ROADMAP closure wording corrected in this closure step |
+
+**Knowledge:** remains **Planned** — no Core Knowledge example in Phase 5; `knowledge/` stays empty.
+
+**Approved Phase 5 decisions:**
+
+- Pure Markdown Skill and Knowledge definitions with metadata tables
+- One Core Skill definition in Phase 5.3; **no** Core Knowledge example in Phase 5
+- Prefer Module-local Skills when Module packages exist; root `skills/` / `knowledge/` only for genuinely cross-cutting Core resources
+- Existing `prompts/` remain separate interaction artifacts (no migration/deletion); Skill is the canonical reusable capability definition
+- Domain content (architecture, testing, security, DevOps, data, documentation) may later feed Phase 7 Module packaging — not Core identity dumps
+
+**Historical objectives (preserved):**
+
 - Skill schema and examples — prefer Module-local skills; root `skills/` / `knowledge/` only for cross-cutting Core resources
 - Shared reference material under root `knowledge/` only when truly Core-wide
 - Domains such as architecture, testing, security, DevOps, data, documentation (content may later feed Phase 7 packaging)
 
-Does not implement a skills execution infrastructure.
+**Non-goals (preserved):** Does not implement a skills execution infrastructure, Knowledge retrieval/RAG/indexing engine, or Skill/Knowledge CLI.
+
+**Closure note:** Phase 5 is **Completed**. Conventions remain **Draft**; the initial Core Skill remains **`draft`** (`0.1.0`, scope `core`); Knowledge remains **Planned** and empty. Skill Runner, discovery/runtime, RAG, CLI integration, automated installation, and Module/domain-specific Skill catalogs remain out of scope (later phases / separate approval).
 
 ---
 

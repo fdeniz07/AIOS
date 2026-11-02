@@ -68,25 +68,27 @@ AIOS/                          # Git repository root
 ├── .agents/                   # planned locally; also the sync DESTINATION name in consumers
 ├── .github/                   # active – community + CI
 ├── assets/                    # active – branding and diagrams
-├── checklists/                # partial
+├── checklists/                # active – initial Core set (review, release); notebook education-specific
 ├── docs/                      # active – framework documentation
-│   └── FRAMEWORK_CONTRACT.md  # authoritative architectural / governance contract
+│   ├── FRAMEWORK_CONTRACT.md  # authoritative architectural / governance contract
+│   ├── WORKFLOW_CHECKLIST_CONVENTIONS.md
+│   └── SKILL_KNOWLEDGE_CONVENTIONS.md
 ├── examples/                  # planned – empty domain folders
 ├── generators/                # planned – empty
-├── knowledge/                 # planned – empty
+├── knowledge/                 # planned – empty (no Core Knowledge example; remains Planned)
 ├── lab/                       # demo – sample FastAPI app for CI
 ├── methodology/               # active
 ├── packs/                     # partial – optional packs
 │   └── education/
 │       ├── README.md          # Education & Learning Engineering Pack overview
 │       └── AGENTS.education.md# preserved historical education operating guidance
-├── prompts/                   # partial
+├── prompts/                   # partial – interaction artifacts (Skills are canonical capabilities when authored)
 ├── rules/                     # active – aiosctl sync SOURCE (Core + legacy education rules)
 ├── scripts/                   # active – aiosctl CLI
-├── skills/                    # planned – empty
+├── skills/                    # partial – initial Core Skill (repository_analysis.md; artifact lifecycle draft; not a catalog)
 ├── templates/                 # placeholder – empty template files
 ├── tests/                     # planned – empty (framework tests not yet present)
-├── workflows/                 # planned – empty
+├── workflows/                 # active – Phase 4 MVP (feature_development, release)
 ├── AGENTS.md                  # active – generic operating manual (L0–L7)
 ├── MANIFEST.md                # active – product contract
 ├── PROJECT_STRUCTURE.md       # active – this file
@@ -113,6 +115,8 @@ Framework documentation.
 | Path | Status | Notes |
 |------|--------|-------|
 | `docs/FRAMEWORK_CONTRACT.md` | active | Authoritative architectural and governance contract (boundaries, ownership, consumption models, L0–L7 precedence) |
+| `docs/WORKFLOW_CHECKLIST_CONVENTIONS.md` | draft | Markdown-first Workflow/Checklist authoring conventions |
+| `docs/SKILL_KNOWLEDGE_CONVENTIONS.md` | draft | Markdown-first Skill/Knowledge authoring conventions |
 | `docs/releases/` | planned | Empty nested folder reserved for future release notes |
 
 Do not treat empty nested folders under `docs/` as implemented documentation products.
@@ -176,14 +180,6 @@ Education rules under `rules/` are **not** fully migrated into the pack yet.
 
 Logos and architecture / workflow diagrams referenced by `README.md`.
 
-### `checklists/` — **partial**
-
-| File | Status |
-|------|--------|
-| `notebook_creation.md` | partial – education-oriented |
-| `release_checklist.md` | placeholder |
-| `review.md` | placeholder |
-
 ### `templates/` — **placeholder**
 
 Template filenames exist; file bodies are currently empty.
@@ -194,9 +190,30 @@ Minimal FastAPI application used by CI to prove a simple Python test path.
 
 This is **not** the AIOS framework runtime.
 
-### `knowledge/`, `skills/`, `workflows/`, `generators/`, `tests/` — **planned**
+### `workflows/` — **active** (Phase 4 MVP)
 
-Reserved empty directories for future reusable engineering assets and validation.
+Initial Core Workflow definitions: `feature_development.md`, `release.md`.
+
+Directory is active with the Phase 4 Core set. Not a workflow execution engine.
+
+### `checklists/` — **active** (initial Core set)
+
+Active directory with initial Core checklists (`review.md`, `release_checklist.md`). `notebook_creation.md` remains education-specific and separate from Core identity. Directory activity does not change individual checklist artifact lifecycles.
+
+### `knowledge/` — **planned** (empty)
+
+Planned and empty. Reserved for genuinely cross-cutting Core Knowledge when authored under [`docs/SKILL_KNOWLEDGE_CONVENTIONS.md`](docs/SKILL_KNOWLEDGE_CONVENTIONS.md) (conventions remain Draft). No Core Knowledge example exists; Knowledge remains Planned.
+
+### `skills/` — **partial** (initial Core Skill; artifact lifecycle `draft`)
+
+Populated with the initial Core Skill definition `repository_analysis.md` (`id` `repository-analysis`). Directory population does **not** mean the Skill lifecycle is `active` or that a complete Skill catalog exists. Artifact lifecycle remains **`draft`** (`version` `0.1.0`). Authoring conventions remain Draft.
+
+- Capability-specific Skills/Knowledge prefer Module-local placement **when Module packages exist** (do not invent fake `modules/` trees).
+- Not a Skill runner, Knowledge retrieval/RAG engine, or automated recommendation service.
+
+### `generators/`, `tests/` — **planned**
+
+Reserved empty directories for future generators and framework validation assets.
 
 Not implemented Modules, discovery engines or automated recommendation services.
 

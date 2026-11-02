@@ -25,6 +25,7 @@ Related entry points:
 - Module lifecycle and governance: [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md)
 - Module validation expectations: [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md)
 - Workflow and checklist authoring conventions: [`WORKFLOW_CHECKLIST_CONVENTIONS.md`](WORKFLOW_CHECKLIST_CONVENTIONS.md)
+- Skill and Knowledge authoring conventions: [`SKILL_KNOWLEDGE_CONVENTIONS.md`](SKILL_KNOWLEDGE_CONVENTIONS.md)
 
 ---
 
@@ -171,7 +172,7 @@ Relationship rules:
 | `rules/` contents | Mixed generic + education | Education items are migration candidates, not permanent Core identity | Pack-based education rules after approved migration |
 | Modules | Not populated; no `modules/` tree | Module Architecture Contract (Section 5); metadata field model in [`MODULE_METADATA.md`](MODULE_METADATA.md); adaptive recommend ≠ auto-apply | Populated modules, parsers/validators, catalog, tooling |
 | Adaptive selection | Manual/human+agent judgment via docs | Architectural recommendation pipeline (Section 5) | Optional assisted discovery — not autonomous apply; engine needs separate approval |
-| Content placement | Root `methodology/` active; root `workflows/` holds initial Core Workflow definitions (Phase 4 MVP); root `checklists/` holds initial Core Checklist definitions; root `knowledge/` / `skills/` still empty | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Broader knowledge/skills population and further workflow/checklist content under later phases / explicit approval |
+| Content placement | Root `methodology/` active; root `workflows/` holds initial Core Workflow definitions (Phase 4 MVP); root `checklists/` holds initial Core Checklist definitions; root `skills/` holds the initial Core Skill definition (`repository_analysis.md`; artifact lifecycle `draft` — not an exhaustive Skill catalog); root `knowledge/` remains empty; Skill/Knowledge authoring conventions exist (`Draft`) | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Further Core Skills and any Knowledge population under later Phase 5+ decisions; Module-local skills/knowledge with Module packages (Phase 7) |
 | Pack manifests | None required | Packs may later use an optional manifest; **not** mandatory in this contract | Evaluate `pack.yaml` need; schema deferred |
 
 ---
@@ -421,6 +422,8 @@ This Module Architecture Contract **does not change** the approved precedence mo
 
 Authoring conventions for Workflow and Checklist **definitions** (Markdown-first metadata tables, lifecycle `draft` / `active` / `deprecated`, stage and checklist reference rules, definition-versus-instance boundary, and execution non-authority) are specified in [`WORKFLOW_CHECKLIST_CONVENTIONS.md`](WORKFLOW_CHECKLIST_CONVENTIONS.md). That document does not change the meanings in the table above and does not implement an execution engine.
 
+Authoring conventions for Skill and Knowledge **definitions** (Markdown-first metadata tables, lifecycle `draft` / `active` / `deprecated`, placement, prompt boundary, and execution/retrieval non-authority) are specified in [`SKILL_KNOWLEDGE_CONVENTIONS.md`](SKILL_KNOWLEDGE_CONVENTIONS.md) (**Draft**). That document does not change the meanings in the table above, does not implement a Skill runner or Knowledge retrieval engine, and does not imply a complete Skill or Knowledge catalog.
+
 ### Related existing areas
 
 | Area | Path | Status today |
@@ -428,12 +431,12 @@ Authoring conventions for Workflow and Checklist **definitions** (Markdown-first
 | Methodologies | `methodology/` | Active |
 | Agent operating manual | `AGENTS.md` | Active |
 | Agent mode rules | `rules/AGENT_RULES.md` | Active (education-leaning content present) |
-| Prompts | `prompts/` | Partial |
+| Prompts | `prompts/` | Partial (interaction artifacts; Skills are the canonical reusable capability definitions when authored) |
 | Templates | `templates/` | Placeholder |
 | Checklists | `checklists/` | Implemented (initial Core set: `review`, `release`; education-specific notebook checklist remains separate) |
 | Workflows | `workflows/` | Implemented (Phase 4 MVP: Feature Development, Release) |
-| Knowledge | `knowledge/` | Planned |
-| Skills | `skills/` | Planned |
+| Knowledge | `knowledge/` | Planned (authoring conventions exist and remain Draft; no Core Knowledge examples) |
+| Skills | `skills/` | Implemented (initial Core Skill definition: `repository_analysis.md`; artifact lifecycle `draft`; conventions remain Draft; not an exhaustive catalog) |
 | Validation suite | `tests/` | Planned |
 | Demo tests | `lab/aios-demo-api/` | Demo |
 
@@ -756,8 +759,8 @@ Always separate:
 | Packs | Optional domain/use-case extensions | Partial |
 | Modules | Reusable engineering capabilities | Architecture approved (Section 5); metadata / lifecycle / validation docs approved; packages not populated |
 | Adaptive selection | Context-based recommend/explain pipeline | Approved design; not automated; engine not implemented |
-| Knowledge | What / why | Planned |
-| Skills | How | Planned |
+| Knowledge | What / why | Planned (conventions Draft; no Core Knowledge example; catalog not populated) |
+| Skills | How | Implemented (initial Core Skill definition; artifact lifecycle `draft`; conventions remain Draft; not an exhaustive catalog) |
 | Agents | Role profiles | Partial |
 | Workflows | Multi-step processes | Implemented (Phase 4 MVP; RDIV remains methodology guidance) |
 | Integrations | External tool guidance | Partial |
