@@ -9,11 +9,11 @@ Currently supported:
 
     aiosctl.py sync
     aiosctl.py version
+    aiosctl.py doctor
 
 Future:
 
     aiosctl.py validate
-    aiosctl.py doctor
     aiosctl.py init
 """
 
@@ -40,6 +40,19 @@ TARGET_RULE_DIR = ".agents"
 VERSION_FILE = "AIOS_VERSION.md"
 FRAMEWORK_VERSION_FILENAME = "VERSION"
 UNSPECIFIED_VERSION = "unspecified"
+
+MIN_PYTHON = (3, 10)
+
+SEVERITY_PASS = "PASS"
+SEVERITY_INFO = "INFO"
+SEVERITY_WARNING = "WARNING"
+SEVERITY_ERROR = "ERROR"
+
+REQUIRED_ROOT_FILES = (
+    "AGENTS.md",
+    "MANIFEST.md",
+    "ROADMAP.md",
+)
 
 GENERATED_HEADER = """\
 # ======================================================
@@ -80,6 +93,15 @@ class SyncOptions:
     force: bool = False
 
     dry_run: bool = False
+
+
+@dataclass
+class DiagnosticFinding:
+    """One read-only doctor diagnostic result."""
+
+    severity: str
+    title: str
+    detail: str = ""
 
 
 # ----------------------------------------------------
@@ -395,7 +417,328 @@ def create_parser() -> argparse.ArgumentParser:
         help="Show AIOS framework version information."
     )
 
+    # --------------------------------------------
+    # doctor
+    # --------------------------------------------
+
+    subparsers.add_parser(
+        "doctor",
+        help="Run read-only AIOS environment diagnostics."
+    )
+
     return parser
+
+
+# ----------------------------------------------------
+# Doctor diagnostics
+# ----------------------------------------------------
+
+def _is_readable_file(path: Path) -> bool:
+    if not path.is_file():
+        return False
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            handle.read(1)
+        return True
+    except OSError:
+        return False
+
+
+def _is_readable_directory(path: Path) -> bool:
+    if not path.is_dir():
+        return False
+    try:
+        list(path.iterdir())
+        return True
+    except OSError:
+        return False
+
+
+def _append_cli_script_finding(findings: List[DiagnosticFinding]) -> None:
+    cli_script = Path(__file__).resolve()
+    if _is_readable_file(cli_script):
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_PASS,
+                "CLI script",
+                str(cli_script),
+            )
+        )
+    else:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "CLI script",
+                f"Missing or unreadable: {cli_script}",
+            )
+        )
+
+
+def collect_doctor_findings(
+    root: Optional[Path] = None,
+) -> List[DiagnosticFinding]:
+    """
+    Run approved read-only doctor checks and return findings.
+
+    Does not create, modify, or delete files. Does not invoke Git.
+    Does not require or diagnose Module infrastructure.
+    """
+    findings: List[DiagnosticFinding] = []
+
+    # 1. Python runtime
+    py = sys.version_info
+    py_label = f"{py.major}.{py.minor}.{py.micro}"
+    if (py.major, py.minor) >= MIN_PYTHON:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_PASS,
+                "Python runtime",
+                f"Python {py_label} (minimum {MIN_PYTHON[0]}.{MIN_PYTHON[1]})",
+            )
+        )
+    else:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Python runtime",
+                f"Python {py_label} is below minimum "
+                f"{MIN_PYTHON[0]}.{MIN_PYTHON[1]}",
+            )
+        )
+
+    # 2. Repository root
+    if root is None:
+        root = locate_repository_root()
+
+    if root is None:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Repository root",
+                "AIOS repository root could not be detected",
+            )
+        )
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Framework version",
+                "Skipped: repository root unavailable",
+            )
+        )
+        _append_cli_script_finding(findings)
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Rules directory",
+                "Skipped: repository root unavailable",
+            )
+        )
+        for name in REQUIRED_ROOT_FILES:
+            findings.append(
+                DiagnosticFinding(
+                    SEVERITY_ERROR,
+                    name,
+                    "Skipped: repository root unavailable",
+                )
+            )
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Framework contract",
+                "Skipped: repository root unavailable",
+            )
+        )
+        return findings
+
+    findings.append(
+        DiagnosticFinding(
+            SEVERITY_PASS,
+            "Repository root",
+            str(root),
+        )
+    )
+
+    # 3–4. VERSION file and framework version value
+    version_path = root / FRAMEWORK_VERSION_FILENAME
+    if not _is_readable_file(version_path):
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Framework version",
+                f"Missing or unreadable: {version_path}",
+            )
+        )
+    else:
+        version = read_framework_version(root)
+        if version == UNSPECIFIED_VERSION:
+            findings.append(
+                DiagnosticFinding(
+                    SEVERITY_ERROR,
+                    "Framework version",
+                    f"{version_path} exists but version is empty "
+                    "or unspecified",
+                )
+            )
+        else:
+            findings.append(
+                DiagnosticFinding(
+                    SEVERITY_PASS,
+                    "Framework version",
+                    version,
+                )
+            )
+
+    # 5. CLI script
+    _append_cli_script_finding(findings)
+
+    # 6. rules/
+    rules_dir = root / AIOS_RULE_DIR
+    if not _is_readable_directory(rules_dir):
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Rules directory",
+                f"Missing or unreadable: {rules_dir}",
+            )
+        )
+    else:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_PASS,
+                "Rules directory",
+                str(rules_dir),
+            )
+        )
+        rule_files = discover_rule_files(rules_dir)
+        if not rule_files:
+            findings.append(
+                DiagnosticFinding(
+                    SEVERITY_WARNING,
+                    "Rules content",
+                    f"{rules_dir} contains no top-level *.md files",
+                )
+            )
+
+    # 7–9. Required root documents
+    for name in REQUIRED_ROOT_FILES:
+        path = root / name
+        if _is_readable_file(path):
+            findings.append(
+                DiagnosticFinding(
+                    SEVERITY_PASS,
+                    name,
+                    str(path),
+                )
+            )
+        else:
+            findings.append(
+                DiagnosticFinding(
+                    SEVERITY_ERROR,
+                    name,
+                    f"Missing or unreadable: {path}",
+                )
+            )
+
+    # 10. Framework contract
+    contract = root / "docs" / "FRAMEWORK_CONTRACT.md"
+    if _is_readable_file(contract):
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_PASS,
+                "Framework contract",
+                str(contract),
+            )
+        )
+    else:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_ERROR,
+                "Framework contract",
+                f"Missing or unreadable: {contract}",
+            )
+        )
+
+    # Optional: methodology/
+    methodology = root / "methodology"
+    if methodology.is_dir():
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_INFO,
+                "Methodology directory",
+                f"Present: {methodology}",
+            )
+        )
+    else:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_INFO,
+                "Methodology directory",
+                f"Not present (optional): {methodology}",
+            )
+        )
+
+    # Optional: aiosctl.yaml (do not parse)
+    config_path = root / "aiosctl.yaml"
+    if config_path.is_file():
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_INFO,
+                "Configuration",
+                f"{config_path.name} is present; currently documentary "
+                "and not consumed by the CLI",
+            )
+        )
+    else:
+        findings.append(
+            DiagnosticFinding(
+                SEVERITY_INFO,
+                "Configuration",
+                "aiosctl.yaml not present (optional)",
+            )
+        )
+
+    return findings
+
+
+def command_doctor(_args=None) -> int:
+    """
+    Run read-only diagnostics. Returns process exit code 0 or 1.
+    """
+    findings = collect_doctor_findings()
+
+    errors = sum(1 for item in findings if item.severity == SEVERITY_ERROR)
+    warnings = sum(
+        1 for item in findings if item.severity == SEVERITY_WARNING
+    )
+    infos = sum(1 for item in findings if item.severity == SEVERITY_INFO)
+
+    log.info("AIOS Doctor")
+    log.info("")
+
+    for item in findings:
+        line = f"[{item.severity}] {item.title}"
+        log.info(line)
+        if item.detail and item.severity in (
+            SEVERITY_ERROR,
+            SEVERITY_WARNING,
+        ):
+            log.info(f"         {item.detail}")
+        elif item.detail and item.severity == SEVERITY_INFO:
+            log.info(f"         {item.detail}")
+
+    log.info("")
+    log.info("Summary:")
+    log.info(f"  Errors   : {errors}")
+    log.info(f"  Warnings : {warnings}")
+    log.info(f"  Info     : {infos}")
+    log.info("")
+
+    if errors:
+        log.info("AIOS environment has errors.")
+        return 1
+
+    log.info("AIOS environment is healthy.")
+    return 0
 
 
 # ----------------------------------------------------
@@ -470,6 +813,8 @@ def main() -> int:
         if args.command == "version":
             command_version(args)
             return 0
+        if args.command == "doctor":
+            return command_doctor(args)
 
         parser.print_help()
         return 0
