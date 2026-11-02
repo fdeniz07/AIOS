@@ -27,11 +27,13 @@
 
 # AIOS
 
-AIOS (**Artificial Intelligence Operating System**) is an open framework that transforms AI coding assistants into **repository-aware engineering partners**.
+AIOS (**Artificial Intelligence Operating System**) is an open-source framework that helps AI coding assistants behave like **repository-aware engineering partners**.
 
-Instead of relying solely on prompts, AIOS provides a structured engineering environment where AI agents learn how to understand repositories, follow project standards, respect workflows, detect conflicts, review their own work and collaborate consistently over time.
+Instead of relying only on chat prompts, AIOS keeps durable engineering context in the repository: operating rules, methodologies, workflows, prompts and structure.
 
-AIOS is designed for developers who believe that **better repositories create better AI.**
+> AIOS provides the **framework**, not the **content**.
+>
+> Your product knowledge, ADRs, backlogs and curricula stay in your repositories (or in optional packs).
 
 ---
 
@@ -41,13 +43,14 @@ AIOS is designed for developers who believe that **better repositories create be
 - Philosophy
 - Architecture
 - Repository Structure
+- Capability Status
 - Core Components
 - AIOS Workflow
-- Decision Engine
+- Decision Guidance
 - Repository Lifecycle
-- Features
 - Compatible With
 - Quick Start
+- Tooling Notes (`aiosctl`)
 - Validation
 - Roadmap
 - Contributing
@@ -55,11 +58,10 @@ AIOS is designed for developers who believe that **better repositories create be
 - Vision
 
 ---
+
 # Why AIOS?
 
-Modern AI coding assistants are incredibly powerful.
-
-Yet they often:
+Modern AI coding assistants are powerful, yet they often:
 
 - ignore repository conventions
 - forget previous project decisions
@@ -67,25 +69,22 @@ Yet they often:
 - modify unrelated files
 - skip quality checks
 - duplicate existing implementations
-- produce unpredictable results
 
-The problem is rarely the AI.
+The problem is rarely “not enough prompt text”.
 
-The real problem is the **lack of persistent project context.**
+The real gap is **missing persistent project context**.
 
-AIOS solves this problem by moving knowledge from prompts into the repository itself.
+AIOS moves that context into the repository so humans and agents share the same operating contract.
 
 ---
 
 # Philosophy
 
 > AI doesn't become better because of longer prompts.
-
+>
 > AI becomes better because of better repositories.
 
-Instead of teaching AI through conversation,
-
-AIOS teaches AI through engineering.
+AIOS teaches assistants through engineering structure: rules, methods, reviews and explicit approval gates.
 
 ---
 
@@ -95,9 +94,9 @@ AIOS teaches AI through engineering.
 <img src="assets/images/architecture.png" alt="Architecture">
 </p>
 
-AIOS acts as the engineering layer between your repository and your AI coding assistant.
+AIOS sits between your repository and your AI coding assistant as a **governance and method layer**.
 
-Rather than generating code immediately, AIOS encourages the agent to:
+Before rushing to code, assistants are expected to:
 
 - understand
 - analyze
@@ -106,7 +105,9 @@ Rather than generating code immediately, AIOS encourages the agent to:
 - review
 - document
 
-before delivering a final result.
+Detailed layout and directory status: [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md)
+
+Product contract: [`MANIFEST.md`](MANIFEST.md)
 
 ---
 
@@ -114,44 +115,79 @@ before delivering a final result.
 
 ```text
 AIOS/
-├── agents/              # Specialized AI agents for dedicated tasks
-├── assets/              # Logos, diagrams, banners and visual resources
-├── checklists/          # Quality assurance and validation checklists
-├── docs/                # Project documentation and additional guides
-├── knowledge/           # Shared knowledge base and reference materials
-├── prompts/             # Reusable prompts for AI assistants
-├── rules/               # Operating rules and AI behavior guidelines
-├── templates/           # Standardized content templates
-├── tests/               # Validation and repository tests
-├── workflows/           # End-to-end development workflows
-│
-├── AGENTS.md            # Instructions for AI coding assistants
-├── MANIFEST.md          # Repository manifest and navigation index
-├── PROJECT_STRUCTURE.md # Complete repository layout
-└── README.md            # Project overview and getting started
+├── AGENTS.md              # Generic operating manual for AI agents
+├── MANIFEST.md            # Product scope and navigation
+├── PROJECT_STRUCTURE.md   # Actual tree + status labels
+├── ROADMAP.md             # Framework evolution phases
+├── rules/                 # Syncable governance rules (aiosctl source)
+├── methodology/           # RDIV, Architecture First, …
+├── prompts/               # Reusable prompts (discovery active; others partial)
+├── packs/education/       # Optional education pack (preserved AGENTS)
+├── templates/             # Placeholders for reusable templates
+├── checklists/            # Partial quality checklists
+├── scripts/aiosctl.py     # Rule sync CLI
+├── assets/                # Branding and diagrams
+├── lab/aios-demo-api/     # Demo app for CI smoke tests
+├── knowledge/             # Planned
+├── skills/                # Planned
+├── workflows/             # Planned
+├── tests/                 # Planned (framework tests)
+└── examples/              # Planned adoption examples
 ```
 
-> 📄 **Looking for the full repository layout?**
->
-> See **PROJECT_STRUCTURE.md** for a complete overview of all directories, files, and their purpose.
+Empty directories are **planned or reserved**, not shipped engines.
 
-> **Design Principle:** Every directory has a single responsibility, making the repository easy to navigate for both humans and AI assistants.
+---
+
+# Capability Status
+
+### Available now
+
+- Generic `AGENTS.md` operating manual
+- Governance rules under `rules/`
+- Engineering methodologies under `methodology/`
+- Discovery prompt skeletons under `prompts/discovery/`
+- Generic architecture review prompt
+- `aiosctl sync` for copying `rules/*.md` → consumer `.agents/`
+- OSS docs: license, contributing, security, code of conduct
+- Optional preserved education manual: `packs/education/AGENTS.education.md`
+
+### Partially available
+
+- Broader prompt library (many placeholder files)
+- Templates and checklists (several empty)
+- CI repository report + demo API tests
+- Optional packs beyond the preserved education AGENTS copy
+
+### Planned
+
+- Workflow library under `workflows/`
+- Skills and knowledge libraries
+- Richer `aiosctl` commands (`validate`, `doctor`, `init`, `version`)
+- Framework contract tests under `tests/`
+- Engineering domain modules
+- Deeper coding-agent integrations
+
+See [`ROADMAP.md`](ROADMAP.md) for phased direction.
 
 ---
 
 # Core Components
 
-| Component | Purpose |
-|------------|---------|
-| **AGENTS.md** | Defines AI behavior and responsibilities |
-| **MANIFEST.md** | Project philosophy and engineering principles |
-| **PROJECT_STRUCTURE.md** | Repository architecture |
-| **WORKFLOWS** | Step-by-step implementation processes |
-| **CHECKLISTS** | Quality verification before implementation |
-| **KNOWLEDGE** | Repository-specific knowledge |
-| **SKILLS** | Technology-specific best practices |
-| **TEMPLATES** | Reusable project templates |
-| **TESTS** | AI behavior validation |
+| Component | Purpose | Status |
+|-----------|---------|--------|
+| **AGENTS.md** | How AI agents must operate | Available |
+| **MANIFEST.md** | Product contract and navigation | Available |
+| **PROJECT_STRUCTURE.md** | Real layout + status | Available |
+| **rules/** | Syncable governance | Available |
+| **methodology/** | RDIV and related methods | Available |
+| **prompts/** | Reusable prompt assets | Partial |
+| **packs/** | Optional domain packs | Partial |
+| **workflows/** | End-to-end flows | Planned |
+| **skills/** | Reusable engineering skills | Planned |
+| **knowledge/** | Shared reference knowledge | Planned |
+| **tests/** | Framework validation | Planned |
+| **lab/** | Demo API for CI | Demo only |
 
 ---
 
@@ -161,29 +197,38 @@ AIOS/
 <img src="assets/images/workflow.png" alt="Workflow">
 </p>
 
-Traditional AI focuses on prompts.
+AIOS recommends **RDIV**:
 
-AIOS focuses on repositories.
+1. Review
+2. Decide
+3. Implement
+4. Verify
 
-This small shift fundamentally changes how AI collaborates with developers.
+Details: [`methodology/rdiv.md`](methodology/rdiv.md)
+
+This is a **documented method**, not a separate installed runtime engine.
 
 ---
 
-# Decision Engine
+# Decision Guidance
 
 <p align="center">
-<img src="assets/images/decision-engine.png" alt="Decision Engine">
+<img src="assets/images/decision-engine.png" alt="Decision guidance">
 </p>
 
-Before implementing changes, AIOS evaluates:
+Before implementing, agents should evaluate:
 
 - repository rules
-- previous decisions
-- workflow requirements
+- existing implementations
+- workflow expectations
 - approval gates
 - quality standards
 
-If a conflict exists, the AI stops and requests human approval instead of making unsafe assumptions.
+If a conflict exists, the agent should stop and request human approval instead of making unsafe assumptions.
+
+Decision priorities and gates are defined in `AGENTS.md` and `rules/DECISION_RULES.md`.
+
+There is no separate automated “decision engine” binary in this repository today.
 
 ---
 
@@ -192,8 +237,6 @@ If a conflict exists, the AI stops and requests human approval instead of making
 <p align="center">
 <img src="assets/images/repository-lifecycle.png" alt="Repository Lifecycle">
 </p>
-
-AIOS follows a predictable engineering lifecycle:
 
 1. Read the repository
 2. Understand the project
@@ -207,208 +250,163 @@ AIOS follows a predictable engineering lifecycle:
 
 ---
 
-# Features
-
-✅ Repository Intelligence
-
-✅ Engineering Workflows
-
-✅ Repository Memory
-
-✅ Approval Gates
-
-✅ Conflict Detection
-
-✅ Self Review
-
-✅ Definition of Done
-
-✅ Documentation Standards
-
-✅ Educational Standards
-
-✅ Repository Safety
-
-✅ Model-Agnostic Governance 
-
----
-
 # Design Principles
-
-AIOS is built around a small set of architectural principles:
 
 - Repository-Driven Engineering
 - Architecture First
 - Model-Agnostic AI
 - Explicit Governance
 - Human-in-the-Loop Decisions
+- Adaptive to Project Context
+- Framework, Not Content
 
 ---
+
 # Compatible With
 
-AIOS is model-agnostic and is designed to work with modern AI coding assistants, including:
+AIOS is **model-agnostic** and is designed to work with modern AI coding assistants, including:
 
-| AI Assistant   | Status        |
-| -------------- | ------------- |
-| ChatGPT        | ✅ Tested     |
-| Codex          | ✅ Tested     |
-| Claude Code    | ✅ Compatible |
-| Cursor         | ✅ Compatible |
-| GitHub Copilot | ✅ Compatible |
-| Windsurf       | ✅ Compatible |
-| Continue.dev   | ✅ Compatible |
-| Roo Code       | ✅ Compatible |
+| AI Assistant | Status |
+|--------------|--------|
+| ChatGPT | Designed for |
+| Codex | Designed for |
+| Claude Code | Designed for |
+| Cursor | Designed for |
+| GitHub Copilot | Designed for |
+| Windsurf | Designed for |
+| Continue.dev | Designed for |
+| Roo Code | Designed for |
+
+“Designed for” means governance documents are written to be assistant-neutral.
+
+It does **not** claim automated certification of every tool on every release.
 
 ---
 
 # Quick Start
 
-# 5-Minute Quick Start
-
-Get AIOS running in less than five minutes.
-
 ## 1. Clone AIOS
 
 ```bash
 git clone https://github.com/fdeniz07/AIOS.git
+cd AIOS
 ```
 
----
+## 2. Adopt the Core framework
 
-## 2. Copy the Core Framework
+At minimum, copy or reference:
 
-Copy the AIOS framework into your repository.
+- `AGENTS.md`
+- `MANIFEST.md`
+- `PROJECT_STRUCTURE.md`
+- `rules/`
+- `methodology/`
 
-At minimum, include:
+Optional:
 
-- AGENTS.md
-- MANIFEST.md
-- PROJECT_STRUCTURE.md
-- agents/
-- rules/
-- workflows/
+- `prompts/discovery/`
+- `packs/education/` when building education-oriented repositories
 
----
+## 3. Open your consumer repository in your coding assistant
 
-## 3. Open Your Repository
-
-Open the repository in your preferred AI coding assistant.
-
----
-
-## 4. Initialize the AI
-
-Start with a simple instruction:
+## 4. Initialize the assistant
 
 ```text
-Read the entire repository.
-
-Follow AGENTS.md.
-
-Understand the project before making changes.
-
-Respect repository workflows.
-
-Wait for approval when required.
+Read AGENTS.md and MANIFEST.md.
+Follow AIOS operating rules.
+Understand the repository before making changes.
+Respect approval gates.
+Wait for confirmation when standards conflict.
 ```
+
+## 5. Sync rules into a consumer project (optional)
+
+From the AIOS repository:
+
+```bash
+python scripts/aiosctl.py sync --project /path/to/your/project
+```
+
+This copies `rules/*.md` into `<project>/.agents/` and writes `AIOS_VERSION.md`.
 
 ---
 
-## 5. Start Building
+# Tooling Notes (`aiosctl`)
 
-You're ready to collaborate with AI using repository-driven engineering.
+| Item | Current behavior |
+|------|------------------|
+| Implemented command | `sync` |
+| Source | `rules/*.md` |
+| Destination | `<project>/.agents/` |
+| Skip logic | Content hash (unless `--force`) |
+| Orphan cleanup | Not deleted automatically |
+| `aiosctl.yaml` | May list helper project names; **not read by the CLI today** |
+| Planned | `validate`, `doctor`, `init`, `version` |
 
-No lengthy prompt engineering required.
-
-The repository now provides the context.
-
-> **Tip**
->
-> AIOS works best when the repository contains clear documentation, consistent workflows, and project-specific rules.
+Compatibility with existing consumers depends on keeping the current sync paths and rule filenames stable.
 
 ---
 
 # Validation
 
-AIOS has already been successfully validated using real-world repositories.
+What exists today:
 
-Current validation includes:
+- Manual / convention-based validation by following `AGENTS.md` and methodologies
+- GitHub Actions CI that:
+  - writes a simple repository file-count report
+  - runs pytest for `lab/aios-demo-api`
 
-- ✅ Educational Python Repository
-- ✅ Notebook Generation
-- ✅ Repository Analysis
-- ✅ Workflow Execution
-- ✅ Approval Gates
-- ✅ Conflict Detection
-- ✅ Self Review
-- ✅ Repository Rule Enforcement
+What is **not** claimed:
 
-Future validation repositories will include:
+- A full automated AI behavior test framework
+- Certified conflict-detection middleware
+- Guaranteed enforcement inside third-party IDEs
 
-- Spring Boot
-- .NET
-- React
-- DevOps
-- Multi-Agent Projects
+Consumer learning repositories have been used to exercise AIOS conventions in practice; treat that as adoption experience, not as a formal conformance suite.
 
 ---
 
 # Roadmap
 
-## v1.0
+High-level direction (details in [`ROADMAP.md`](ROADMAP.md)):
 
-- AIOS Core
-- Documentation
-- Architecture
-- Workflow System
+0. Foundation and identity
+1. Framework contract
+2. CLI improvements
+3. Workflow and checklist system
+4. Skills and Knowledge
+5. Adaptive Project Intelligence
+6. Engineering modules
+7. Validation and automation
+8. Ecosystem and integrations
 
-## v1.1
-
-- Workflow Library
-- Checklist Library
-- Template Library
-
-## v2.0
-
-- Knowledge System
-- Skills Library
-- AI Test Framework
-- Community Extensions
+Phases are directional, not dated commitments.
 
 ---
 
 # Contributing
 
-Contributions are always welcome.
+Contributions are welcome — especially reusable workflows, skills, documentation and tests that preserve the framework contract.
 
-We especially appreciate contributions related to:
-
-- Engineering Workflows
-- Skills
-- Knowledge Libraries
-- Templates
-- Documentation
-- Testing
-
-Please open an Issue before introducing major architectural changes.
+Please read [`CONTRIBUTING.md`](CONTRIBUTING.md) and open an Issue before major architectural changes.
 
 ---
 
 # License
 
-Released under the MIT License.
+Released under the MIT License. See [`LICENSE`](LICENSE).
 
 ---
 
 # Vision
 
-AIOS is not another prompt collection.
+AIOS is not another prompt dump.
 
 It is not another AI wrapper.
 
 It is not another coding assistant.
 
-AIOS is an engineering framework that helps AI become a reliable long-term software development partner.
+AIOS is an engineering framework that helps AI become a reliable long-term software development partner — across stacks, teams and tools.
 
 ---
 

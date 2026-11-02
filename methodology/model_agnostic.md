@@ -4,7 +4,7 @@
 
 AIOS is designed to be independent of any specific Large Language Model (LLM).
 
-The same governance rules should produce consistent educational content regardless of the underlying AI model.
+The same governance rules should produce consistent engineering outcomes regardless of the underlying AI model.
 
 This principle ensures that repositories built with AIOS remain portable across different AI platforms.
 
@@ -19,9 +19,9 @@ The selected AI model performs the implementation.
 Changing the AI model must not change:
 
 - repository structure
-- educational quality
+- engineering quality expectations
 - documentation standards
-- writing style
+- writing and review discipline
 - AIOS compliance
 
 The AI model is an implementation detail.
@@ -74,9 +74,9 @@ Additional models can be adopted without modifying AIOS governance documents.
 Regardless of the selected model, AI assistants are expected to:
 
 - follow all AIOS governance documents;
-- respect the active operating mode;
+- respect the active operating mode or task scope;
 - preserve repository architecture;
-- preserve educational intent;
+- preserve the repository's stated intent and quality bar;
 - avoid inventing undocumented conventions.
 
 ---
@@ -86,12 +86,12 @@ Regardless of the selected model, AI assistants are expected to:
 AIOS is responsible for defining:
 
 - governance
-- editorial standards
+- engineering standards
 - repository conventions
-- educational standards
-- lifecycle rules
+- documentation expectations
+- lifecycle vocabulary where used
 - decision policies
-- operating modes
+- operating guidance for agents
 
 AIOS deliberately avoids model-specific behaviour.
 

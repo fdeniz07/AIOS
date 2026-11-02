@@ -1,6 +1,21 @@
+# aiosctl.yaml
+#
+# Status: helper / reserved configuration
+#
+# IMPORTANT:
+#   The current CLI (scripts/aiosctl.py) does NOT read this file.
+#   `aiosctl sync` selects the target project only via:
+#
+#       python scripts/aiosctl.py sync --project <path>
+#
+#   Sync contract (do not break without a migration plan):
+#       source:      rules/*.md
+#       destination: <project>/.agents/
+#       also writes: <project>/.agents/AIOS_VERSION.md
+#
+# The project list below is documentary / future-config only.
+
 workspace: ..
 
 projects:
   - name: GitHub-DevOps-Learning-Path
-
-
