@@ -8,13 +8,13 @@ License: MIT
 Currently supported:
 
     aiosctl.py sync
+    aiosctl.py version
 
 Future:
 
     aiosctl.py validate
     aiosctl.py doctor
     aiosctl.py init
-    aiosctl.py version
 """
 
 from __future__ import annotations
@@ -22,10 +22,11 @@ from __future__ import annotations
 import argparse
 import hashlib
 import logging
+import sys
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 
 # ----------------------------------------------------
@@ -37,6 +38,8 @@ AIOS_RULE_DIR = "rules"
 TARGET_RULE_DIR = ".agents"
 
 VERSION_FILE = "AIOS_VERSION.md"
+FRAMEWORK_VERSION_FILENAME = "VERSION"
+UNSPECIFIED_VERSION = "unspecified"
 
 GENERATED_HEADER = """\
 # ======================================================
@@ -119,6 +122,48 @@ def discover_aios_root() -> Path:
         )
 
     return root
+
+
+def locate_repository_root() -> Optional[Path]:
+    """
+    Locate the AIOS repository root (parent of scripts/).
+
+    Unlike discover_aios_root(), this does not require rules/ to exist.
+    Returns None only if the resolved path is unavailable.
+    """
+    root = Path(__file__).resolve().parent.parent
+    if not root.exists():
+        return None
+    return root
+
+
+def read_framework_version(root: Optional[Path] = None) -> str:
+    """
+    Read the framework version exclusively from the root VERSION file.
+
+    Missing, empty, or unreadable VERSION yields 'unspecified'.
+    Does not consult CHANGELOG, git tags, or document Version: fields.
+    """
+    if root is None:
+        root = locate_repository_root()
+
+    if root is None:
+        return UNSPECIFIED_VERSION
+
+    version_path = root / FRAMEWORK_VERSION_FILENAME
+
+    if not version_path.is_file():
+        return UNSPECIFIED_VERSION
+
+    try:
+        text = version_path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return UNSPECIFIED_VERSION
+
+    if not text:
+        return UNSPECIFIED_VERSION
+
+    return text.splitlines()[0].strip() or UNSPECIFIED_VERSION
 
 
 # ----------------------------------------------------
@@ -341,12 +386,41 @@ def create_parser() -> argparse.ArgumentParser:
         help="Show changes without writing files."
     )
 
+    # --------------------------------------------
+    # version
+    # --------------------------------------------
+
+    subparsers.add_parser(
+        "version",
+        help="Show AIOS framework version information."
+    )
+
     return parser
 
 
 # ----------------------------------------------------
 # Commands
 # ----------------------------------------------------
+
+def command_version(_args=None) -> None:
+    """
+    Print framework version information (read-only).
+    """
+    root = locate_repository_root()
+    version = read_framework_version(root)
+    python_version = (
+        f"{sys.version_info.major}."
+        f"{sys.version_info.minor}."
+        f"{sys.version_info.micro}"
+    )
+    repository = str(root) if root is not None else "(unavailable)"
+
+    log.info("AIOS")
+    log.info(f"  Framework Version : {version}")
+    log.info("  CLI               : Integrated")
+    log.info(f"  Python            : {python_version}")
+    log.info(f"  Repository        : {repository}")
+
 
 def command_sync(args):
 
@@ -392,8 +466,12 @@ def main() -> int:
     try:
         if args.command == "sync":
             command_sync(args)
-        else:
-            parser.print_help()
+            return 0
+        if args.command == "version":
+            command_version(args)
+            return 0
+
+        parser.print_help()
         return 0
 
     except KeyboardInterrupt:
