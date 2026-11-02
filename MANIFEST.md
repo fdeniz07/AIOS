@@ -1,6 +1,6 @@
 # AIOS Manifest
 
-Version: 1.1.0
+Version: 1.2.0
 
 Status: Active
 
@@ -16,7 +16,52 @@ It turns AI coding assistants into repository-aware engineering partners by plac
 
 > **AIOS provides the framework, not the content.**
 
+Slogan: *Engineer the workspace, not the prompt.*
+
 Consumer repositories own their domain knowledge, product roadmaps, ADRs, backlogs and curricula.
+
+---
+
+## Framework Contract and AGENTS.md
+
+| Document | Role |
+|----------|------|
+| [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) | **Authoritative architectural meta-document** — boundaries, ownership, consumption, sync compatibility, precedence |
+| [`AGENTS.md`](AGENTS.md) | **Operating manual** that operationalizes the contract for AI agents |
+
+These are not competing hierarchy levels. If they appear inconsistent, report the issue; do not invent a new hierarchy.
+
+Canonical instruction precedence (**L0–L7**): Framework Contract §7; operational detail in `AGENTS.md` §2.
+
+---
+
+## Architectural Boundaries
+
+| Layer | Meaning |
+|-------|---------|
+| **Core** | Common engineering foundation and cross-domain principles |
+| **Module** | Reusable engineering capability (planned packages; adaptive recommendations as approved design) |
+| **Pack** | Optional domain- or use-case-specific extension (for example Education) |
+| **Consumer** | Product repository — owns ADRs, backlog, implementation and local policy |
+
+Relationship rules:
+
+- A Pack may use one or more Modules.
+- A Module must not be tied to one Pack unless explicitly justified.
+- Core remains usable without Packs or Modules.
+- Modules are **recommendations** unless the consumer adopts them as local policy.
+
+### Binding versus recommendation
+
+| Kind | Authority |
+|------|-----------|
+| Binding AIOS Core guidance | L4 — subject to L0–L3 |
+| Adopted Pack guidance | L5 — only when explicitly adopted and in scope |
+| Module / methodology recommendations | L6 — recommendations by default |
+| Consumer ADRs / product decisions | L2 — override generic AIOS defaults |
+| Consumer local policies | L3 — consumer-owned |
+
+Non-overridable safety, legal, security, privacy, licensing and compliance constraints remain **L0**.
 
 ---
 
@@ -24,7 +69,7 @@ Consumer repositories own their domain knowledge, product roadmaps, ADRs, backlo
 
 ### In scope
 
-- Generic agent operating guidance (`AGENTS.md`)
+- Framework Contract and generic agent operating guidance
 - Governance rules intended for reuse across projects
 - Engineering methodologies (RDIV, Architecture First, and related)
 - Reusable discovery / review prompts
@@ -36,8 +81,9 @@ Consumer repositories own their domain knowledge, product roadmaps, ADRs, backlo
 ### Out of scope (for AIOS Core)
 
 - Consumer-project roadmaps, sprint backlogs and product ADRs
-- Domain curricula and lesson content
+- Domain curricula and lesson content as Core identity
 - Claiming unimplemented automation as shipped engines
+- Autonomous module-selection or decision engines
 - Lock-in to a single LLM, IDE or language stack
 
 ---
@@ -59,8 +105,21 @@ Consumer repositories own their domain knowledge, product roadmaps, ADRs, backlo
 4. **Model-agnostic governance** — rules outlive any single model
 5. **Human-in-the-loop** — conflicts disclosed; approvals respected
 6. **Minimal change** — preserve useful work; avoid rewrites
-7. **Adaptive to project context** — ceremony scales with repository reality
-8. **Framework ≠ content** — Core stays reusable; packs and consumers carry domain material
+7. **Adaptive to project context** — recommend proportionally; do not impose
+8. **Consumer authority** — approved consumer ADRs/product decisions prevail over generic AIOS defaults (within L0)
+9. **Framework ≠ content** — Core stays reusable; packs and consumers carry domain material
+
+---
+
+## Consumption Models
+
+| Model | Meaning |
+|-------|---------|
+| **Reference-only** | Reference AIOS without copying AIOS-managed files |
+| **Synced** | Copy AIOS-managed artifacts under the sync contract |
+| **Hybrid** | Combination of the two — not a separate runtime |
+
+See Framework Contract §8–§9.
 
 ---
 
@@ -70,8 +129,9 @@ Consumer repositories own their domain knowledge, product roadmaps, ADRs, backlo
 
 | Capability | Location |
 |------------|----------|
-| Generic agent operating manual | `AGENTS.md` |
-| Product contract / navigation | `MANIFEST.md`, `PROJECT_STRUCTURE.md`, `README.md` |
+| Framework Contract | `docs/FRAMEWORK_CONTRACT.md` |
+| Agent operating manual (L0–L7) | `AGENTS.md` |
+| Product / structure navigation | `MANIFEST.md`, `PROJECT_STRUCTURE.md`, `README.md` |
 | Governance rule set (syncable) | `rules/` |
 | Engineering methodologies | `methodology/` |
 | Discovery prompt pack (partial bodies) | `prompts/discovery/` |
@@ -88,16 +148,19 @@ Consumer repositories own their domain knowledge, product roadmaps, ADRs, backlo
 | Templates / checklists | Directories exist; several files empty |
 | CI | Repository report + demo API tests; not a full framework validator |
 | Visual / branding assets | Present under `assets/` |
+| Optional packs | Education pack partial; migration of education `rules/` still gated |
 
 ### Planned
 
-See `ROADMAP.md` for phased evolution (CLI, workflows, skills, knowledge, modules, validation, integrations).
+See `ROADMAP.md` for phased evolution (CLI, workflows, skills, knowledge, populated modules, validation, integrations).
+
+Adaptive module **selection as automated tooling** is not implemented. Adaptive **recommendation** is an approved design principle.
 
 ---
 
 ## Planned Engineering Domains
 
-Reusable engineering knowledge is intentional product scope. Planned module / skill domains include:
+Intended Module domains (packages not populated yet):
 
 - Architecture Engineering
 - Development Engineering
@@ -107,7 +170,7 @@ Reusable engineering knowledge is intentional product scope. Planned module / sk
 - Data Engineering
 - Documentation & Governance
 
-These domains should land as reusable skills, workflows and knowledge — not as consumer-specific project content.
+These should land as reusable Module assets — not as consumer-specific project content.
 
 ---
 
@@ -117,7 +180,7 @@ These domains should land as reusable skills, workflows and knowledge — not as
 |------|--------|---------|
 | `packs/education/` | Partial | Education-oriented agent guidance and (later) related rules/prompts |
 
-Education-specific rules under `rules/` remain in place for **consumer sync compatibility** and are not migrated in Phase 0.
+Education-specific rules under `rules/` remain for **sync compatibility** until an approved migration. Pack guidance is binding only when adopted (L5).
 
 ---
 
@@ -125,16 +188,19 @@ Education-specific rules under `rules/` remain in place for **consumer sync comp
 
 | Belongs in AIOS | Belongs in the consumer repository |
 |-----------------|------------------------------------|
-| Generic AGENTS / rules / methodologies | Product roadmap and backlog |
-| Reusable prompts and skills | Project ADRs and decision logs |
+| Framework Contract, generic AGENTS, Core rules, methodologies | Product roadmap and backlog |
+| Reusable prompts, planned skills/modules | Project ADRs and decision logs |
 | Sync tooling and adoption docs | Domain code and curricula |
-| Optional packs | Environment secrets and deployment config |
+| Optional packs (source) | Environment secrets and deployment config; whether to adopt a Pack |
+
+AIOS must not silently overwrite consumer-owned decisions or artifacts.
 
 ### Sync contract (compatibility-critical)
 
 `aiosctl sync` currently copies `rules/*.md` into `<project>/.agents/` and writes `AIOS_VERSION.md`.
 
 - Source glob and destination path are part of the compatibility surface
+- Synced files are AIOS-derived; they are not consumer ADRs
 - `aiosctl.yaml` may list helper project hints but is **not read by the CLI today**
 - Sync is selected with `--project`
 - Orphan destination files are not deleted automatically
@@ -148,8 +214,9 @@ Do not break this contract without a versioned migration plan for consumers.
 | Start here | Why |
 |------------|-----|
 | `README.md` | Overview, status, quick start |
-| `AGENTS.md` | How AI agents must operate |
-| `MANIFEST.md` | This product contract |
+| `docs/FRAMEWORK_CONTRACT.md` | Authoritative framework contract and precedence |
+| `AGENTS.md` | How AI agents must operate (L0–L7) |
+| `MANIFEST.md` | This product manifest |
 | `PROJECT_STRUCTURE.md` | Actual tree and directory status |
 | `ROADMAP.md` | Framework evolution phases |
 | `methodology/README.md` | Method index |
@@ -161,6 +228,10 @@ Do not break this contract without a versioned migration plan for consumers.
 
 ## Versioning Note
 
-Framework documentation versions (for example AGENTS / Manifest `1.1.0`) describe document maturity.
+Distinguish conceptually:
 
-Git tags such as `v1.0.0` record repository releases and may lag or lead individual document versions. Prefer `ROADMAP.md` and this manifest over badge text when judging capability status.
+- **AIOS Framework Version** — distribution / Core contract surface (git tags + doc versions today)
+- **Module / Pack Version** — proposed for future populated packages
+- **Consumer Integration Version** — partial today via sync `AIOS_VERSION.md` (timestamp + source path)
+
+Document versions (for example Manifest `1.2.0`) describe document maturity and may differ from git tags. Prefer `ROADMAP.md`, this manifest and the Framework Contract over badge text when judging capability status.

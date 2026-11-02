@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Version: 1.1.0
+Version: 1.2.0
 
 Status: Stable
 
@@ -18,13 +18,15 @@ It is not a prompt for a single conversation.
 
 It is not project-domain content.
 
-Every AI agent must follow these rules unless the user explicitly overrides them after conflict disclosure.
+It **operationalizes** the approved framework contract in `docs/FRAMEWORK_CONTRACT.md` for day-to-day agent behavior. It does not compete with that contract as a separate authority layer.
+
+Every AI agent must follow the instruction precedence in Section 2. Explicit user instructions may steer the current task within L0 boundaries; they do not silently amend durable consumer decisions.
 
 Education-specific operating instructions previously kept in this file are preserved at:
 
 `packs/education/AGENTS.education.md`
 
-Use that document only when working on an education pack or an education-oriented consumer repository that adopts it.
+Use that document only when working on an education pack or an education-oriented consumer repository that adopts it. Pack guidance is binding only within its explicitly adopted scope (L5).
 
 ---
 
@@ -75,22 +77,106 @@ Explain at the level the repository and the user require. Prefer clarity over cl
 
 ---
 
-# 2. Instruction Priority
+# 2. Instruction Precedence
 
-If instructions conflict, apply this order:
+## Framework Contract relationship
 
-1. **Explicit user instructions**, after conflict detection and confirmation when they override repository standards
-2. **This file** (`AGENTS.md`)
-3. **`rules/PROJECT_RULES.md`** and other active files under `rules/`
-4. **`methodology/`** documents (RDIV, Architecture First, AI Collaboration, Model-Agnostic AI, and related)
-5. **Consumer-repository documents** (local README, ADRs, style guides, project rules)
-6. **Optional packs** adopted by the consumer (for example education packs)
-7. **AIOS `README.md` / `MANIFEST.md` / `ROADMAP.md`** for framework intent
-8. External general knowledge
+- `docs/FRAMEWORK_CONTRACT.md` is the **authoritative architectural meta-document**. It defines AIOS boundaries, consumption models, ownership and the precedence model.
+- This file (`AGENTS.md`) **operationalizes** that contract for agents. It is not a competing hierarchy level above or beside the contract.
+- If this manual and the Framework Contract appear inconsistent, **do not invent a new hierarchy**. Report the inconsistency and request clarification or correction.
+
+Canonical hierarchy: Framework Contract §7, as operationalized below (L0–L7).
+
+## L0–L7 hierarchy
+
+Higher applicable levels take precedence over lower ones.
+
+### L0 – Non-overridable constraints
+
+Applicable **safety, legal, security, privacy, licensing and compliance** obligations.
+
+These cannot be overridden by user instructions, consumer ADRs, local policies, AIOS Core, Packs, Modules or external knowledge.
+
+Do **not** classify ordinary technical preferences or architectural recommendations as L0.
+
+### L1 – Explicit user instructions
+
+Explicit instructions from the user for the **current task**.
+
+They are binding within L0 boundaries.
+
+If a user instruction conflicts with an existing consumer ADR or durable consumer policy:
+
+- Disclose the conflict.
+- Do not silently rewrite the durable decision.
+- Obtain explicit confirmation from the authorized consumer owner before changing the durable decision.
+- Record durable changes in the appropriate consumer-owned artifact.
+
+### L2 – Consumer-approved ADRs and product decisions
+
+Explicitly approved consumer-specific architecture decisions and product decisions.
+
+These take precedence over generic AIOS defaults.
+
+Respect consumer ownership. Do not silently replace these decisions.
+
+### L3 – Consumer local policies
+
+Consumer-owned project instructions, repository policies and local engineering standards.
+
+Binding within their scope, subject to L0 and applicable L2 decisions.
+
+### L4 – AIOS Core binding defaults
+
+Applicable AIOS Core **operating and governance** defaults that are binding by default in an AIOS adoption context — including this manual and Core governance rules under `rules/` as adopted (for example instruction precedence, human approval, consumer-ownership boundaries, sync safety and compatibility).
+
+These apply in the AIOS adoption context but **must not override L0–L3**.
+
+The presence of a methodology, engineering pattern or architectural approach in Core documentation (including under `methodology/`) does **not** automatically make it an L4 binding rule. See L6.
+
+### L5 – Adopted Pack guidance
+
+Domain- or use-case-specific guidance (for example `packs/education/`).
+
+A Pack is binding **only** within its explicitly adopted scope. It cannot override L0–L4.
+
+### L6 – Module and methodology recommendations
+
+Adaptive Module recommendations, skills, workflows, engineering patterns, architectural approaches and methodology guidance offered as advice.
+
+**Recommendations by default**, not mandatory instructions. Inclusion in AIOS Core documentation does **not** elevate them to L4.
+
+Examples (non-exhaustive): RDIV and other Core methods under `methodology/`, DDD, Clean Architecture, CQRS, event-driven architecture, microservices, testing strategies and similar engineering methodologies.
+
+If a consumer **explicitly adopts** a Module or methodology recommendation as a local policy, the resulting consumer-owned policy belongs to **L3** within the scope of that adoption. Do not assume or silently perform that adoption.
+
+### L7 – External knowledge
+
+External documentation, articles, examples and general knowledge.
+
+Non-binding reference sources only.
+
+## Conflict-resolution rules
+
+1. Higher-level applicable constraints take precedence over lower-level instructions.
+2. L0 constraints cannot be overridden.
+3. Explicit user instructions govern the current task within L0 boundaries, but do not silently amend durable consumer decisions.
+4. Consumer-approved ADRs and product decisions take precedence over generic AIOS defaults.
+5. More specific or newer same-level decisions win only when the newer decision explicitly supersedes the older one or the relationship is otherwise unambiguous.
+6. If same-level binding instructions conflict and no clear supersession exists, stop and ask the authorized decision owner.
+7. Recommendations never silently override binding instructions.
+8. AIOS-synced files in a consumer repository (for example under `.agents/`) remain AIOS-derived artifacts. Sync does not give AIOS ownership of consumer ADRs or product decisions.
+9. **Document precedence** (this section) and **decision-quality priorities** (Section 7) are separate concepts. Quality rankings do not rewrite L0–L7 authority.
+
+## Binding versus recommendation
+
+| Kind | Levels (typical) | Behavior |
+|------|------------------|----------|
+| Binding | L0–L5 (within scope) | Must follow when applicable |
+| Recommendation | L6 (and adaptive Module suggestions) | Explain; do not impose; owner decides |
+| Reference | L7 | Informational only |
 
 Never invent a competing hierarchy.
-
-If two AIOS documents appear to conflict, prefer the higher item in this list, report the conflict, and ask when the impact is significant.
 
 ---
 
@@ -142,8 +228,10 @@ When working inside the AIOS framework repository:
 
 When working inside a consumer repository:
 
-- treat that repository's docs and conventions as local truth
-- use AIOS as governance and method, not as a reason to ignore local context
+- treat approved consumer ADRs and product decisions as **L2**
+- treat consumer local policies as **L3**
+- use AIOS Core operating/governance defaults as **L4** — not a reason to override L2/L3
+- treat Core methodologies and Module guidance as **L6** recommendations unless the consumer explicitly adopts them (**L3**); recommend Packs only when adopted (**L5**); do not impose them
 
 ---
 
@@ -238,20 +326,22 @@ New task
         No  → Plan, then implement
 ```
 
-## Decision priorities
+## Decision-quality priorities (not document authority)
 
-When multiple options are valid, prefer this order:
+When multiple options remain valid **after** applying Section 2 (L0–L7), prefer this quality order:
 
-1. Correctness and safety
-2. Explicit user intent
-3. AIOS / repository compliance
+1. Correctness and safety (within L0; safety/legal/security constraints already win as authority)
+2. Fit to explicit user intent for the current task (L1)
+3. Fit to applicable consumer decisions and local policy (L2–L3), then AIOS Core defaults (L4)
 4. Consistency with existing architecture
 5. Maintainability
 6. Clarity and readability
 7. Simplicity
 8. Performance (only when relevant)
 
-Do not sacrifice a higher priority for a lower one.
+Do not sacrifice a higher quality priority for a lower one.
+
+This list does **not** replace document precedence. It ranks engineering options once authority is settled.
 
 ## Adaptive to context
 
@@ -261,22 +351,27 @@ Adjust depth and ceremony to the repository:
 - greenfield work still requires explicit structure
 - legacy systems require extra care around compatibility
 
+Identify and recommend relevant Modules or Packs with rationale (**L6** / adopted **L5**).
+
 AI recommends. The human decides.
 
 ---
 
 # 8. Human Approval Gates
 
-Detect conflicts between a user request and repository or AIOS standards.
+Detect conflicts between a user request and repository standards, consumer ADRs/policies, or AIOS defaults.
 
-Before overriding standards:
+Before overriding ordinary standards (not L0):
 
-1. Name the conflicting rule or convention
+1. Name the conflicting rule, ADR or convention
 2. Explain consequences
-3. Ask for explicit confirmation
+3. Ask for explicit confirmation from the authorized owner when a durable consumer decision would change
 4. Proceed only after confirmation
+5. Record durable consumer changes in the appropriate consumer-owned artifact
 
-Never silently violate repository standards.
+Never silently violate repository standards or rewrite durable consumer decisions.
+
+L0 constraints cannot be approved away.
 
 ### Operations that require explicit approval
 
@@ -286,6 +381,7 @@ Never silently violate repository standards.
 - Changes that break public contracts or data
 - Introducing new top-level architecture conventions
 - Any action that may destroy irreversible work
+- Changing or superseding an approved consumer ADR or durable product decision
 
 When in doubt, ask.
 
@@ -385,6 +481,8 @@ Current implemented behavior:
 
 Do not change sync paths or rule filenames casually; consumer repositories may depend on them.
 
+Synced `.agents/` files are AIOS-derived (**L4** source material in the consumer tree). Sync does **not** transfer ownership of consumer ADRs or product decisions (**L2**).
+
 ## `aiosctl.yaml`
 
 Present as a reserved / helper configuration file.
@@ -399,13 +497,14 @@ Project selection for sync is provided via `--project`.
 
 | Document | Role |
 |----------|------|
+| `docs/FRAMEWORK_CONTRACT.md` | Authoritative framework contract and precedence meta-document |
 | `MANIFEST.md` | Product scope and navigation |
 | `PROJECT_STRUCTURE.md` | Actual repository layout and status |
 | `README.md` | Overview and quick start |
 | `ROADMAP.md` | Framework evolution phases |
-| `methodology/` | Engineering methods |
-| `rules/` | Syncable governance rules |
-| `packs/education/` | Optional education pack content |
+| `methodology/` | Engineering methods (often L6 unless adopted as binding policy) |
+| `rules/` | Syncable governance rules (Core defaults / L4 in adoption context) |
+| `packs/education/` | Optional education pack content (L5 when adopted) |
 
 ---
 
@@ -413,9 +512,10 @@ Project selection for sync is provided via `--project`.
 
 1. Understand the repository before changing it.
 2. Prefer minimal, reversible improvements.
-3. Protect consistency and safety.
-4. Disclose conflicts; obtain approval when needed.
-5. Provide the framework — do not impose unrelated domain content.
+3. Protect consistency, safety and non-overridable constraints (L0).
+4. Respect consumer ADRs and policies (L2–L3) over generic AIOS defaults (L4).
+5. Disclose conflicts; obtain approval when needed; never silently overwrite durable decisions.
+6. Recommend adaptively; do not impose Modules or unrelated domain content.
 
 ---
 

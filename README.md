@@ -43,6 +43,8 @@ Instead of relying only on chat prompts, AIOS keeps durable engineering context 
 - Philosophy
 - Architecture
 - Repository Structure
+- Governance and Ownership
+- How to Consume AIOS
 - Capability Status
 - Core Components
 - AIOS Workflow
@@ -107,7 +109,11 @@ Before rushing to code, assistants are expected to:
 
 Detailed layout and directory status: [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md)
 
-Product contract: [`MANIFEST.md`](MANIFEST.md)
+Product manifest: [`MANIFEST.md`](MANIFEST.md)
+
+Authoritative framework contract: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md)
+
+Agent operating manual (operationalizes the contract): [`AGENTS.md`](AGENTS.md)
 
 ---
 
@@ -115,27 +121,71 @@ Product contract: [`MANIFEST.md`](MANIFEST.md)
 
 ```text
 AIOS/
-├── AGENTS.md              # Generic operating manual for AI agents
-├── MANIFEST.md            # Product scope and navigation
-├── PROJECT_STRUCTURE.md   # Actual tree + status labels
-├── ROADMAP.md             # Framework evolution phases
-├── rules/                 # Syncable governance rules (aiosctl source)
-├── methodology/           # RDIV, Architecture First, …
-├── prompts/               # Reusable prompts (discovery active; others partial)
-├── packs/education/       # Optional education pack (preserved AGENTS)
-├── templates/             # Placeholders for reusable templates
-├── checklists/            # Partial quality checklists
-├── scripts/aiosctl.py     # Rule sync CLI
-├── assets/                # Branding and diagrams
-├── lab/aios-demo-api/     # Demo app for CI smoke tests
-├── knowledge/             # Planned
-├── skills/                # Planned
-├── workflows/             # Planned
-├── tests/                 # Planned (framework tests)
-└── examples/              # Planned adoption examples
+├── AGENTS.md                    # Agent operating manual (operationalizes the contract)
+├── MANIFEST.md                  # Product scope and navigation
+├── PROJECT_STRUCTURE.md         # Actual tree + status labels
+├── ROADMAP.md                   # Framework evolution phases
+├── docs/FRAMEWORK_CONTRACT.md   # Authoritative architectural contract
+├── rules/                       # Syncable governance rules (aiosctl source)
+├── methodology/                 # RDIV, Architecture First, …
+├── prompts/                     # Reusable prompts (discovery active; others partial)
+├── packs/education/             # Optional education pack (partial)
+├── templates/                   # Placeholders for reusable templates
+├── checklists/                  # Partial quality checklists
+├── scripts/aiosctl.py           # Rule sync CLI
+├── assets/                      # Branding and diagrams
+├── lab/aios-demo-api/           # Demo app for CI smoke tests
+├── knowledge/                   # Planned
+├── skills/                      # Planned
+├── workflows/                   # Planned
+├── tests/                       # Planned (framework tests)
+└── examples/                    # Planned adoption examples
 ```
 
 Empty directories are **planned or reserved**, not shipped engines.
+
+---
+
+# Governance and Ownership
+
+[`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) is the **authoritative architectural meta-document** for AIOS boundaries, consumption models, ownership and instruction precedence.
+
+[`AGENTS.md`](AGENTS.md) **operationalizes** that contract for AI coding agents. It is not a competing authority layer.
+
+### Consumer ownership
+
+- Consumer-approved ADRs and product decisions take precedence over generic AIOS defaults.
+- Consumer local policies remain consumer-owned.
+- AIOS must not silently overwrite consumer decisions or artifacts.
+- Applicable safety, legal, security, privacy, licensing and compliance constraints remain non-overridable.
+
+### Instruction precedence (summary)
+
+AIOS uses a canonical **L0–L7** precedence model (non-overridable constraints → user task instructions → consumer ADRs → consumer local policies → AIOS Core → adopted Packs → Module/methodology recommendations → external knowledge).
+
+Full definition: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §7 and [`AGENTS.md`](AGENTS.md) §2.
+
+### Adaptive module recommendations
+
+AIOS is designed to analyze project context and **recommend** relevant engineering Modules.
+
+- The project owner retains decision authority.
+- Modules are recommendations unless explicitly adopted as consumer local policy.
+- This repository does **not** ship an autonomous module-selection engine today.
+
+---
+
+# How to Consume AIOS
+
+| Model | Meaning |
+|-------|---------|
+| **Reference-only** | Read AIOS guidance in place; do not copy AIOS-managed files into the consumer |
+| **Synced** | Copy AIOS-managed artifacts under the sync contract (`rules/*.md` → `.agents/` today) |
+| **Hybrid** | Combination of reference-only and synced — not a separate runtime |
+
+Synced `.agents/` files are AIOS-derived guidance. Sync does not make AIOS the owner of consumer ADRs or product decisions.
+
+Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 
 ---
 
@@ -143,7 +193,8 @@ Empty directories are **planned or reserved**, not shipped engines.
 
 ### Available now
 
-- Generic `AGENTS.md` operating manual
+- Framework Contract: `docs/FRAMEWORK_CONTRACT.md`
+- Generic `AGENTS.md` operating manual (L0–L7 operationalized)
 - Governance rules under `rules/`
 - Engineering methodologies under `methodology/`
 - Discovery prompt skeletons under `prompts/discovery/`
@@ -176,13 +227,15 @@ See [`ROADMAP.md`](ROADMAP.md) for phased direction.
 
 | Component | Purpose | Status |
 |-----------|---------|--------|
-| **AGENTS.md** | How AI agents must operate | Available |
-| **MANIFEST.md** | Product contract and navigation | Available |
+| **docs/FRAMEWORK_CONTRACT.md** | Authoritative framework contract | Available |
+| **AGENTS.md** | Agent operating manual (operationalizes the contract) | Available |
+| **MANIFEST.md** | Product scope and navigation | Available |
 | **PROJECT_STRUCTURE.md** | Real layout + status | Available |
-| **rules/** | Syncable governance | Available |
+| **rules/** | Syncable Core governance guidance | Available |
 | **methodology/** | RDIV and related methods | Available |
 | **prompts/** | Reusable prompt assets | Partial |
-| **packs/** | Optional domain packs | Partial |
+| **packs/** | Optional domain packs (adopted = L5) | Partial |
+| **Modules** | Reusable engineering capabilities | Planned (adaptive recommendations approved as design) |
 | **workflows/** | End-to-end flows | Planned |
 | **skills/** | Reusable engineering skills | Planned |
 | **knowledge/** | Shared reference knowledge | Planned |
@@ -226,7 +279,9 @@ Before implementing, agents should evaluate:
 
 If a conflict exists, the agent should stop and request human approval instead of making unsafe assumptions.
 
-Decision priorities and gates are defined in `AGENTS.md` and `rules/DECISION_RULES.md`.
+- **Instruction precedence (what is authoritative):** [`AGENTS.md`](AGENTS.md) §2 / Framework Contract §7
+- **Decision quality (which valid option is better):** [`rules/DECISION_RULES.md`](rules/DECISION_RULES.md)
+- **Agent modes (behavior profiles, not document authority):** [`rules/AGENT_RULES.md`](rules/AGENT_RULES.md)
 
 There is no separate automated “decision engine” binary in this repository today.
 
@@ -257,7 +312,8 @@ There is no separate automated “decision engine” binary in this repository t
 - Model-Agnostic AI
 - Explicit Governance
 - Human-in-the-Loop Decisions
-- Adaptive to Project Context
+- Adaptive to Project Context (recommend; do not impose)
+- Consumer Ownership of ADRs and Product Decisions
 - Framework, Not Content
 
 ---
@@ -296,6 +352,7 @@ cd AIOS
 
 At minimum, copy or reference:
 
+- `docs/FRAMEWORK_CONTRACT.md`
 - `AGENTS.md`
 - `MANIFEST.md`
 - `PROJECT_STRUCTURE.md`
@@ -305,18 +362,19 @@ At minimum, copy or reference:
 Optional:
 
 - `prompts/discovery/`
-- `packs/education/` when building education-oriented repositories
+- `packs/education/` when building education-oriented repositories (Pack guidance applies only when adopted)
 
 ## 3. Open your consumer repository in your coding assistant
 
 ## 4. Initialize the assistant
 
 ```text
-Read AGENTS.md and MANIFEST.md.
-Follow AIOS operating rules.
+Read docs/FRAMEWORK_CONTRACT.md and AGENTS.md.
+Respect consumer ADRs and local policies over generic AIOS defaults.
+Follow L0–L7 instruction precedence.
 Understand the repository before making changes.
-Respect approval gates.
-Wait for confirmation when standards conflict.
+Recommend Modules adaptively; do not impose them.
+Wait for confirmation when standards or durable decisions conflict.
 ```
 
 ## 5. Sync rules into a consumer project (optional)
