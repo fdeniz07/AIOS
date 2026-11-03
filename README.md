@@ -115,6 +115,21 @@ Authoritative framework contract: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_
 
 Agent operating manual (operationalizes the contract): [`AGENTS.md`](AGENTS.md)
 
+### Adaptive Project Intelligence (Phase 6 — completed design)
+
+Phase 6 delivers a **conceptual and documentation foundation** for how agents assess project/task context, scale process depth, recommend guidance, and respect existing governance. It does **not** ship an adaptive runtime, recommendation engine, registry, resolver, scoring system, or automation.
+
+| Document | Role |
+|----------|------|
+| [`docs/ADAPTIVE_PROJECT_CONTEXT.md`](docs/ADAPTIVE_PROJECT_CONTEXT.md) | Project Context and Task Context models |
+| [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) | Process Depth (intensity) classification |
+| [`docs/ADAPTIVE_GUIDANCE_MODEL.md`](docs/ADAPTIVE_GUIDANCE_MODEL.md) | Guidance types, relevance, and lifecycle |
+| [`docs/ADAPTIVE_GOVERNANCE_MODEL.md`](docs/ADAPTIVE_GOVERNANCE_MODEL.md) | Interactions with precedence and human approval |
+| [`docs/ADAPTIVE_REFERENCE_SCENARIOS.md`](docs/ADAPTIVE_REFERENCE_SCENARIOS.md) | Integrated illustrative validation scenarios |
+| [`docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md) | Documentation-level audit record (**PASS WITH FINDINGS**; not runtime verification) |
+
+Phased status: [`ROADMAP.md`](ROADMAP.md) Phase 6.
+
 ---
 
 ## Repository Structure
@@ -126,6 +141,7 @@ AIOS/
 ├── PROJECT_STRUCTURE.md         # Actual tree + status labels
 ├── ROADMAP.md                   # Framework evolution phases
 ├── docs/FRAMEWORK_CONTRACT.md   # Authoritative architectural contract
+├── docs/ADAPTIVE_*.md           # Phase 6 Adaptive Project Intelligence design docs
 ├── rules/                       # Syncable governance rules (aiosctl source)
 ├── methodology/                 # RDIV, Architecture First, …
 ├── prompts/                     # Reusable prompts (discovery active; others partial)
@@ -171,7 +187,8 @@ AIOS is designed to analyze project context and **recommend** relevant engineeri
 
 - The project owner retains decision authority.
 - Modules are recommendations unless explicitly adopted as consumer local policy.
-- This repository does **not** ship an autonomous module-selection engine today.
+- Phase 6 documents the Adaptive Project Intelligence **design** (context, process depth, guidance, governance, scenarios, documentation audit).
+- This repository does **not** ship an autonomous module-selection or adaptive recommendation **engine** today.
 
 ---
 
@@ -202,6 +219,13 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 - `aiosctl sync` for copying `rules/*.md` → consumer `.agents/`
 - OSS docs: license, contributing, security, code of conduct
 - Optional preserved education manual: `packs/education/AGENTS.education.md`
+- Adaptive Project Intelligence **design documentation** (Phase 6 completed):
+  - `docs/ADAPTIVE_PROJECT_CONTEXT.md`
+  - `docs/PROCESS_DEPTH_MODEL.md`
+  - `docs/ADAPTIVE_GUIDANCE_MODEL.md`
+  - `docs/ADAPTIVE_GOVERNANCE_MODEL.md`
+  - `docs/ADAPTIVE_REFERENCE_SCENARIOS.md`
+  - `docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md` (documentation-level audit only)
 
 ### Partially available
 
@@ -218,6 +242,7 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 - Framework contract tests under `tests/`
 - Engineering domain modules
 - Deeper coding-agent integrations
+- Adaptive recommendation **engine** / runtime (separate future approval; not part of Phase 6)
 
 See [`ROADMAP.md`](ROADMAP.md) for phased direction.
 
@@ -235,6 +260,7 @@ See [`ROADMAP.md`](ROADMAP.md) for phased direction.
 | **methodology/** | RDIV and related methods | Available |
 | **prompts/** | Reusable prompt assets | Partial |
 | **packs/** | Optional domain packs (adopted = L5) | Partial |
+| **Adaptive Project Intelligence docs** | Context, depth, guidance, governance, scenarios, documentation audit | Available (Phase 6 design; not a runtime) |
 | **Modules** | Reusable engineering capabilities | Planned (adaptive recommendations approved as design) |
 | **workflows/** | End-to-end flows | Planned |
 | **skills/** | Reusable engineering skills | Planned |
@@ -433,12 +459,12 @@ High-level direction (details in [`ROADMAP.md`](ROADMAP.md)):
 2. CLI improvements
 3. Workflow and checklist system
 4. Skills and Knowledge
-5. Adaptive Project Intelligence
+5. Adaptive Project Intelligence — **Completed** (conceptual / documentation foundation; not an adaptive engine)
 6. Engineering modules
 7. Validation and automation
 8. Ecosystem and integrations
 
-Phases are directional, not dated commitments.
+Phases are directional, not dated commitments. Completed phases still do not imply unimplemented runtime features.
 
 ---
 
