@@ -373,6 +373,8 @@ Uncertainty alone must not automatically result in Critical.
 
 Scenarios illustrate the model; they do not create new binding rules.
 
+**See also:** Integrated Adaptive Project Intelligence reference scenarios (cross-model validation references): [`ADAPTIVE_REFERENCE_SCENARIOS.md`](ADAPTIVE_REFERENCE_SCENARIOS.md). Section 4.7 remains the Process Depth–focused illustrative set and is not replaced by that suite.
+
 #### Scenario A — README typo
 
 - **Drivers:** Low D1–D4; standing constraints scanned.

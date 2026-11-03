@@ -268,7 +268,18 @@ Completed means Product Owner–accepted Phase 5 deliverables are implemented in
 
 **Intent:** Define how agents assess repository and task context, adapt process depth, and recommend relevant guidance — **architecture and recommendation design**, not an autonomous runtime engine.
 
-**Status:** In Progress
+**Status:** Completed
+
+Completed means Product Owner–accepted Phase 6 Adaptive Project Intelligence **documentation and design** deliverables are present in the working tree, with documentation-level final audit outcome **PASS WITH FINDINGS**. It does **not** imply they have already been committed or pushed. It does **not** deliver an adaptive engine, runtime, registry, resolver, scoring system, or automatic Consumer modification.
+
+**Canonical design documents:**
+
+- [`docs/ADAPTIVE_PROJECT_CONTEXT.md`](docs/ADAPTIVE_PROJECT_CONTEXT.md)
+- [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md)
+- [`docs/ADAPTIVE_GUIDANCE_MODEL.md`](docs/ADAPTIVE_GUIDANCE_MODEL.md)
+- [`docs/ADAPTIVE_GOVERNANCE_MODEL.md`](docs/ADAPTIVE_GOVERNANCE_MODEL.md)
+- [`docs/ADAPTIVE_REFERENCE_SCENARIOS.md`](docs/ADAPTIVE_REFERENCE_SCENARIOS.md)
+- [`docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md)
 
 **Explicit boundary:** Actual adaptive **engine** implementation requires a **separate future scope and Product Owner approval**. Phase 6 must not claim that engine as delivered.
 
@@ -289,8 +300,26 @@ Out of scope for Phase 6 (unless separately approved later):
 | **6.2** | Repository Context Model | Completed — [`docs/ADAPTIVE_PROJECT_CONTEXT.md`](docs/ADAPTIVE_PROJECT_CONTEXT.md) |
 | **6.3** | Complexity & Process Depth Model | Completed — [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) |
 | **6.4** | Adaptive Guidance Model | Completed — [`docs/ADAPTIVE_GUIDANCE_MODEL.md`](docs/ADAPTIVE_GUIDANCE_MODEL.md) (conceptual design specification; not an adaptive engine) |
-| **6.5** | Governance & Human Approval | Planned |
-| **6.6** | Reference Scenarios & Final Audit | Planned |
+| **6.5** | Governance & Human Approval | Completed — conceptual design in [`docs/ADAPTIVE_GOVERNANCE_MODEL.md`](docs/ADAPTIVE_GOVERNANCE_MODEL.md) (governance interactions only; no new approval policies; not a runtime) |
+| **6.6** | Reference Scenarios & Final Audit | Completed — [`docs/ADAPTIVE_REFERENCE_SCENARIOS.md`](docs/ADAPTIVE_REFERENCE_SCENARIOS.md) (illustrative validation references; not policies); [`docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md) (documentation-level audit **PASS WITH FINDINGS**; not a runtime test) |
+
+#### Phase 6.6 substages
+
+| Stage | Title | Status |
+|-------|-------|--------|
+| **6.6.1** | Read-only Discovery | Completed |
+| **6.6.2** | Scenario & Audit Design | Completed |
+| **6.6.3** | Reference Scenarios & Audit Documentation | Completed — [`docs/ADAPTIVE_REFERENCE_SCENARIOS.md`](docs/ADAPTIVE_REFERENCE_SCENARIOS.md); [`docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md) |
+| **6.6.4** | Documentation Alignment & Phase Closure | Completed |
+
+#### Phase 6.5 substages
+
+| Stage | Title | Status |
+|-------|-------|--------|
+| **6.5.1** | Read-only Discovery | Completed |
+| **6.5.2** | Governance Design Proposal | Completed |
+| **6.5.3** | Adaptive Governance Model Documentation | Completed — [`docs/ADAPTIVE_GOVERNANCE_MODEL.md`](docs/ADAPTIVE_GOVERNANCE_MODEL.md) (conceptual design specification; not a runtime; AGENTS.md §8 unchanged) |
+| **6.5.4** | Documentation & Roadmap Alignment | **Completed** |
 
 #### Phase 6.4 substages
 

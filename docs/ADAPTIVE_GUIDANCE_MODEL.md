@@ -411,6 +411,8 @@ Adaptive Guidance **SHOULD** remain capable of describing Official, Community, a
 
 Scenarios are **illustrative**. They are not automatic rules. Hypothetical future artifacts are labeled as such. Do not invent repository artifacts that do not exist.
 
+This section remains the **Adaptive Guidance–focused** illustrative set. The integrated cross-model suite is [`ADAPTIVE_REFERENCE_SCENARIOS.md`](ADAPTIVE_REFERENCE_SCENARIOS.md) (documentation validation references; not new policies). Section 14 content is preserved and is not replaced by that suite.
+
 ### 14.1 Trivial documentation fix (Core-only)
 
 - **Context:** Single README typo; negligible risk.
@@ -512,11 +514,13 @@ This document does **not** establish or claim: adaptive engine; registry; resolv
 
 ## 16. Future Considerations
 
+Governance interactions with existing precedence and Human Approval Gates are defined in [`ADAPTIVE_GOVERNANCE_MODEL.md`](ADAPTIVE_GOVERNANCE_MODEL.md). This document remains the canonical source for Guidance Lifecycle semantics (§9); the Governance Model explains interactions and does **not** change [`../AGENTS.md`](../AGENTS.md) §8 authority.
+
+Phase **6.6** reference scenarios and documentation-level audit specifications are delivered in [`ADAPTIVE_REFERENCE_SCENARIOS.md`](ADAPTIVE_REFERENCE_SCENARIOS.md) and [`ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md). This document remains the canonical source for Guidance Lifecycle semantics (§9); those Phase 6.6 documents do **not** redefine them.
+
 Items below require **separate** Product Owner scope and approval:
 
-- Roadmap / structure alignment updates that reference this document
 - Evaluation of whether [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md) §5.6 should be clarified to name all six Guidance Types and the Acceptance versus Adoption split (**deferred**; not decided here)
-- Phase 6.5 Governance & Human Approval design interactions (without changing §8 authority)
 - Phase 7 Module catalog population enabling non-hypothetical Module recommendations
 - Any runtime, registry, distribution, or verification infrastructure
 
@@ -548,6 +552,6 @@ Items below require **separate** Product Owner scope and approval:
 - This is a Core Adaptive Project Intelligence **design** document (`draft`).
 - Changes **MUST** remain consistent with [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md), [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md), [`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md), and [`../AGENTS.md`](../AGENTS.md).
 - Do not claim runtime or tooling delivery based on this document alone.
-- Later Phase 6 work **SHOULD** reference this file for Adaptive Guidance rather than redefining the six types, lifecycle stages, or Pack L6/L5 states.
+- Phase 6 reference scenarios and documentation-level audit materials are maintained in `ADAPTIVE_REFERENCE_SCENARIOS.md` and `ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`, respectively.
 
 End of Adaptive Guidance Model v0.1.0 (`draft`).

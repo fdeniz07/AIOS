@@ -34,8 +34,8 @@ These two models supply structured contextual inputs for later Adaptive Project 
 
 - Phase **6.3** — Complexity & Process Depth Model ([`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md))
 - Phase **6.4** — Adaptive Guidance Model ([`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md))
-- Phase **6.5** — Governance & Human Approval (interaction clarified there; existing gates already apply)
-- Phase **6.6** — Reference Scenarios & Final Audit
+- Phase **6.5** — Governance & Human Approval ([`ADAPTIVE_GOVERNANCE_MODEL.md`](ADAPTIVE_GOVERNANCE_MODEL.md); documents interactions with existing governance and approval mechanisms; existing gates already apply)
+- Phase **6.6** — Reference Scenarios & Final Audit ([`ADAPTIVE_REFERENCE_SCENARIOS.md`](ADAPTIVE_REFERENCE_SCENARIOS.md); [`ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md))
 
 ### Scope
 
@@ -51,7 +51,8 @@ These two models supply structured contextual inputs for later Adaptive Project 
 
 - Process Depth classification criteria, weights, scores, or transitions (Phase 6.3 — see [`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md))
 - Adaptive Guidance relevance, recommendation, and lifecycle concepts (Phase 6.4 — defined in [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md); this document does **not** redefine them)
-- New human-approval policies beyond referencing existing gates (Phase 6.5)
+- Governance interaction design and Adaptive Project Intelligence × approval boundaries (Phase 6.5 — defined in [`ADAPTIVE_GOVERNANCE_MODEL.md`](ADAPTIVE_GOVERNANCE_MODEL.md); this document does **not** redefine them). Phase 6.5 does **not** introduce new [`../AGENTS.md`](../AGENTS.md) §8 approval policies.
+- Integrated reference scenarios and documentation-level final audit (Phase 6.6 — defined in [`ADAPTIVE_REFERENCE_SCENARIOS.md`](ADAPTIVE_REFERENCE_SCENARIOS.md) and [`ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md); this document does **not** redefine them)
 - Any executable engine, CLI, RAG, parser, or automated consumer modification
 
 ---

@@ -74,6 +74,9 @@ AIOS/                          # Git repository root
 │   ├── ADAPTIVE_PROJECT_CONTEXT.md
 │   ├── PROCESS_DEPTH_MODEL.md
 │   ├── ADAPTIVE_GUIDANCE_MODEL.md
+│   ├── ADAPTIVE_GOVERNANCE_MODEL.md
+│   ├── ADAPTIVE_REFERENCE_SCENARIOS.md
+│   ├── ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md
 │   ├── WORKFLOW_CHECKLIST_CONVENTIONS.md
 │   └── SKILL_KNOWLEDGE_CONVENTIONS.md
 ├── examples/                  # planned – empty domain folders
@@ -121,6 +124,9 @@ Framework documentation.
 | `docs/ADAPTIVE_PROJECT_CONTEXT.md` | draft | Project Context and Task Context models for Adaptive Project Intelligence (design only; no engine) |
 | `docs/PROCESS_DEPTH_MODEL.md` | draft | Complexity Dimensions and Process Depth Classification for Adaptive Project Intelligence (design only; no engine) |
 | `docs/ADAPTIVE_GUIDANCE_MODEL.md` | draft | Adaptive Guidance conceptual model for Adaptive Project Intelligence (design specification; no runtime engine or automatic selection). |
+| `docs/ADAPTIVE_GOVERNANCE_MODEL.md` | draft | Adaptive Governance conceptual model for Adaptive Project Intelligence (design specification; governance interactions with existing precedence and AGENTS.md §8; no runtime; no new approval policies). |
+| `docs/ADAPTIVE_REFERENCE_SCENARIOS.md` | draft | Integrated Adaptive Project Intelligence reference scenarios (illustrative documentation validation references; not policies; not a runtime). |
+| `docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md` | draft | Documentation-level Adaptive Project Intelligence final audit specification and recorded Phase 6 documentation audit (**PASS WITH FINDINGS**; consistency and traceability only; not runtime/engine/CI verification). |
 | `docs/WORKFLOW_CHECKLIST_CONVENTIONS.md` | draft | Markdown-first Workflow/Checklist authoring conventions |
 | `docs/SKILL_KNOWLEDGE_CONVENTIONS.md` | draft | Markdown-first Skill/Knowledge authoring conventions |
 | `docs/releases/` | planned | Empty nested folder reserved for future release notes |

@@ -29,6 +29,9 @@ Related entry points:
 - Adaptive Project Context (design): [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md)
 - Process Depth Model (design): [`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md)
 - Adaptive Guidance Model (conceptual design reference; not a runtime): [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md)
+- Adaptive Governance Model (conceptual governance interaction design; not a runtime): [`ADAPTIVE_GOVERNANCE_MODEL.md`](ADAPTIVE_GOVERNANCE_MODEL.md)
+- Adaptive Reference Scenarios (illustrative validation references; not policies; not a runtime): [`ADAPTIVE_REFERENCE_SCENARIOS.md`](ADAPTIVE_REFERENCE_SCENARIOS.md)
+- Adaptive Project Intelligence Audit (documentation-level audit specification; not runtime verification): [`ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md`](ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md)
 
 ---
 
