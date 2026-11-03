@@ -72,6 +72,7 @@ AIOS/                          # Git repository root
 ├── docs/                      # active – framework documentation
 │   ├── FRAMEWORK_CONTRACT.md  # authoritative architectural / governance contract
 │   ├── ADAPTIVE_PROJECT_CONTEXT.md
+│   ├── PROCESS_DEPTH_MODEL.md
 │   ├── WORKFLOW_CHECKLIST_CONVENTIONS.md
 │   └── SKILL_KNOWLEDGE_CONVENTIONS.md
 ├── examples/                  # planned – empty domain folders
@@ -117,6 +118,7 @@ Framework documentation.
 |------|--------|-------|
 | `docs/FRAMEWORK_CONTRACT.md` | active | Authoritative architectural and governance contract (boundaries, ownership, consumption models, L0–L7 precedence) |
 | `docs/ADAPTIVE_PROJECT_CONTEXT.md` | draft | Project Context and Task Context models for Adaptive Project Intelligence (design only; no engine) |
+| `docs/PROCESS_DEPTH_MODEL.md` | draft | Complexity Dimensions and Process Depth Classification for Adaptive Project Intelligence (design only; no engine) |
 | `docs/WORKFLOW_CHECKLIST_CONVENTIONS.md` | draft | Markdown-first Workflow/Checklist authoring conventions |
 | `docs/SKILL_KNOWLEDGE_CONVENTIONS.md` | draft | Markdown-first Skill/Knowledge authoring conventions |
 | `docs/releases/` | planned | Empty nested folder reserved for future release notes |
