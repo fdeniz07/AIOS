@@ -288,9 +288,18 @@ Out of scope for Phase 6 (unless separately approved later):
 | **6.1** | Adaptive Intelligence Discovery | Completed |
 | **6.2** | Repository Context Model | Completed — [`docs/ADAPTIVE_PROJECT_CONTEXT.md`](docs/ADAPTIVE_PROJECT_CONTEXT.md) |
 | **6.3** | Complexity & Process Depth Model | Completed — [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) |
-| **6.4** | Adaptive Guidance Model | Planned |
+| **6.4** | Adaptive Guidance Model | Completed — [`docs/ADAPTIVE_GUIDANCE_MODEL.md`](docs/ADAPTIVE_GUIDANCE_MODEL.md) (conceptual design specification; not an adaptive engine) |
 | **6.5** | Governance & Human Approval | Planned |
 | **6.6** | Reference Scenarios & Final Audit | Planned |
+
+#### Phase 6.4 substages
+
+| Stage | Title | Status |
+|-------|-------|--------|
+| **6.4.1** | Read-only Documentation Alignment Discovery | Completed |
+| **6.4.2** | Adaptive Guidance Design Proposal | Completed |
+| **6.4.3** | Adaptive Guidance Model Implementation | Completed — [`docs/ADAPTIVE_GUIDANCE_MODEL.md`](docs/ADAPTIVE_GUIDANCE_MODEL.md) (conceptual design specification; not a runtime) |
+| **6.4.4** | Documentation & Roadmap Alignment | Completed |
 
 #### Phase 6.3 substages
 
@@ -320,7 +329,7 @@ Out of scope for Phase 6 (unless separately approved later):
 ### Preserved historical intent
 
 - Project-type and repository signals as part of Project Context (for example library, service, monorepo, docs-only)
-- Guidance for choosing workflows, skills and Modules using approved metadata hints when available
+- Explainable guidance recommendations based on Project Context, Task Context, existing artifact definitions, and human judgment / acceptance where applicable — not an automatic resolver, scoring system, or runtime selection engine ([`docs/ADAPTIVE_GUIDANCE_MODEL.md`](docs/ADAPTIVE_GUIDANCE_MODEL.md))
 - No autonomous module discovery, selection, or consumer-modification engine in this phase
 
 ---

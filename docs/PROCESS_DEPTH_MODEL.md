@@ -45,7 +45,7 @@ Provide a shared, qualitative way for agents and humans to:
 **Out of scope:**
 
 - Rewriting Feature Development Workflow stage classifications or eligibility rules
-- Adaptive Guidance selection of Workflows, Checklists, Skills, Modules, or Packs (Phase **6.4**)
+- Adaptive Guidance relevance and recommendation of Guidance Types and artifacts (Phase **6.4** — see [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md); this document does not define those rules)
 - Numerical scores, weights, thresholds, formulas, or automatic escalation
 - Runtime engines, parsers, schemas, APIs, RAG, Skill/Workflow executors, adaptive CLI
 - Automatic Module/Pack discovery, installation, adoption, or consumer repository modification
@@ -636,29 +636,30 @@ Human approval gates and instruction precedence remain as defined in [`FRAMEWORK
 ## 7. Relationship to Adaptive Project Context / Phase 6.4
 
 | Artifact | Relationship |
-|----------|----------------|
+|----------|--------------|
 | [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md) | Defines Project Context and Task Context — inputs to this model |
-| This document | Interprets dimensions and recommends Process Depth |
+| This document | Interprets dimensions and recommends Process Depth (**usage intensity**) |
 | This document §5 | Advisory Feature Development Workflow intensity mapping (Phase **6.3.4**) |
-| Phase **6.4** | Adaptive Guidance Model — selecting Workflows, Checklists, Skills, and optional Modules/Packs |
+| [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md) | Adaptive Guidance Model — **relevance** and explainable recommendations for the six canonical Guidance Types. Process Depth **MUST NOT** independently select Guidance Types or artifacts. |
 | [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md) §5.6 | Adaptive recommendation architecture (design only; not an engine) |
 
 ```text
 Project Context + Task Context
         → Complexity Dimensions (D1–D12)
-        → Process Depth recommendation
-        → (Phase 6.4) Adaptive Guidance recommendations
+        → Process Depth recommendation          [intensity — this document]
+        → Adaptive Guidance recommendations     [relevance — ADAPTIVE_GUIDANCE_MODEL.md]
 ```
 
-This pipeline is conceptual. It is not an executable engine.
+This pipeline is conceptual. It is not an executable engine or automatic guidance selector.
 
 ---
 
 ## Document maintenance
 
 - This is a Core Adaptive Project Intelligence **design** document (`draft`).
-- Changes must remain consistent with [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md) and [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md).
+- Changes must remain consistent with [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md), [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md), and [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md).
 - Do not claim runtime or tooling delivery based on this document alone.
 - Feature Development intensity mapping lives in §5; later Phase 6 work should reference this file rather than redefine Process Depth levels, D1–D12, or §5 stage mapping.
+- Adaptive Guidance relevance and lifecycle concepts belong in [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md); do not redefine them here.
 
 End of Process Depth Model v0.1.0 (`draft`).

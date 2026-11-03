@@ -32,8 +32,8 @@ Agents need a shared way to understand:
 
 These two models supply structured contextual inputs for later Adaptive Project Intelligence stages:
 
-- Phase **6.3** — Complexity & Process Depth Model
-- Phase **6.4** — Adaptive Guidance Model
+- Phase **6.3** — Complexity & Process Depth Model ([`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md))
+- Phase **6.4** — Adaptive Guidance Model ([`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md))
 - Phase **6.5** — Governance & Human Approval (interaction clarified there; existing gates already apply)
 - Phase **6.6** — Reference Scenarios & Final Audit
 
@@ -49,8 +49,8 @@ These two models supply structured contextual inputs for later Adaptive Project 
 
 **Out of scope:**
 
-- Process Depth classification criteria, weights, scores, or transitions (Phase 6.3)
-- Adaptive Guidance selection rules (Phase 6.4)
+- Process Depth classification criteria, weights, scores, or transitions (Phase 6.3 — see [`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md))
+- Adaptive Guidance relevance, recommendation, and lifecycle concepts (Phase 6.4 — defined in [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md); this document does **not** redefine them)
 - New human-approval policies beyond referencing existing gates (Phase 6.5)
 - Any executable engine, CLI, RAG, parser, or automated consumer modification
 
@@ -367,11 +367,11 @@ Both are required inputs for later adaptive decisions.
 ```text
 Project Context  ──┐
                    ├──► Phase 6.3 Process Depth consideration
-Task Context     ──┘              │
+Task Context     ──┘              │   ([PROCESS_DEPTH_MODEL.md])
                                   └──► Phase 6.4 Adaptive Guidance recommendations
-                                         (Core Workflows / Checklists / Skills /
-                                          Methodologies first; Modules / Packs
-                                          only if present and relevant)
+                                         ([ADAPTIVE_GUIDANCE_MODEL.md] —
+                                          explainable relevance recommendations;
+                                          not an automatic selection engine)
 ```
 
 ### Missing information and conflicts
@@ -493,7 +493,7 @@ Future Phase 6 stages may extend related design. Implementation capabilities req
 
 - This is a **Core** Adaptive Project Intelligence **design** document (`draft`).
 - Changes must remain consistent with [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md) and must not invent new governance levels.
-- Related Stage 6.3+ documents may refine Process Depth and guidance selection; they should **reference** this file for context definitions rather than redefining them.
+- Related Stage 6.3+ documents ([`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md), [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md)) should **reference** this file for Project Context and Task Context definitions rather than redefining them.
 - Do not claim runtime or tooling delivery based on this document alone.
 
 End of Adaptive Project Context v0.1.0 (`draft`).

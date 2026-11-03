@@ -26,6 +26,9 @@ Related entry points:
 - Module validation expectations: [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md)
 - Workflow and checklist authoring conventions: [`WORKFLOW_CHECKLIST_CONVENTIONS.md`](WORKFLOW_CHECKLIST_CONVENTIONS.md)
 - Skill and Knowledge authoring conventions: [`SKILL_KNOWLEDGE_CONVENTIONS.md`](SKILL_KNOWLEDGE_CONVENTIONS.md)
+- Adaptive Project Context (design): [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md)
+- Process Depth Model (design): [`PROCESS_DEPTH_MODEL.md`](PROCESS_DEPTH_MODEL.md)
+- Adaptive Guidance Model (conceptual design reference; not a runtime): [`ADAPTIVE_GUIDANCE_MODEL.md`](ADAPTIVE_GUIDANCE_MODEL.md)
 
 ---
 
