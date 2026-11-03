@@ -2,7 +2,7 @@
 
 Status: Active
 
-Last Updated: 2026-11-02
+Last Updated: 2026-11-03
 
 This is the **AIOS framework** product roadmap.
 
@@ -266,14 +266,44 @@ Completed means Product Owner–accepted Phase 5 deliverables are implemented in
 
 ## Phase 6 — Adaptive Project Intelligence
 
-**Intent:** Define how agents detect repository context and adapt process depth — **architecture and recommendation design**, not an autonomous runtime engine.
+**Intent:** Define how agents assess repository and task context, adapt process depth, and recommend relevant guidance — **architecture and recommendation design**, not an autonomous runtime engine.
 
-- Project-type signals (library, service, monorepo, docs-only, etc.)
-- Guidance for choosing workflows, skills and Modules using approved metadata hints
-- Documentation/convention-first unless/until tooling is separately proven and approved
-- No autonomous module discovery, selection, or consumer-modification engine in this phase
+**Status:** In Progress
 
 **Explicit boundary:** Actual adaptive **engine** implementation requires a **separate future scope and Product Owner approval**. Phase 6 must not claim that engine as delivered.
+
+Out of scope for Phase 6 (unless separately approved later):
+
+- Autonomous Module discovery, selection, installation, or adoption
+- Autonomous consumer repository modification
+- Skill or Workflow execution engines
+- Knowledge retrieval / RAG
+- Adaptive CLI
+- Numerical scoring or machine-learning classification
+
+### Approved substages
+
+| Stage | Title | Status |
+|-------|-------|--------|
+| **6.1** | Adaptive Intelligence Discovery | Completed |
+| **6.2** | Repository Context Model | Completed — [`docs/ADAPTIVE_PROJECT_CONTEXT.md`](docs/ADAPTIVE_PROJECT_CONTEXT.md) |
+| **6.3** | Complexity & Process Depth Model | Planned |
+| **6.4** | Adaptive Guidance Model | Planned |
+| **6.5** | Governance & Human Approval | Planned |
+| **6.6** | Reference Scenarios & Final Audit | Planned |
+
+### Approved design directions
+
+- Keep **Project Context** and **Task Context** separate; both inform Process Depth and guidance recommendations
+- Use exactly four Process Depth levels: **Lightweight**, **Standard**, **Enhanced**, **Critical** (distinct from L0–L7; distinct from “lightweight tooling”)
+- Remain useful with **Core-only** guidance (Workflows, Checklists, Skills, methodologies); Modules and Packs may enrich later but are not mandatory
+- Documentation/convention-first unless/until tooling is separately proven and approved
+
+### Preserved historical intent
+
+- Project-type and repository signals as part of Project Context (for example library, service, monorepo, docs-only)
+- Guidance for choosing workflows, skills and Modules using approved metadata hints when available
+- No autonomous module discovery, selection, or consumer-modification engine in this phase
 
 ---
 
