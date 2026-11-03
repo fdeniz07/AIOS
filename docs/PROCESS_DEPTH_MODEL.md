@@ -38,13 +38,13 @@ Provide a shared, qualitative way for agents and humans to:
 
 - Complexity Dimensions taxonomy and roles
 - Four Process Depth levels and qualitative classification reasoning
-- Conceptual relationship to Feature Development Workflow
+- Advisory Feature Development Workflow intensity mapping (§5)
 - Concise Release Workflow clarification
 - Governance invariants related to Process Depth
 
 **Out of scope:**
 
-- Detailed Feature Development stage-by-stage normative mapping (Phase **6.3.4**)
+- Rewriting Feature Development Workflow stage classifications or eligibility rules
 - Adaptive Guidance selection of Workflows, Checklists, Skills, Modules, or Packs (Phase **6.4**)
 - Numerical scores, weights, thresholds, formulas, or automatic escalation
 - Runtime engines, parsers, schemas, APIs, RAG, Skill/Workflow executors, adaptive CLI
@@ -405,21 +405,25 @@ Scenarios illustrate the model; they do not create new binding rules.
 
 ---
 
-## 5. Workflow notes
+## 5. Workflow relationship
 
-### 5.1 Feature Development Workflow (conceptual)
+This section provides **advisory Core guidance** (default **L6**) on how recommended Process Depth relates to the Feature Development Workflow. It does **not** rewrite Workflow classifications, create new mandatory stage rules, or authorize operational actions.
 
-- Process Depth **recommends** engineering ceremony intensity.
-- The Feature Development Workflow **owns** stage-level Required / light / skip classifications ([`../workflows/feature_development.md`](../workflows/feature_development.md)).
-- Detailed stage-by-stage normative mapping belongs to Phase **6.3.4** and is **not** defined here.
+### 5.1 Workflow Ownership and Boundaries
 
-Do not treat as interchangeable:
+| Concern | Owner |
+|---------|--------|
+| Engineering-process intensity recommendation | **Process Depth** (this document) |
+| Stage-level Required / Light / Skip classifications and eligibility | **Feature Development Workflow** ([`../workflows/feature_development.md`](../workflows/feature_development.md)) |
+| Mandatory approval requirements | [`../AGENTS.md`](../AGENTS.md) **§8** and applicable Consumer ADR / local policy |
+| Operational authorization (commit, push, publish, deploy, etc.) | **Human owners** under Contract / AGENTS rules |
 
-- Lightweight Process Depth
-- Workflow light/skip paths
-- Lightweight tooling
+- Process Depth **recommends** engineering ceremony intensity for a task.
+- The Feature Development Workflow **owns** whether a stage is Required, Light, or Skip-eligible for a given change class.
+- Process Depth **cannot** override Workflow conditions, eligibility, or governance.
+- AI recommends; humans decide.
 
-### 5.2 Release Workflow clarification (mandatory)
+### 5.2 Release Workflow Boundary
 
 - Complexity Dimensions **may inform** Release assessment.
 - **Process Depth** and **Release class** are **separate concepts**.
@@ -428,6 +432,182 @@ Do not treat as interchangeable:
 - There is **no automatic equivalence or mapping** between Process Depth and Release class.
 
 This clarification is concise by design. It does **not** create a separate Release classification model.
+
+### 5.3 Terminology and Separation
+
+Do **not** treat as interchangeable:
+
+| Term | Meaning |
+|------|---------|
+| **Process Depth** (Lightweight / Standard / Enhanced / Critical) | Recommended engineering-process intensity for the task |
+| **Workflow Light / Skip** | Feature Development stage classification / eligibility under that Workflow |
+| **Lightweight tooling** | Tooling or packaging convenience — unrelated to Process Depth |
+| **Release class** | Release nature and procedure — not Process Depth |
+
+Lightweight Process Depth does **not** mean a Workflow stage may be skipped. Workflow Light/Skip remains owned solely by Feature Development eligibility rules.
+
+### 5.4 Process Depth Intensity Expectations
+
+Across all nine Feature Development stages, Process Depth scales **how deep** analysis, design, planning, verification, and review should be — without changing which stages the Workflow requires.
+
+| Process Depth | Intensity expectation (all stages, qualitative) |
+|---------------|--------------------------------------------------|
+| **Lightweight** | Minimal proportional ceremony; short rationale; no invented architecture or heavy planning |
+| **Standard** | Default meaningful depth; ordinary discovery, plan, validation, and review proportionate to the change |
+| **Enhanced** | Deeper discovery, explicit design/impact thinking, careful sequencing, stronger verification, structured review |
+| **Critical** | Maximum proportional ceremony; exhaustive hazard-aware analysis and verification; heightened human attention where independently required — **without** adding new Required Workflow stages |
+
+These expectations are advisory. Stage Required / Light / Skip remains as defined in [`../workflows/feature_development.md`](../workflows/feature_development.md).
+
+### 5.5 Stage-Level Mapping
+
+The tables below cover all nine Feature Development stages at all four Process Depth levels. Classifications in the Workflow column preserve existing Workflow meaning; intensity columns are advisory only.
+
+#### Stage 1 — Request and Scope Analysis
+
+**Workflow:** Required
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Confirm trivial scope and bounds in a few sentences |
+| Standard | Clarify request, in/out of scope, and obvious constraints |
+| Enhanced | Explicit scope, stakeholders/impact surface, and non-goals |
+| Critical | Exhaustive scope and hazard framing before further work |
+
+#### Stage 2 — Repository and Context Discovery
+
+**Workflow:** Required for meaningful engineering work; **conditional light / skip** only when the change is trivial (for example documentation-only typo) **and** repository risk is negligible — with short rationale if deep discovery is skipped.
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Perform targeted discovery of affected paths and relevant context; expand to deeper discovery when task complexity or repository risk warrants it. Deep discovery may be skipped only when §5.6 conditions hold. |
+| Standard | Meaningful discovery of relevant code, docs, tests, and prior decisions |
+| Enhanced | Deep discovery across affected components, contracts, and ADRs |
+| Critical | Exhaustive discovery of blast radius, dependents, and failure modes |
+
+Lightweight Process Depth alone does **not** authorize skipping Stage 2. See §5.6.
+
+#### Stage 3 — Requirements and Acceptance Criteria
+
+**Workflow:** Required for new features or behavior changes; **optional / light** for pure refactors or small fixes when acceptance criteria are already explicit and unchanged.
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Reuse explicit criteria; note “unchanged” when applicable |
+| Standard | Clear acceptance criteria for the change |
+| Enhanced | Detailed criteria including edge cases and compatibility expectations |
+| Critical | Criteria covering severe failure modes, rollback/safety expectations, and residual risk notes |
+
+#### Stage 4 — Architecture and Design
+
+**Workflow:** **Conditional required** when architecture, public contracts, module boundaries, data compatibility, or top-level conventions are affected; otherwise **light or skip** with rationale.
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Light or skip only where existing Workflow conditions permit, with rationale; integrate with existing design and do not invent architecture. |
+| Standard | Light design fit unless architecture/contract triggers apply |
+| Enhanced | Explicit design direction, options, and impact notes when triggers apply |
+| Critical | Thorough design and impact analysis for high-hazard architectural change; ADR path when durable decisions are needed |
+
+#### Stage 5 — Implementation Planning
+
+**Workflow:** Required for meaningful work; **light** for small, clearly scoped fixes (short ordered step list is enough).
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | A short, explicit ordered plan; keep it minimal for trivial edits. |
+| Standard | Short ordered plan naming touched areas and validation approach |
+| Enhanced | Explicit sequencing, dependencies, and risk checkpoints |
+| Critical | Hazard-aware plan with verification and rollback considerations |
+
+#### Stage 6 — Implementation
+
+**Workflow:** Required when repository changes will be made; skip only if the Workflow stops after Decide with an explicit no-change outcome.
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Minimal targeted edit; no opportunistic refactors |
+| Standard | Scoped implementation within approved plan |
+| Enhanced | Careful, sequenced implementation with impact awareness |
+| Critical | Highly controlled implementation; no silent scope expansion |
+
+#### Stage 7 — Testing and Validation
+
+**Workflow:** Required for code or behavior changes; **light** for documentation-only changes (verify docs accuracy and links as appropriate).
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Spot-check affected docs/links or trivial behavior |
+| Standard | Relevant tests/validation for the change; honest unrun disclosure |
+| Enhanced | Stronger validation across affected contracts/components; residual risks recorded |
+| Critical | Maximum proportional verification for severe downside; residual risks explicit |
+
+#### Stage 8 — Review and Human Approval
+
+**Workflow:** **Required** when any AGENTS §8 approval-listed operation applies, when durable Consumer decisions changed, or when the Consumer’s adopted review policy requires it; otherwise **light review** appropriate to risk. Stage 8 does not replace earlier §8 gates or grant operational authorization.
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Brief owner/peer skim when no mandatory gate applies |
+| Standard | Normal review as applicable |
+| Enhanced | Structured review of design, impact, and evidence |
+| Critical | Heightened human attention where independently required — **no new Core Required stages** invented by Process Depth |
+
+Applicable §8 and Consumer policy approvals remain mandatory whenever they apply, at every Process Depth.
+
+#### Stage 9 — Completion and Handover
+
+**Workflow:** Required (short); artifact depth follows Consumer process.
+
+| Process Depth | Advisory intensity |
+|---------------|-------------------|
+| Lightweight | Brief note of what changed |
+| Standard | Normal handover summary for the change |
+| Enhanced | Clear handover of impacts, follow-ups, and residual risks |
+| Critical | Explicit handover of hazards, residual risks, and owner-visible outcomes |
+
+### 5.6 Lightweight Eligibility and Stage 2
+
+- **Lightweight Process Depth alone does not authorize skipping a Workflow stage.**
+- For **Stage 2** (Repository and Context Discovery), both conditions must hold before a deep-discovery skip is justified:
+
+  1. The task is classified as **Lightweight** Process Depth; **and**
+  2. The existing Feature Development Workflow Stage 2 skip eligibility conditions are **independently** satisfied (trivial change and negligible repository risk, with short rationale).
+
+- Targeted analysis remains necessary even when deep discovery is skipped.
+- If either condition fails, Stage 2 proceeds at the intensity expected for the recommended Process Depth.
+
+### 5.7 Governance and Non-Overrides
+
+This mapping preserves — and does not weaken — existing governance:
+
+| Rule | Statement |
+|------|-----------|
+| Precedence | **L0–L7** remain as defined in the Framework Contract |
+| Approvals | [`../AGENTS.md`](../AGENTS.md) **§8** approval requirements remain mandatory whenever applicable |
+| Consumer authority | Consumer ADRs and local policies remain binding |
+| Decision rights | AI recommends; humans decide |
+| Adoption | No automatic Module/Pack adoption |
+| Consumer repos | No automatic consumer repository modifications |
+| Workflow execution | No automatic workflow execution or stage skipping |
+| Authorization | No operational authorization through Process Depth |
+| Critical depth | Critical Process Depth does **not** introduce additional Required Workflow stages |
+
+Process Depth cannot override Workflow conditions, eligibility, or independently required human gates. Review requirements are not operational authorization.
+
+### 5.8 Worked Examples
+
+The following scenarios are **illustrative and qualitative**. They are **not** automatic classification rules. Actual Process Depth depends on Task Context and D1–D12 as assessed for the real change.
+
+| Scenario (illustrative) | Plausible Process Depth | Intensity sketch (not a rule) |
+|-------------------------|-------------------------|-------------------------------|
+| README typo correction | Lightweight | Stage 2 deep discovery may be skip-eligible only if Workflow Stage 2 conditions also hold; light Stages 3–5/7; brief Stages 8–9 |
+| Small API bug fix | Standard | Meaningful Stages 1–3 and 5–7; Stage 4 light/skip unless contracts/architecture are affected |
+| New REST endpoint | Standard → Enhanced (context-dependent) | Explicit Stages 3–5; Stage 4 when public contract/architecture is touched; solid Stage 7 |
+| Database migration and backward-compatibility change | Enhanced | Deep Stages 2–5 and 7; careful Stage 6; structured Stage 8 |
+| Authentication and authorization architecture change | Enhanced → Critical (hazard-dependent) | Exhaustive Stages 2–5 and 7–8; Stage 4 required under Workflow architecture triggers; Critical only when severe security/integrity/reversibility hazards justify it |
+
+Do not escalate to Critical solely because security-related keywords appear. Do not treat Lightweight as a blanket skip for Stage 2 or any other Required stage.
 
 ---
 
@@ -459,7 +639,7 @@ Human approval gates and instruction precedence remain as defined in [`FRAMEWORK
 |----------|----------------|
 | [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md) | Defines Project Context and Task Context — inputs to this model |
 | This document | Interprets dimensions and recommends Process Depth |
-| Phase **6.3.4** | Detailed Feature Development (and related) stage mapping |
+| This document §5 | Advisory Feature Development Workflow intensity mapping (Phase **6.3.4**) |
 | Phase **6.4** | Adaptive Guidance Model — selecting Workflows, Checklists, Skills, and optional Modules/Packs |
 | [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md) §5.6 | Adaptive recommendation architecture (design only; not an engine) |
 
@@ -479,6 +659,6 @@ This pipeline is conceptual. It is not an executable engine.
 - This is a Core Adaptive Project Intelligence **design** document (`draft`).
 - Changes must remain consistent with [`FRAMEWORK_CONTRACT.md`](FRAMEWORK_CONTRACT.md) and [`ADAPTIVE_PROJECT_CONTEXT.md`](ADAPTIVE_PROJECT_CONTEXT.md).
 - Do not claim runtime or tooling delivery based on this document alone.
-- Related Phase 6.3.4+ work should reference this file rather than redefine Process Depth levels or D1–D12.
+- Feature Development intensity mapping lives in §5; later Phase 6 work should reference this file rather than redefine Process Depth levels, D1–D12, or §5 stage mapping.
 
 End of Process Depth Model v0.1.0 (`draft`).

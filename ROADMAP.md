@@ -287,7 +287,7 @@ Out of scope for Phase 6 (unless separately approved later):
 |-------|-------|--------|
 | **6.1** | Adaptive Intelligence Discovery | Completed |
 | **6.2** | Repository Context Model | Completed — [`docs/ADAPTIVE_PROJECT_CONTEXT.md`](docs/ADAPTIVE_PROJECT_CONTEXT.md) |
-| **6.3** | Complexity & Process Depth Model | In Progress — design artifact [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) |
+| **6.3** | Complexity & Process Depth Model | Completed — [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) |
 | **6.4** | Adaptive Guidance Model | Planned |
 | **6.5** | Governance & Human Approval | Planned |
 | **6.6** | Reference Scenarios & Final Audit | Planned |
@@ -299,7 +299,16 @@ Out of scope for Phase 6 (unless separately approved later):
 | **6.3.1** | Complexity & Process Depth Discovery | Completed |
 | **6.3.2** | Complexity Dimensions Model | Completed — consolidated in [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) |
 | **6.3.3** | Process Depth Classification Model | Completed — [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) |
-| **6.3.4** | Feature Development Workflow Mapping | Planned |
+| **6.3.4** | Feature Development Workflow Mapping | Completed — [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) §5 |
+
+#### Phase 6.3.4 substages
+
+| Stage | Title | Status |
+|-------|-------|--------|
+| **6.3.4.1** | Read-only Discovery | Completed |
+| **6.3.4.2** | Design Proposal | Completed |
+| **6.3.4.3** | Implementation | Completed — [`docs/PROCESS_DEPTH_MODEL.md`](docs/PROCESS_DEPTH_MODEL.md) §5 |
+| **6.3.4.4** | Documentation & Roadmap Alignment | Completed |
 
 ### Approved design directions
 
