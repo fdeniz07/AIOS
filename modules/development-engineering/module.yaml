@@ -1,0 +1,29 @@
+id: development-engineering
+version: 0.1.0
+title: Development Engineering
+summary: >
+  Optional stack-agnostic guidance for disciplined implementation within an
+  already agreed scope, without replacing Core workflows or imposing coding standards.
+
+status: draft
+maturity: experimental
+
+applies_when:
+  - A change includes scoped code or behavior implementation
+  - Implementation plan and diff fidelity need discipline
+  - Opportunistic or out-of-scope edits are a material risk
+avoid_when:
+  - The primary need is architecture boundary assessment
+  - The work is release, publish, or deployment oriented
+  - Documentation-only typos with no implementation surface
+  - The consumer forbids external development guidance by policy
+
+tags:
+  - development
+  - implementation
+  - change-hygiene
+provides:
+  - implementation-change-hygiene
+  - scoped-change-guidance
+
+requires_core: "1.0.1"

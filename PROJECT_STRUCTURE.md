@@ -1,10 +1,10 @@
 # AIOS Project Structure
 
-Version: 1.2.0
+Version: 1.3.1
 
 Status: Active
 
-Last Updated: 2026-11-03
+Last Updated: 2026-11-04
 
 This document describes the **actual** repository layout and the status of each area.
 
@@ -31,7 +31,7 @@ Status legend:
 | Layer | Meaning | In this repository today |
 |-------|---------|--------------------------|
 | **Core** | Common engineering foundation | `AGENTS.md`, governance docs, `rules/`, `methodology/`, `scripts/aiosctl.py`, framework docs under `docs/` |
-| **Modules** | Reusable engineering capabilities | **Not populated** — adaptive selection is an approved design approach; no module packages or discovery engine are implemented |
+| **Modules** | Reusable engineering capabilities | **Partial** — thin catalog under `modules/`; two draft packages: `architecture-engineering` and `development-engineering` (each `draft` / `experimental`); Module-local Skills `architecture-boundary-review` and `implementation-change-hygiene` (each `draft`). No Module discovery engine, resolver, installer, or adaptive runtime |
 | **Packs** | Optional domain / use-case extensions | `packs/education/` (partial) |
 | **Consumer repositories** | Separate projects that adopt AIOS | Outside this repo; own ADRs, roadmaps, policies and implementation |
 
@@ -84,6 +84,18 @@ AIOS/                          # Git repository root
 ├── knowledge/                 # planned – empty (no Core Knowledge example; remains Planned)
 ├── lab/                       # demo – sample FastAPI app for CI
 ├── methodology/               # active
+├── modules/                   # partial – Engineering Module catalog (thin index + two draft Modules)
+│   ├── README.md              # thin catalog index (not a registry/resolver)
+│   ├── architecture-engineering/
+│   │   ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
+│   │   ├── README.md          # Module entry (L6 guidance; not adoption)
+│   │   └── skills/
+│   │       └── architecture_boundary_review.md  # Module Skill draft
+│   └── development-engineering/
+│       ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
+│       ├── README.md          # Module entry (L6 guidance; not adoption)
+│       └── skills/
+│           └── implementation_change_hygiene.md  # Module Skill draft
 ├── packs/                     # partial – optional packs
 │   └── education/
 │       ├── README.md          # Education & Learning Engineering Pack overview
@@ -216,18 +228,38 @@ Active directory with initial Core checklists (`review.md`, `release_checklist.m
 
 Planned and empty. Reserved for genuinely cross-cutting Core Knowledge when authored under [`docs/SKILL_KNOWLEDGE_CONVENTIONS.md`](docs/SKILL_KNOWLEDGE_CONVENTIONS.md) (conventions remain Draft). No Core Knowledge example exists; Knowledge remains Planned.
 
+### `modules/` — **partial** (Engineering Module Catalog)
+
+Thin catalog of optional Engineering Module packages (Phase 7 foundation).
+
+| Path | Status | Notes |
+|------|--------|-------|
+| `modules/README.md` | present (thin catalog index) | Lists only packages that exist; not a registry, resolver, or installer; not an artifact lifecycle `active` claim |
+| `modules/architecture-engineering/` | partial / draft | Engineering Module; `status: draft`, `maturity: experimental`, `version: 0.1.0` |
+| `.../module.yaml` | draft metadata | Metadata v1; informational `requires_core: "1.0.1"` — not runtime enforcement |
+| `.../README.md` | draft entry | L6 by default; explicit Consumer adoption → L3; does not own Consumer architecture |
+| `.../skills/architecture_boundary_review.md` | draft Module Skill | `id` `architecture-boundary-review`; does not replace Core `repository-analysis` |
+| `modules/development-engineering/` | partial / draft | Engineering Module; `status: draft`, `maturity: experimental`, `version: 0.1.0` |
+| `.../module.yaml` | draft metadata | Metadata v1; informational `requires_core: "1.0.1"` — not runtime enforcement |
+| `.../README.md` | draft entry | L6 by default; explicit Consumer adoption → L3; does not replace Core workflows or own Consumer coding standards |
+| `.../skills/implementation_change_hygiene.md` | draft Module Skill | `id` `implementation-change-hygiene`; does not replace Core Feature Development Workflow or Core Review Checklist |
+
+Not present: remaining planned Engineering domains (Testing & Quality, Security, DevOps & Cloud, Data, Documentation); Module validation CLI; dependency resolver; auto-adoption; adaptive Module selection engine.
+
+Module guidance does not bind Consumers until explicitly adopted. Framework Governance remains Core-owned.
+
 ### `skills/` — **partial** (initial Core Skill; artifact lifecycle `draft`)
 
 Populated with the initial Core Skill definition `repository_analysis.md` (`id` `repository-analysis`). Directory population does **not** mean the Skill lifecycle is `active` or that a complete Skill catalog exists. Artifact lifecycle remains **`draft`** (`version` `0.1.0`). Authoring conventions remain Draft.
 
-- Capability-specific Skills/Knowledge prefer Module-local placement **when Module packages exist** (do not invent fake `modules/` trees).
+- Capability-specific Skills/Knowledge prefer Module-local placement **when Module packages exist** (prefer Module-local paths under existing packages such as `modules/architecture-engineering/` or `modules/development-engineering/`; do not invent undeclared Module trees).
 - Not a Skill runner, Knowledge retrieval/RAG engine, or automated recommendation service.
 
 ### `generators/`, `tests/` — **planned**
 
 Reserved empty directories for future generators and framework validation assets.
 
-Not implemented Modules, discovery engines or automated recommendation services.
+Module packages may exist under `modules/` separately. These directories are not Module discovery engines or automated recommendation services.
 
 ### `examples/` — **planned**
 
@@ -267,7 +299,7 @@ In **consumer** repositories, `.agents/` is the **destination** of `aiosctl sync
 | Layer | What it is | Examples |
 |-------|------------|----------|
 | **Framework (AIOS Core)** | Reusable governance, methods and tooling entry points | `docs/FRAMEWORK_CONTRACT.md`, `AGENTS.md`, `rules/`, `methodology/`, `scripts/aiosctl.py` |
-| **Modules** | Reusable engineering capabilities (design approved; packages not present) | Architecture, Testing, Security Engineering — **planned**, not shipped |
+| **Modules** | Reusable engineering capabilities (partial catalog; two draft Modules present in repository tree — documentation/content only, not a runtime) | `architecture-engineering` (`draft`) + Skill `architecture-boundary-review` (`draft`); `development-engineering` (`draft`) + Skill `implementation-change-hygiene` (`draft`); remaining Engineering domains not packaged |
 | **Optional packs** | Domain extensions (L5 when adopted) | `packs/education/` |
 | **Demo** | CI / smoke sample | `lab/aios-demo-api/` |
 | **Consumer repositories** | Separate projects adopting AIOS | Own ADRs (**L2**), local policies (**L3**); may sync `.agents/` from `rules/` |

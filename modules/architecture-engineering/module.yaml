@@ -1,0 +1,28 @@
+id: architecture-engineering
+version: 0.1.0
+title: Architecture Engineering
+summary: >
+  Guidance for understanding, reviewing, and supporting durable software
+  architecture decisions without imposing a product architecture on consumers.
+
+status: draft
+maturity: experimental
+
+applies_when:
+  - Non-trivial system boundaries or integration points exist
+  - A change affects architecture, public contracts, or structural conventions
+  - Architecture decisions may need durable consumer ADRs
+avoid_when:
+  - Tiny single-file scripts with no lasting architecture
+  - Narrow edits with adequate local context and no architecture assessment requested
+  - The consumer forbids external architecture frameworks by policy
+
+tags:
+  - architecture
+  - design
+  - boundaries
+provides:
+  - architecture-review-guidance
+  - adr-oriented-decision-support
+
+requires_core: "1.0.1"

@@ -2,7 +2,7 @@
 
 Status: Active
 
-Last Updated: 2026-11-03
+Last Updated: 2026-11-04
 
 This is the **AIOS framework** product roadmap.
 
@@ -23,7 +23,7 @@ Authoritative governance and precedence: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRA
 - Avoid unnecessary complexity
 - Preserve useful Git history and consumer sync compatibility
 - Provide the framework, not the domain content
-- Do not present planned capabilities (module runtime, discovery engine, automated apply of recommendations, populated module catalog, new CLI commands, etc.) as already implemented
+- Do not present planned capabilities (module runtime, discovery engine, automated apply of recommendations, a fully populated multi-domain Module catalog, new CLI commands, etc.) as already implemented — a draft first Module package does not mean the catalog is complete
 - Protect the existing `aiosctl sync` contract (`rules/*.md` → consumer `.agents/`) unless a versioned migration is explicitly approved
 
 ---
@@ -106,7 +106,7 @@ These remain later-phase direction only — **not implemented** and not Phase 1 
 - CLI growth beyond `aiosctl sync` (Phase 3)
 - Populated `workflows/`, `skills/`, `knowledge/` and related content (Phases 4–5)
 - Adaptive recommendation design (Phase 6) and any future adaptive **engine** (separate approval)
-- Populated Engineering Module catalog / packaging (Phase 7)
+- Engineering Module catalog / packaging (Phase 7; see that section for current partial progress)
 - Broader validation/automation and ecosystem samples (Phases 8–9)
 
 ---
@@ -369,21 +369,52 @@ Out of scope for Phase 6 (unless separately approved later):
 
 This phase carries forward the **implementation / packaging** slice formerly associated with “Engineering Modules,” after architecture was moved into Phase 2.
 
-Examples of intended Module domains (catalog targets — **not present today**):
+**Status:** In progress — Module catalog foundation established; catalog not fully populated.
 
-- Architecture Engineering
-- Development Engineering
-- Testing & Quality Engineering
-- Security Engineering
-- DevOps & Cloud Engineering
-- Data Engineering
-- Documentation & Governance
+### Completed so far (Phase 7.1–7.9)
+
+| ID | Title | Status | Outcome |
+|----|-------|--------|---------|
+| **7.1** | Module Catalog Discovery | **Completed** | Read-only inventory and first-Module recommendation |
+| **7.2** | Module Catalog Architecture | **Completed** | Catalog conventions; root modules/; PO decisions on IDs/prompts/index |
+| **7.3** | Architecture Engineering Module Design | **Completed** | Design-only for `architecture-engineering` |
+| **7.4** | Initial Module Skeleton | **Completed** | `modules/README.md`; `architecture-engineering` `module.yaml` + README |
+| **7.5** | First Module Skill + doc alignment | **Completed** | Module-local Skill `architecture-boundary-review` (`draft`); Module/catalog README alignment |
+| **7.6** | Roadmap and Project Structure Alignment | **Completed** | ROADMAP and PROJECT_STRUCTURE aligned to the Module catalog foundation; Product Owner accepted |
+| **7.7** | Next-domain prioritization | **Completed** | Candidate Engineering domains evaluated; Development Engineering selected as the next packaged domain |
+| **7.8** | Development Engineering Module | **Completed** | `development-engineering` (`draft` / `experimental` / `0.1.0`); Module-local Skill `implementation-change-hygiene` (`draft`); Module README alignment |
+| **7.9** | Catalog Documentation Alignment | **Completed** | Align ROADMAP, PROJECT_STRUCTURE, and Architecture Related Modules to both existing draft Modules |
+
+### Present today (not a full catalog)
+
+- Catalog index: `modules/README.md` (thin index; not a registry/resolver)
+- Draft Module packages:
+  - `architecture-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); Module-local Skill `architecture-boundary-review` (`draft`, `scope: module`)
+  - `development-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); Module-local Skill `implementation-change-hygiene` (`draft`, `scope: module`)
+- Guidance remains **L6** by default; explicit Consumer adoption → Consumer-owned **L3**
+- Framework Governance remains Core-owned; Consumer architecture/ADRs remain Consumer-owned (**L2**)
+
+### Catalog targets (not all packaged)
+
+Intended Engineering Module domains (two draft packages present today; catalog not complete):
+
+- Architecture Engineering — **present** (`architecture-engineering`, draft)
+- Development Engineering — **present** (`development-engineering`, draft)
+- Testing & Quality Engineering — not packaged
+- Security Engineering — not packaged
+- DevOps & Cloud Engineering — not packaged
+- Data Engineering — not packaged
+- Documentation Engineering — not packaged (narrowed from “Documentation & Governance”; Framework Governance stays Core)
 
 Education materials remain optional **Packs**, not Core identity and not an automatic Module migration.
 
-Module recommendations remain non-binding (**L6**) until a consumer explicitly adopts them as local policy (**L3**).
+### Remaining Phase 7 direction (not claimed done)
 
-**Out of scope unless separately approved:** dependency resolver runtime; auto-install into consumer repositories; breaking sync.
+- Additional Module packages for the domains above (when designed and approved)
+- Further Module-local capabilities only with explicit approval
+- Do **not** treat draft Modules/Skills as stable, active, installed, adopted, or mandatory
+
+**Out of scope unless separately approved:** dependency resolver runtime; auto-install into consumer repositories; Module registry/discovery engine; adaptive recommendation **engine**; breaking sync; new metadata/lifecycle fields.
 
 ---
 
