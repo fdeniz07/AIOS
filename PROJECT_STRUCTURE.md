@@ -31,7 +31,7 @@ Status legend:
 | Layer | Meaning | In this repository today |
 |-------|---------|--------------------------|
 | **Core** | Common engineering foundation | `AGENTS.md`, governance docs, `rules/`, `methodology/`, `scripts/aiosctl.py`, framework docs under `docs/` |
-| **Modules** | Reusable engineering capabilities | **Partial** — thin catalog under `modules/`; six draft packages: `architecture-engineering`, `development-engineering`, `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering` (each `draft` / `experimental`); Module-local Skills `architecture-boundary-review` and `implementation-change-hygiene` (each `draft`); `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering` are skeleton-only (no Module-local Skills yet). Documentation/content only — no Module discovery engine, resolver, installer, or adaptive runtime |
+| **Modules** | Reusable engineering capabilities | **Partial (Phase 7 foundation complete)** — thin catalog under `modules/`; six draft packages: `architecture-engineering`, `development-engineering`, `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering` (each `draft` / `experimental`); Module-local Skills `architecture-boundary-review` and `implementation-change-hygiene` (each `draft`); `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering` are skeleton-only (no Module-local Skills yet). Documentation Engineering is **explicitly deferred** (not packaged). Documentation/content only — no Module discovery engine, resolver, installer, or adaptive runtime |
 | **Packs** | Optional domain / use-case extensions | `packs/education/` (partial) |
 | **Consumer repositories** | Separate projects that adopt AIOS | Outside this repo; own ADRs, roadmaps, policies and implementation |
 
@@ -84,7 +84,7 @@ AIOS/                          # Git repository root
 ├── knowledge/                 # planned – empty (no Core Knowledge example; remains Planned)
 ├── lab/                       # demo – sample FastAPI app for CI
 ├── methodology/               # active
-├── modules/                   # partial – Engineering Module catalog (thin index + six draft Modules)
+├── modules/                   # partial – Phase 7 Engineering Module catalog foundation (thin index + six draft Modules; Documentation Engineering deferred)
 │   ├── README.md              # thin catalog index (not a registry/resolver)
 │   ├── architecture-engineering/
 │   │   ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
@@ -242,7 +242,7 @@ Planned and empty. Reserved for genuinely cross-cutting Core Knowledge when auth
 
 ### `modules/` — **partial** (Engineering Module Catalog)
 
-Thin catalog of optional Engineering Module packages (Phase 7 foundation).
+Thin catalog of optional Engineering Module packages (Phase 7 foundation **complete**; packages remain `draft` / `experimental`).
 
 | Path | Status | Notes |
 |------|--------|-------|
@@ -268,7 +268,7 @@ Thin catalog of optional Engineering Module packages (Phase 7 foundation).
 | `.../module.yaml` | draft metadata | Metadata v1; informational `requires_core: "1.0.1"` — not runtime enforcement |
 | `.../README.md` | draft entry | L6 by default; explicit Consumer adoption → L3; enriches Core data/persistence inventory and data-compatibility checkpoints; migration inspection ≠ execution; data pipeline semantics ≠ DevOps CI/CD; does not fork `repository_analysis`; Consumer data architecture/policy/retention/risk acceptance remain Consumer-owned (**L2**) |
 
-Not present: remaining planned Engineering domain (Documentation); Module validation CLI; dependency resolver; auto-adoption; adaptive Module selection engine.
+Not present: Documentation Engineering Module (**explicitly deferred** — not a Phase 7 open packaging item); Module validation CLI; dependency resolver; auto-adoption; adaptive Module selection engine.
 
 Module guidance does not bind Consumers until explicitly adopted. Framework Governance remains Core-owned.
 
@@ -323,7 +323,7 @@ In **consumer** repositories, `.agents/` is the **destination** of `aiosctl sync
 | Layer | What it is | Examples |
 |-------|------------|----------|
 | **Framework (AIOS Core)** | Reusable governance, methods and tooling entry points | `docs/FRAMEWORK_CONTRACT.md`, `AGENTS.md`, `rules/`, `methodology/`, `scripts/aiosctl.py` |
-| **Modules** | Reusable engineering capabilities (partial catalog; six draft Modules present in repository tree — documentation/content only, not a runtime) | `architecture-engineering` (`draft`) + Skill `architecture-boundary-review` (`draft`); `development-engineering` (`draft`) + Skill `implementation-change-hygiene` (`draft`); `testing-quality-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `security-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `devops-cloud-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `data-engineering` (`draft`, skeleton-only, no Module-local Skill yet); remaining Engineering domain (Documentation) not packaged |
+| **Modules** | Reusable engineering capabilities (partial catalog; six draft Modules present in repository tree — documentation/content only, not a runtime) | `architecture-engineering` (`draft`) + Skill `architecture-boundary-review` (`draft`); `development-engineering` (`draft`) + Skill `implementation-change-hygiene` (`draft`); `testing-quality-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `security-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `devops-cloud-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `data-engineering` (`draft`, skeleton-only, no Module-local Skill yet); Documentation Engineering **explicitly deferred** (not packaged) |
 | **Optional packs** | Domain extensions (L5 when adopted) | `packs/education/` |
 | **Demo** | CI / smoke sample | `lab/aios-demo-api/` |
 | **Consumer repositories** | Separate projects adopting AIOS | Own ADRs (**L2**), local policies (**L3**); may sync `.agents/` from `rules/` |

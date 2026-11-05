@@ -29,4 +29,4 @@ This index lists **only packages that exist** in this repository. It does not du
 
 - Framework Governance remains Core-owned; it is not a Module responsibility.
 - Capability-specific Skills may live inside Module packages when present (for example a draft Skill under `architecture-engineering`). Cross-cutting Core resources remain under root directories such as `methodology/`, `skills/`, and `workflows/`. This index does not list or resolve individual Skills.
-- Planned or undesigned catalog domains are **not** listed here until a package exists.
+- Domains without a package in this repository are **not** listed here. Documentation Engineering is **explicitly deferred** and not packaged.

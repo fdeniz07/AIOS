@@ -106,7 +106,7 @@ These remain later-phase direction only — **not implemented** and not Phase 1 
 - CLI growth beyond `aiosctl sync` (Phase 3)
 - Populated `workflows/`, `skills/`, `knowledge/` and related content (Phases 4–5)
 - Adaptive recommendation design (Phase 6) and any future adaptive **engine** (separate approval)
-- Engineering Module catalog / packaging (Phase 7; see that section for current partial progress)
+- Engineering Module catalog / packaging (Phase 7 — **Completed**; see that section for the six-Module foundation and explicit Documentation Engineering deferral)
 - Broader validation/automation and ecosystem samples (Phases 8–9)
 
 ---
@@ -369,7 +369,7 @@ Out of scope for Phase 6 (unless separately approved later):
 
 This phase carries forward the **implementation / packaging** slice formerly associated with “Engineering Modules,” after architecture was moved into Phase 2.
 
-**Status:** In progress — Module catalog foundation established; catalog not fully populated.
+**Status:** Completed — initial Engineering Module catalog foundation delivered as six `draft` / `experimental` packages; Documentation Engineering explicitly deferred (not packaged); no Module runtime, resolver, installer, or auto-adoption.
 
 ### Completed so far (Phase 7.1–7.30)
 
@@ -405,13 +405,20 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 | **7.35** | Data Engineering Domain Discovery | **Completed** | Read-only; Data Engineering justified; proceed to Module design |
 | **7.36** | Data Engineering Module Design | **Completed** | Design-only; PO approved `data-engineering` skeleton-first (mandatory migration-inspection and pipeline-execution clarifications) |
 
-### Phase 7.37 (current)
+### Phase 7.37
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
 | **7.37** | Data Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; six draft Modules; no Module-local Skills |
 
-### Present today (not a full catalog)
+### Phase 7.38–7.39 (completed)
+
+| ID | Title | Status | Outcome |
+|----|-------|--------|---------|
+| **7.38** | Engineering Module Catalog Final Review | **Completed** | Read-only final validation of the six-Module foundation; Documentation Engineering not justified as a required Phase 7 package |
+| **7.39** | Companion Related Modules Alignment | **Completed** | Documentation-only reciprocal Related Modules alignment across six Module READMEs and ROADMAP 7.37 status; published as `d580367` |
+
+### Present after Phase 7 closure
 
 - Catalog index: `modules/README.md` (thin index; not a registry/resolver)
 - Draft Module packages:
@@ -423,10 +430,11 @@ This phase carries forward the **implementation / packaging** slice formerly ass
   - `data-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
 - Guidance remains **L6** by default; explicit Consumer adoption → Consumer-owned **L3**
 - Framework Governance remains Core-owned; Consumer architecture/ADRs, Consumer testing policies, Consumer security policies / risk acceptance, Consumer infrastructure / deployment policies / SLOs, and Consumer data architecture / data policies / retention / risk acceptance remain Consumer-owned (**L2**)
+- Documentation Engineering is **explicitly deferred** and not packaged in this phase; Education materials remain an optional **Pack**, not a Module.
 
-### Catalog targets (not all packaged)
+### Catalog foundation (Phase 7 closure)
 
-Intended Engineering Module domains (six draft packages present today; catalog not complete):
+Phase 7 closes with the following **initial Engineering Module catalog foundation**. All listed packages remain `draft` / `experimental`. This does **not** claim stable, active, installed, adopted, or mandatory Modules.
 
 - Architecture Engineering — **present** (`architecture-engineering`, draft)
 - Development Engineering — **present** (`development-engineering`, draft)
@@ -434,14 +442,16 @@ Intended Engineering Module domains (six draft packages present today; catalog n
 - Security Engineering — **present** (`security-engineering`, draft)
 - DevOps & Cloud Engineering — **present** (`devops-cloud-engineering`, draft)
 - Data Engineering — **present** (`data-engineering`, draft)
-- Documentation Engineering — not packaged (narrowed from “Documentation & Governance”; Framework Governance stays Core)
+- Documentation Engineering — **explicitly deferred** (not packaged). Narrowed from “Documentation & Governance”; Framework Governance stays Core. No additional Engineering Module is required for Phase 7 closure.
 
 Education materials remain optional **Packs**, not Core identity and not an automatic Module migration.
 
-### Remaining Phase 7 direction (not claimed done)
+### After Phase 7 (not Phase 7 incomplete work)
 
-- Additional Module packages for the domains above (when designed and approved)
-- Further Module-local capabilities only with explicit approval
+Phase 7 packaging scope is closed. The following remain **later / separately approved** work — not open Phase 7 checklist items:
+
+- Further Module-local capabilities (Skills, etc.) only with explicit approval
+- Any future Documentation Engineering Module design/packaging only with explicit Product Owner approval (currently **deferred**)
 - Do **not** treat draft Modules/Skills as stable, active, installed, adopted, or mandatory
 
 **Out of scope unless separately approved:** dependency resolver runtime; auto-install into consumer repositories; Module registry/discovery engine; adaptive recommendation **engine**; breaking sync; new metadata/lifecycle fields.
