@@ -21,6 +21,7 @@ This index lists **only packages that exist** in this repository. It does not du
 | `architecture-engineering` | Architecture Engineering | `draft` | Guidance for understanding, reviewing, and supporting durable software architecture decisions without imposing a product architecture on consumers. | [`architecture-engineering/`](architecture-engineering/) |
 | `development-engineering` | Development Engineering | `draft` | Optional stack-agnostic guidance for disciplined implementation within an already agreed scope, without replacing Core workflows or imposing coding standards. | [`development-engineering/`](development-engineering/) |
 | `testing-quality-engineering` | Testing & Quality Engineering | `draft` | Optional stack-agnostic guidance for risk-proportionate testing and validation evidence, without replacing Core workflows or mandating test tools. | [`testing-quality-engineering/`](testing-quality-engineering/) |
+| `security-engineering` | Security Engineering | `draft` | Optional stack-agnostic guidance for change-scoped security engineering—threat awareness, secrets hygiene, and supply-chain review areas—without certification, penetration testing, or risk-acceptance authority. | [`security-engineering/`](security-engineering/) |
 
 ## Notes
 

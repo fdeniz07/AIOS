@@ -371,7 +371,7 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 
 **Status:** In progress — Module catalog foundation established; catalog not fully populated.
 
-### Completed so far (Phase 7.1–7.17)
+### Completed so far (Phase 7.1–7.27)
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
@@ -387,12 +387,15 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 | **7.15** | Testing & Quality Engineering Discovery | **Completed** | Read-only inventory; T&Q next-domain recommendation |
 | **7.16** | Testing & Quality Engineering Module Design | **Completed** | Design-only; PO approved `testing-quality-engineering` skeleton-first |
 | **7.17** | Testing & Quality Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; no Skills |
+| **7.18** | Catalog Documentation Alignment | **Completed** | Align ROADMAP and PROJECT_STRUCTURE to three draft Modules (`architecture-engineering`, `development-engineering`, `testing-quality-engineering`) |
+| **7.26** | Next-domain discovery | **Completed** | Candidate remaining domains evaluated; Security Engineering recommended as next packaged domain |
+| **7.27** | Security Engineering Module Design | **Completed** | Design-only; PO approved `security-engineering` skeleton-first |
 
-### Phase 7.18 (current)
+### Phase 7.28 (current)
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
-| **7.18** | Catalog Documentation Alignment | **Completed** | Align ROADMAP and PROJECT_STRUCTURE to three draft Modules (`architecture-engineering`, `development-engineering`, `testing-quality-engineering`) |
+| **7.28** | Security Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; four draft Modules; no Module-local Skills |
 
 ### Present today (not a full catalog)
 
@@ -401,17 +404,18 @@ This phase carries forward the **implementation / packaging** slice formerly ass
   - `architecture-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); Module-local Skill `architecture-boundary-review` (`draft`, `scope: module`)
   - `development-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); Module-local Skill `implementation-change-hygiene` (`draft`, `scope: module`)
   - `testing-quality-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
+  - `security-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
 - Guidance remains **L6** by default; explicit Consumer adoption → Consumer-owned **L3**
-- Framework Governance remains Core-owned; Consumer architecture/ADRs and Consumer testing policies remain Consumer-owned (**L2**)
+- Framework Governance remains Core-owned; Consumer architecture/ADRs, Consumer testing policies, and Consumer security policies / risk acceptance remain Consumer-owned (**L2**)
 
 ### Catalog targets (not all packaged)
 
-Intended Engineering Module domains (three draft packages present today; catalog not complete):
+Intended Engineering Module domains (four draft packages present today; catalog not complete):
 
 - Architecture Engineering — **present** (`architecture-engineering`, draft)
 - Development Engineering — **present** (`development-engineering`, draft)
 - Testing & Quality Engineering — **present** (`testing-quality-engineering`, draft)
-- Security Engineering — not packaged
+- Security Engineering — **present** (`security-engineering`, draft)
 - DevOps & Cloud Engineering — not packaged
 - Data Engineering — not packaged
 - Documentation Engineering — not packaged (narrowed from “Documentation & Governance”; Framework Governance stays Core)

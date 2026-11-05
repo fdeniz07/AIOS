@@ -1,0 +1,30 @@
+id: security-engineering
+version: 0.1.0
+title: Security Engineering
+summary: >
+  Optional stack-agnostic guidance for change-scoped security engineering—
+  threat awareness, secrets hygiene, and supply-chain review areas—without
+  certification, penetration testing, or risk-acceptance authority.
+
+status: draft
+maturity: experimental
+
+applies_when:
+  - A change may affect trust boundaries, secrets handling, or dependency/supply-chain surface
+  - Security review-area identification is requested for a scoped change
+  - Release or review security/dependency checkpoints need supporting analysis
+avoid_when:
+  - The primary need is architecture boundary redesign
+  - The primary need is implementation change hygiene or validation evidence honesty
+  - Penetration testing, formal audit, or compliance certification is requested
+  - The consumer forbids external security guidance by policy
+
+tags:
+  - security
+  - secrets-hygiene
+  - supply-chain
+provides:
+  - change-scoped-security-review-guidance
+  - secrets-and-supply-chain-awareness
+
+requires_core: "1.0.1"
