@@ -296,8 +296,9 @@ Do not assume Security Engineering is installed or adopted because this package 
 - [`development-engineering`](../development-engineering/) — companion for implementation change hygiene (docs-only; not a hard dependency)
 - [`testing-quality-engineering`](../testing-quality-engineering/) — companion for validation strategy and evidence honesty (docs-only; not a hard dependency)
 - [`security-engineering`](../security-engineering/) — companion for threat, secrets, and supply-chain awareness (docs-only; not a hard dependency)
+- [`data-engineering`](../data-engineering/) — companion for data-pipeline **semantics** and schema/contract impact (docs-only; not a hard dependency). This Module retains CI/CD, environment promotion, IaC **inspection**, and operational readiness; Data Engineering does **not** own delivery pipelines and does **not** authorize migration or job execution. Data pipeline semantics ≠ CI/CD ownership. IaC inspection remains distinct from execution.
 
-Other Engineering domains are not listed here until packages exist.
+Documentation Engineering is not listed until a package exists.
 
 ---
 

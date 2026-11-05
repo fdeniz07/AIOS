@@ -305,7 +305,7 @@ Do not assume DevOps & Cloud Engineering is installed or adopted because this pa
 - [`security-engineering`](../security-engineering/) — companion for threat, sensitive-data, and secrets awareness (docs-only; not a hard dependency)
 - [`devops-cloud-engineering`](../devops-cloud-engineering/) — companion for delivery-pipeline and operational practices (docs-only; not a hard dependency). Data pipeline semantics remain distinct from CI/CD ownership; no job/pipeline execution authority is transferred.
 
-Other Engineering domains are not listed here until packages exist.
+Documentation Engineering is not listed until a package exists.
 
 ---
 

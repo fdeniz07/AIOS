@@ -173,8 +173,10 @@ Do not assume Development Engineering is installed or adopted because this packa
 - [`architecture-engineering`](../architecture-engineering/) — companion for architecture-boundary guidance (docs-only; not a hard dependency)
 - [`development-engineering`](../development-engineering/) — companion for implementation change hygiene (docs-only; not a hard dependency)
 - [`devops-cloud-engineering`](../devops-cloud-engineering/) — companion for CI/CD pipeline structure, environment promotion, and operational readiness (docs-only; not a hard dependency). This Module retains ownership of risk-proportionate test strategy and validation evidence honesty; DevOps & Cloud does **not** own test strategy, test execution policy, coverage interpretation, or Feature Development Stage 7.
+- [`security-engineering`](../security-engineering/) — Security Engineering complements validation with change-scoped security observations. It does not replace this Module's validation strategy or evidence-honesty guidance, and does not grant certification or penetration-testing authority.
+- [`data-engineering`](../data-engineering/) — Data Engineering complements testing with data-quality criteria awareness. It does not replace this Module's test strategy or authorize test execution.
 
-Other Engineering domains are not listed here until packages exist.
+Documentation Engineering is not listed until a package exists.
 
 ---
 

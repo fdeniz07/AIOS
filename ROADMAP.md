@@ -409,7 +409,7 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
-| **7.37** | Data Engineering Skeleton | **In Progress** | `module.yaml` + README; catalog index row; six draft Modules; no Module-local Skills |
+| **7.37** | Data Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; six draft Modules; no Module-local Skills |
 
 ### Present today (not a full catalog)
 
