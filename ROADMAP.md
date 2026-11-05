@@ -371,7 +371,7 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 
 **Status:** In progress — Module catalog foundation established; catalog not fully populated.
 
-### Completed so far (Phase 7.1–7.27)
+### Completed so far (Phase 7.1–7.30)
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
@@ -390,12 +390,15 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 | **7.18** | Catalog Documentation Alignment | **Completed** | Align ROADMAP and PROJECT_STRUCTURE to three draft Modules (`architecture-engineering`, `development-engineering`, `testing-quality-engineering`) |
 | **7.26** | Next-domain discovery | **Completed** | Candidate remaining domains evaluated; Security Engineering recommended as next packaged domain |
 | **7.27** | Security Engineering Module Design | **Completed** | Design-only; PO approved `security-engineering` skeleton-first |
+| **7.28** | Security Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; four draft Modules; no Module-local Skills |
+| **7.29** | DevOps & Cloud Engineering Domain Discovery | **Completed** | Read-only inventory; DevOps & Cloud recommended as next packaged domain |
+| **7.30** | DevOps & Cloud Engineering Module Design | **Completed** | Design-only; PO approved `devops-cloud-engineering` skeleton-first |
 
-### Phase 7.28 (current)
+### Phase 7.31 (current)
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
-| **7.28** | Security Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; four draft Modules; no Module-local Skills |
+| **7.31** | DevOps & Cloud Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; five draft Modules; no Module-local Skills |
 
 ### Present today (not a full catalog)
 
@@ -405,18 +408,19 @@ This phase carries forward the **implementation / packaging** slice formerly ass
   - `development-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); Module-local Skill `implementation-change-hygiene` (`draft`, `scope: module`)
   - `testing-quality-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
   - `security-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
+  - `devops-cloud-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
 - Guidance remains **L6** by default; explicit Consumer adoption → Consumer-owned **L3**
-- Framework Governance remains Core-owned; Consumer architecture/ADRs, Consumer testing policies, and Consumer security policies / risk acceptance remain Consumer-owned (**L2**)
+- Framework Governance remains Core-owned; Consumer architecture/ADRs, Consumer testing policies, Consumer security policies / risk acceptance, and Consumer infrastructure / deployment policies / SLOs remain Consumer-owned (**L2**)
 
 ### Catalog targets (not all packaged)
 
-Intended Engineering Module domains (four draft packages present today; catalog not complete):
+Intended Engineering Module domains (five draft packages present today; catalog not complete):
 
 - Architecture Engineering — **present** (`architecture-engineering`, draft)
 - Development Engineering — **present** (`development-engineering`, draft)
 - Testing & Quality Engineering — **present** (`testing-quality-engineering`, draft)
 - Security Engineering — **present** (`security-engineering`, draft)
-- DevOps & Cloud Engineering — not packaged
+- DevOps & Cloud Engineering — **present** (`devops-cloud-engineering`, draft)
 - Data Engineering — not packaged
 - Documentation Engineering — not packaged (narrowed from “Documentation & Governance”; Framework Governance stays Core)
 

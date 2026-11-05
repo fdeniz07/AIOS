@@ -125,10 +125,11 @@ Companion relationships are documentation-only. Metadata v1 has no Module-to-Mod
 | **This Module** | Boundaries, structural fit, and architecture decision **support** (Consumer still owns ADRs) |
 | [`../development-engineering/`](../development-engineering/) | Implementation discipline within an **already agreed** scope |
 | [`../testing-quality-engineering/`](../testing-quality-engineering/) | Risk-proportionate testing strategy and validation evidence (complementary; docs-only) |
+| [`../devops-cloud-engineering/`](../devops-cloud-engineering/) | Delivery, infrastructure, environment promotion, and operational-readiness guidance (docs-only) |
 
-This Module retains ownership of architecture boundaries and structural design concerns. Companion Modules do not take over that scope.
+This Module retains ownership of architecture boundaries and structural design concerns. Companion Modules do not take over that scope. DevOps & Cloud Engineering may discuss operational implications; it does **not** own cloud topology or architecture decisions. Cloud topology and architecture decisions remain Consumer-owned (**L2**).
 
-Do not assume Development Engineering or Testing & Quality Engineering is installed or adopted because this package references them. When implementation-scope or change-hygiene questions dominate and architecture boundaries are already clear, prefer Development Engineering. When validation strategy or evidence-honesty questions dominate, prefer Testing & Quality Engineering. Other Engineering domains may be referenced here when those packages exist — without implying hard dependencies.
+Do not assume Development Engineering, Testing & Quality Engineering, or DevOps & Cloud Engineering is installed or adopted because this package references them. When implementation-scope or change-hygiene questions dominate and architecture boundaries are already clear, prefer Development Engineering. When validation strategy or evidence-honesty questions dominate, prefer Testing & Quality Engineering. When delivery-pipeline, infrastructure, environment-promotion, or operational-readiness questions dominate, prefer [`devops-cloud-engineering`](../devops-cloud-engineering/). Other Engineering domains may be referenced here when those packages exist — without implying hard dependencies.
 
 ---
 

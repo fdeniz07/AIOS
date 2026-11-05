@@ -39,7 +39,7 @@ In scope for this Module’s guidance surface:
 | Architecture-boundary guidance | **Architecture Engineering** — [`../architecture-engineering/`](../architecture-engineering/) |
 | Product architecture, ADRs, coding standards | **Consumer** (**L2** / local policy) |
 | Testing strategy | Not this Module — [`../testing-quality-engineering/`](../testing-quality-engineering/) (Testing & Quality Engineering) |
-| Security Engineering | Not this Module (future Security domain, if packaged) |
+| Security Engineering | Not this Module — Security Engineering does not provide certification, penetration-testing, or formal audit authority |
 | Release Workflow | **Core** — [`../../workflows/release.md`](../../workflows/release.md) |
 
 Out of scope:
@@ -148,6 +148,7 @@ Companion relationships are **documentation-only**. Metadata v1 has no Module-to
 
 - [`architecture-engineering`](../architecture-engineering/) — companion for architecture-boundary guidance (docs-only; not a hard dependency). This Module retains ownership of implementation discipline and change hygiene.
 - [`testing-quality-engineering`](../testing-quality-engineering/) — complementary companion for risk-proportionate testing strategy and validation evidence (docs-only; not a hard dependency). This Module does **not** own testing strategy or validation methodology.
+- [`devops-cloud-engineering`](../devops-cloud-engineering/) — companion for delivery-pipeline, infrastructure, and operational domain practices (docs-only; not a hard dependency). This Module does **not** own reusable delivery/ops guidance and does **not** replace Core Feature Development Workflow; DevOps & Cloud does **not** replace implementation-change-hygiene.
 
 Do not assume companion Modules are installed or adopted because this package references them. Other Engineering domains are not listed here until packages exist.
 

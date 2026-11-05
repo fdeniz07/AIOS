@@ -22,6 +22,7 @@ This index lists **only packages that exist** in this repository. It does not du
 | `development-engineering` | Development Engineering | `draft` | Optional stack-agnostic guidance for disciplined implementation within an already agreed scope, without replacing Core workflows or imposing coding standards. | [`development-engineering/`](development-engineering/) |
 | `testing-quality-engineering` | Testing & Quality Engineering | `draft` | Optional stack-agnostic guidance for risk-proportionate testing and validation evidence, without replacing Core workflows or mandating test tools. | [`testing-quality-engineering/`](testing-quality-engineering/) |
 | `security-engineering` | Security Engineering | `draft` | Optional stack-agnostic guidance for change-scoped security engineering—threat awareness, secrets hygiene, and supply-chain review areas—without certification, penetration testing, or risk-acceptance authority. | [`security-engineering/`](security-engineering/) |
+| `devops-cloud-engineering` | DevOps & Cloud Engineering | `draft` | Optional stack-agnostic guidance for change-scoped delivery and operational engineering—CI/CD hygiene, environment promotion, infrastructure practices, and operational readiness—without deployment authority, cloud access, or vendor mandates. | [`devops-cloud-engineering/`](devops-cloud-engineering/) |
 
 ## Notes
 

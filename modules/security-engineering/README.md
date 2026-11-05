@@ -190,6 +190,7 @@ Do not assume Testing & Quality Engineering is installed or adopted because this
 - [`architecture-engineering`](../architecture-engineering/) — companion for architecture-boundary guidance (docs-only; not a hard dependency)
 - [`development-engineering`](../development-engineering/) — companion for implementation change hygiene (docs-only; not a hard dependency)
 - [`testing-quality-engineering`](../testing-quality-engineering/) — companion for validation strategy and evidence honesty (docs-only; not a hard dependency)
+- [`devops-cloud-engineering`](../devops-cloud-engineering/) — companion for delivery-pipeline security hygiene and operational delivery practices (docs-only; not a hard dependency). This Module retains ownership of change-scoped threat, secrets, and supply-chain **awareness**; DevOps & Cloud addresses how security hygiene is handled **within delivery pipelines**. Core **L0** remains authoritative. No secret-store access, secret exposure, scanner execution, or security certification authority is transferred.
 
 Other Engineering domains are not listed here until packages exist.
 

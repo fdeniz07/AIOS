@@ -1,0 +1,33 @@
+id: devops-cloud-engineering
+version: 0.1.0
+title: DevOps & Cloud Engineering
+summary: >
+  Optional stack-agnostic guidance for change-scoped delivery and
+  operational engineering—CI/CD hygiene, environment promotion,
+  infrastructure practices, and operational readiness—without
+  deployment authority, cloud access, or vendor mandates.
+
+status: draft
+maturity: experimental
+
+applies_when:
+  - A change affects CI/CD pipelines, environments, infrastructure-as-code, containers, or operational readiness
+  - Delivery, environment promotion, or infrastructure review guidance is requested for a scoped change
+  - Release publication or deployment steps need supporting operational analysis without replacing Core Release
+avoid_when:
+  - The primary need is architecture boundary redesign
+  - The primary need is implementation change hygiene, validation evidence, or security threat review
+  - Cloud account access, production deployment execution, or infrastructure apply is requested
+  - The Consumer forbids external DevOps or Cloud guidance by policy
+
+tags:
+  - devops
+  - cloud
+  - cicd
+  - infrastructure
+  - operations
+provides:
+  - change-scoped-delivery-ops-guidance
+  - cicd-and-environment-hygiene-awareness
+
+requires_core: "1.0.1"

@@ -52,8 +52,8 @@ In scope for this Module’s guidance surface:
 | Architecture-boundary guidance | **Architecture Engineering** — [`../architecture-engineering/`](../architecture-engineering/) |
 | Implementation discipline and change hygiene | **Development Engineering** — [`../development-engineering/`](../development-engineering/) |
 | Testing policies, coverage thresholds, mandatory tools | **Consumer** (**L2** / local policy) |
-| Security certification / penetration testing | Not this Module (future Security domain, if packaged) |
-| CI/CD platform setup and deployment pipelines | Not this Module (future DevOps & Cloud domain, if packaged) |
+| Security certification / penetration testing | Not this Module — Security Engineering does not provide certification, penetration-testing, or formal audit authority |
+| CI/CD pipeline structure and delivery/operational guidance | Not this Module — see [DevOps & Cloud Engineering](../devops-cloud-engineering/) (does not grant platform setup, deployment execution, or tool-selection authority) |
 
 Out of scope:
 
@@ -81,7 +81,7 @@ Out of scope:
 
 - The primary need is architecture boundary or structural-fit assessment — use Architecture Engineering / Core repository analysis
 - The primary need is implementation scope fidelity or change hygiene — use Development Engineering
-- The work is release publish, tag, or deploy platform setup — use Core Release Workflow / future DevOps guidance
+- The work is release publish, tag, or deploy platform setup — use Core Release Workflow / [`devops-cloud-engineering`](../devops-cloud-engineering/) for delivery and operational engineering guidance (this Module does **not** own pipeline structure, environment promotion, or operational readiness)
 - Documentation-only typos with no behavior or validation surface
 - The Consumer forbids external testing guidance by policy
 - Anyone expects this Module to run tests, set coverage gates, or authorize commits
@@ -172,6 +172,7 @@ Do not assume Development Engineering is installed or adopted because this packa
 
 - [`architecture-engineering`](../architecture-engineering/) — companion for architecture-boundary guidance (docs-only; not a hard dependency)
 - [`development-engineering`](../development-engineering/) — companion for implementation change hygiene (docs-only; not a hard dependency)
+- [`devops-cloud-engineering`](../devops-cloud-engineering/) — companion for CI/CD pipeline structure, environment promotion, and operational readiness (docs-only; not a hard dependency). This Module retains ownership of risk-proportionate test strategy and validation evidence honesty; DevOps & Cloud does **not** own test strategy, test execution policy, coverage interpretation, or Feature Development Stage 7.
 
 Other Engineering domains are not listed here until packages exist.
 
