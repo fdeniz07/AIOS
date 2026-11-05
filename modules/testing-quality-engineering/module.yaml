@@ -1,0 +1,29 @@
+id: testing-quality-engineering
+version: 0.1.0
+title: Testing & Quality Engineering
+summary: >
+  Optional stack-agnostic guidance for risk-proportionate testing and
+  validation evidence, without replacing Core workflows or mandating test tools.
+
+status: draft
+maturity: experimental
+
+applies_when:
+  - A change needs risk-proportionate test strategy or validation planning
+  - Validation claims need honest evidence versus unrun checks
+  - Critical-path or regression selection guidance is requested
+avoid_when:
+  - The primary need is architecture boundary assessment
+  - The primary need is implementation scope or change-hygiene review
+  - The work is release publication or deployment platform setup
+  - The consumer forbids external testing guidance by policy
+
+tags:
+  - testing
+  - quality
+  - validation
+provides:
+  - test-strategy-guidance
+  - validation-evidence-honesty
+
+requires_core: "1.0.1"

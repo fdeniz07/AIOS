@@ -38,7 +38,7 @@ In scope for this Module’s guidance surface:
 | Framework Governance and AGENTS.md §8 | **Core** |
 | Architecture-boundary guidance | **Architecture Engineering** — [`../architecture-engineering/`](../architecture-engineering/) |
 | Product architecture, ADRs, coding standards | **Consumer** (**L2** / local policy) |
-| Testing strategy | Not this Module (future Testing & Quality domain, if packaged) |
+| Testing strategy | Not this Module — [`../testing-quality-engineering/`](../testing-quality-engineering/) (Testing & Quality Engineering) |
 | Security Engineering | Not this Module (future Security domain, if packaged) |
 | Release Workflow | **Core** — [`../../workflows/release.md`](../../workflows/release.md) |
 
@@ -144,9 +144,12 @@ Do not assume Architecture Engineering is installed or adopted because this pack
 
 ## Related Modules
 
-- [`architecture-engineering`](../architecture-engineering/) — companion for architecture-boundary guidance (docs-only; not a hard dependency)
+Companion relationships are **documentation-only**. Metadata v1 has no Module-to-Module `dependencies` field. Presence of a companion package does **not** install, adopt, or enable either Module.
 
-Other Engineering domains are not listed here until packages exist.
+- [`architecture-engineering`](../architecture-engineering/) — companion for architecture-boundary guidance (docs-only; not a hard dependency). This Module retains ownership of implementation discipline and change hygiene.
+- [`testing-quality-engineering`](../testing-quality-engineering/) — complementary companion for risk-proportionate testing strategy and validation evidence (docs-only; not a hard dependency). This Module does **not** own testing strategy or validation methodology.
+
+Do not assume companion Modules are installed or adopted because this package references them. Other Engineering domains are not listed here until packages exist.
 
 ---
 

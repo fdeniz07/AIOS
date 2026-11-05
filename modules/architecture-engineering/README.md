@@ -124,8 +124,11 @@ Companion relationships are documentation-only. Metadata v1 has no Module-to-Mod
 |--------|----------------|
 | **This Module** | Boundaries, structural fit, and architecture decision **support** (Consumer still owns ADRs) |
 | [`../development-engineering/`](../development-engineering/) | Implementation discipline within an **already agreed** scope |
+| [`../testing-quality-engineering/`](../testing-quality-engineering/) | Risk-proportionate testing strategy and validation evidence (complementary; docs-only) |
 
-Do not assume Development Engineering is installed or adopted because this package references it. When implementation-scope or change-hygiene questions dominate and architecture boundaries are already clear, prefer that companion. Other Engineering domains may be referenced here when those packages exist — without implying hard dependencies.
+This Module retains ownership of architecture boundaries and structural design concerns. Companion Modules do not take over that scope.
+
+Do not assume Development Engineering or Testing & Quality Engineering is installed or adopted because this package references them. When implementation-scope or change-hygiene questions dominate and architecture boundaries are already clear, prefer Development Engineering. When validation strategy or evidence-honesty questions dominate, prefer Testing & Quality Engineering. Other Engineering domains may be referenced here when those packages exist — without implying hard dependencies.
 
 ---
 
