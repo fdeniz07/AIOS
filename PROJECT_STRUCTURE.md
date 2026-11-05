@@ -1,6 +1,6 @@
 # AIOS Project Structure
 
-Version: 1.3.4
+Version: 1.3.5
 
 Status: Active
 
@@ -31,7 +31,7 @@ Status legend:
 | Layer | Meaning | In this repository today |
 |-------|---------|--------------------------|
 | **Core** | Common engineering foundation | `AGENTS.md`, governance docs, `rules/`, `methodology/`, `scripts/aiosctl.py`, framework docs under `docs/` |
-| **Modules** | Reusable engineering capabilities | **Partial** — thin catalog under `modules/`; five draft packages: `architecture-engineering`, `development-engineering`, `testing-quality-engineering`, `security-engineering`, and `devops-cloud-engineering` (each `draft` / `experimental`); Module-local Skills `architecture-boundary-review` and `implementation-change-hygiene` (each `draft`); `testing-quality-engineering`, `security-engineering`, and `devops-cloud-engineering` are skeleton-only (no Module-local Skills yet). Documentation/content only — no Module discovery engine, resolver, installer, or adaptive runtime |
+| **Modules** | Reusable engineering capabilities | **Partial** — thin catalog under `modules/`; six draft packages: `architecture-engineering`, `development-engineering`, `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering` (each `draft` / `experimental`); Module-local Skills `architecture-boundary-review` and `implementation-change-hygiene` (each `draft`); `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering` are skeleton-only (no Module-local Skills yet). Documentation/content only — no Module discovery engine, resolver, installer, or adaptive runtime |
 | **Packs** | Optional domain / use-case extensions | `packs/education/` (partial) |
 | **Consumer repositories** | Separate projects that adopt AIOS | Outside this repo; own ADRs, roadmaps, policies and implementation |
 
@@ -84,7 +84,7 @@ AIOS/                          # Git repository root
 ├── knowledge/                 # planned – empty (no Core Knowledge example; remains Planned)
 ├── lab/                       # demo – sample FastAPI app for CI
 ├── methodology/               # active
-├── modules/                   # partial – Engineering Module catalog (thin index + five draft Modules)
+├── modules/                   # partial – Engineering Module catalog (thin index + six draft Modules)
 │   ├── README.md              # thin catalog index (not a registry/resolver)
 │   ├── architecture-engineering/
 │   │   ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
@@ -102,7 +102,10 @@ AIOS/                          # Git repository root
 │   ├── security-engineering/
 │   │   ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
 │   │   └── README.md          # Module entry (L6 guidance; not adoption)
-│   └── devops-cloud-engineering/
+│   ├── devops-cloud-engineering/
+│   │   ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
+│   │   └── README.md          # Module entry (L6 guidance; not adoption)
+│   └── data-engineering/
 │       ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
 │       └── README.md          # Module entry (L6 guidance; not adoption)
 ├── packs/                     # partial – optional packs
@@ -261,8 +264,11 @@ Thin catalog of optional Engineering Module packages (Phase 7 foundation).
 | `modules/devops-cloud-engineering/` | partial / draft | Engineering Module; `status: draft`, `maturity: experimental`, `version: 0.1.0`; skeleton-only (no Module-local Skills) |
 | `.../module.yaml` | draft metadata | Metadata v1; informational `requires_core: "1.0.1"` — not runtime enforcement |
 | `.../README.md` | draft entry | L6 by default; explicit Consumer adoption → L3; enriches Core Release/ops practice; IaC inspection ≠ execution; does not replace Core Release or AIOS CI; Consumer infrastructure/deployment/SLO decisions remain Consumer-owned (**L2**) |
+| `modules/data-engineering/` | partial / draft | Engineering Module; `status: draft`, `maturity: experimental`, `version: 0.1.0`; skeleton-only (no Module-local Skills) |
+| `.../module.yaml` | draft metadata | Metadata v1; informational `requires_core: "1.0.1"` — not runtime enforcement |
+| `.../README.md` | draft entry | L6 by default; explicit Consumer adoption → L3; enriches Core data/persistence inventory and data-compatibility checkpoints; migration inspection ≠ execution; data pipeline semantics ≠ DevOps CI/CD; does not fork `repository_analysis`; Consumer data architecture/policy/retention/risk acceptance remain Consumer-owned (**L2**) |
 
-Not present: remaining planned Engineering domains (Data, Documentation); Module validation CLI; dependency resolver; auto-adoption; adaptive Module selection engine.
+Not present: remaining planned Engineering domain (Documentation); Module validation CLI; dependency resolver; auto-adoption; adaptive Module selection engine.
 
 Module guidance does not bind Consumers until explicitly adopted. Framework Governance remains Core-owned.
 
@@ -270,7 +276,7 @@ Module guidance does not bind Consumers until explicitly adopted. Framework Gove
 
 Populated with the initial Core Skill definition `repository_analysis.md` (`id` `repository-analysis`). Directory population does **not** mean the Skill lifecycle is `active` or that a complete Skill catalog exists. Artifact lifecycle remains **`draft`** (`version` `0.1.0`). Authoring conventions remain Draft.
 
-- Capability-specific Skills/Knowledge prefer Module-local placement **when Module packages exist** (prefer Module-local paths under existing packages such as `modules/architecture-engineering/`, `modules/development-engineering/`, `modules/testing-quality-engineering/`, `modules/security-engineering/`, or `modules/devops-cloud-engineering/`; do not invent undeclared Module trees).
+- Capability-specific Skills/Knowledge prefer Module-local placement **when Module packages exist** (prefer Module-local paths under existing packages such as `modules/architecture-engineering/`, `modules/development-engineering/`, `modules/testing-quality-engineering/`, `modules/security-engineering/`, `modules/devops-cloud-engineering/`, or `modules/data-engineering/`; do not invent undeclared Module trees).
 - Not a Skill runner, Knowledge retrieval/RAG engine, or automated recommendation service.
 
 ### `generators/`, `tests/` — **planned**
@@ -317,7 +323,7 @@ In **consumer** repositories, `.agents/` is the **destination** of `aiosctl sync
 | Layer | What it is | Examples |
 |-------|------------|----------|
 | **Framework (AIOS Core)** | Reusable governance, methods and tooling entry points | `docs/FRAMEWORK_CONTRACT.md`, `AGENTS.md`, `rules/`, `methodology/`, `scripts/aiosctl.py` |
-| **Modules** | Reusable engineering capabilities (partial catalog; five draft Modules present in repository tree — documentation/content only, not a runtime) | `architecture-engineering` (`draft`) + Skill `architecture-boundary-review` (`draft`); `development-engineering` (`draft`) + Skill `implementation-change-hygiene` (`draft`); `testing-quality-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `security-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `devops-cloud-engineering` (`draft`, skeleton-only, no Module-local Skill yet); remaining Engineering domains not packaged |
+| **Modules** | Reusable engineering capabilities (partial catalog; six draft Modules present in repository tree — documentation/content only, not a runtime) | `architecture-engineering` (`draft`) + Skill `architecture-boundary-review` (`draft`); `development-engineering` (`draft`) + Skill `implementation-change-hygiene` (`draft`); `testing-quality-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `security-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `devops-cloud-engineering` (`draft`, skeleton-only, no Module-local Skill yet); `data-engineering` (`draft`, skeleton-only, no Module-local Skill yet); remaining Engineering domain (Documentation) not packaged |
 | **Optional packs** | Domain extensions (L5 when adopted) | `packs/education/` |
 | **Demo** | CI / smoke sample | `lab/aios-demo-api/` |
 | **Consumer repositories** | Separate projects adopting AIOS | Own ADRs (**L2**), local policies (**L3**); may sync `.agents/` from `rules/` |

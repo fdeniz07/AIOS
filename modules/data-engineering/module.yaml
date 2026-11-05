@@ -1,0 +1,33 @@
+id: data-engineering
+version: 0.1.0
+title: Data Engineering
+summary: >
+  Optional stack-agnostic guidance for change-scoped data engineering—
+  schema evolution, data-contract impact, pipeline semantics, lineage,
+  and data-quality awareness—without migration execution, database
+  access, PII export, or vendor mandates.
+
+status: draft
+maturity: experimental
+
+applies_when:
+  - A change affects schemas, migrations, data contracts, persistence models, or data transformation/job definitions
+  - Schema-evolution, lineage/blast-radius, or data-quality criteria awareness is requested for a scoped change
+  - Support is needed alongside Core data-compatibility or irreversibility checkpoints without replacing those gates
+avoid_when:
+  - The primary need is architecture boundary redesign
+  - The primary need is implementation-change hygiene, validation evidence, delivery/ops, or security threat review
+  - Migration execution, live database access, production/PII export, or autonomous data-job execution is requested
+  - The Consumer forbids external data-engineering guidance by policy
+
+tags:
+  - data
+  - schema
+  - lineage
+  - data-quality
+  - persistence
+provides:
+  - change-scoped-data-engineering-guidance
+  - schema-and-data-contract-impact-awareness
+
+requires_core: "1.0.1"

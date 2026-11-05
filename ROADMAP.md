@@ -394,11 +394,22 @@ This phase carries forward the **implementation / packaging** slice formerly ass
 | **7.29** | DevOps & Cloud Engineering Domain Discovery | **Completed** | Read-only inventory; DevOps & Cloud recommended as next packaged domain |
 | **7.30** | DevOps & Cloud Engineering Module Design | **Completed** | Design-only; PO approved `devops-cloud-engineering` skeleton-first |
 
-### Phase 7.31 (current)
+### Phase 7.31–7.36 (completed)
 
 | ID | Title | Status | Outcome |
 |----|-------|--------|---------|
 | **7.31** | DevOps & Cloud Engineering Skeleton | **Completed** | `module.yaml` + README; catalog index row; five draft Modules; no Module-local Skills |
+| **7.32** | Companion Module README Alignment | **Completed** | Documentation-only alignment of Architecture, Development, Testing & Quality and Security companion references for DevOps & Cloud Engineering; no Core or Module authority changes. |
+| **7.33** | Final Pre-Commit Review and Publication | **Completed** | Nine-file Phase 7.31–7.32 change set reviewed, staged, committed and pushed (`f014c2e`). |
+| **7.34** | Engineering Module Catalog Gap Assessment | **Completed** | Read-only; Data Engineering justified as next Module; Documentation Engineering not yet justified as Module |
+| **7.35** | Data Engineering Domain Discovery | **Completed** | Read-only; Data Engineering justified; proceed to Module design |
+| **7.36** | Data Engineering Module Design | **Completed** | Design-only; PO approved `data-engineering` skeleton-first (mandatory migration-inspection and pipeline-execution clarifications) |
+
+### Phase 7.37 (current)
+
+| ID | Title | Status | Outcome |
+|----|-------|--------|---------|
+| **7.37** | Data Engineering Skeleton | **In Progress** | `module.yaml` + README; catalog index row; six draft Modules; no Module-local Skills |
 
 ### Present today (not a full catalog)
 
@@ -409,19 +420,20 @@ This phase carries forward the **implementation / packaging** slice formerly ass
   - `testing-quality-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
   - `security-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
   - `devops-cloud-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
+  - `data-engineering` — `status: draft`, `maturity: experimental`, `version: 0.1.0`; informational `requires_core: "1.0.1"` (not a runtime pin); skeleton only (`module.yaml` + README); no Module-local Skills in this version
 - Guidance remains **L6** by default; explicit Consumer adoption → Consumer-owned **L3**
-- Framework Governance remains Core-owned; Consumer architecture/ADRs, Consumer testing policies, Consumer security policies / risk acceptance, and Consumer infrastructure / deployment policies / SLOs remain Consumer-owned (**L2**)
+- Framework Governance remains Core-owned; Consumer architecture/ADRs, Consumer testing policies, Consumer security policies / risk acceptance, Consumer infrastructure / deployment policies / SLOs, and Consumer data architecture / data policies / retention / risk acceptance remain Consumer-owned (**L2**)
 
 ### Catalog targets (not all packaged)
 
-Intended Engineering Module domains (five draft packages present today; catalog not complete):
+Intended Engineering Module domains (six draft packages present today; catalog not complete):
 
 - Architecture Engineering — **present** (`architecture-engineering`, draft)
 - Development Engineering — **present** (`development-engineering`, draft)
 - Testing & Quality Engineering — **present** (`testing-quality-engineering`, draft)
 - Security Engineering — **present** (`security-engineering`, draft)
 - DevOps & Cloud Engineering — **present** (`devops-cloud-engineering`, draft)
-- Data Engineering — not packaged
+- Data Engineering — **present** (`data-engineering`, draft)
 - Documentation Engineering — not packaged (narrowed from “Documentation & Governance”; Framework Governance stays Core)
 
 Education materials remain optional **Packs**, not Core identity and not an automatic Module migration.
