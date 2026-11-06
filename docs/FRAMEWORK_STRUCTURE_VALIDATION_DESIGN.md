@@ -134,7 +134,7 @@ PO-approved meanings (do not restore any former STR-007–STR-009 interpretation
 | STR-008 | ERROR | Explicit `--root` is missing or is not a directory |
 | STR-009 | ERROR | Explicit root directory does not satisfy the minimum-two-marker candidate rule |
 
-`category` is always `framework-structure`.  
+`category` is always `framework-structure`.
 `code` and `rule` both use the STR id (for example `STR-001`) so duplicate identity `(rule, path)` remains stable.
 
 | Code | Severity | Trigger | Message (canonical) | Suggestion (canonical) |
