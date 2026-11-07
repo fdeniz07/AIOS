@@ -1,7 +1,7 @@
 """CLI entry point: ``python -m validation``.
 
 Independent of ``python scripts/aiosctl.py``.
-Phase 8.2 registers Framework Structure Validation by default.
+Registers Framework Structure Validation and Module Contract Validation.
 """
 
 from __future__ import annotations
@@ -12,13 +12,15 @@ from pathlib import Path
 from typing import Optional, Sequence
 
 from .framework_structure import make_framework_structure_runner
+from .module_contract import make_module_contract_runner
 from .orchestrator import Orchestrator
 from .reporter import format_report
 
 _BANNER = """\
 AIOS validation
-Registered validator: framework-structure (Framework Structure Validation)
-Module contract validation and documentation integrity are NOT performed.
+Registered validators: framework-structure (Framework Structure Validation), \
+module-contract (Module Contract Validation)
+Documentation integrity and Pack validation are NOT performed.
 """
 
 
@@ -26,11 +28,15 @@ def build_default_orchestrator(
     *,
     explicit_root: Optional[Path] = None,
 ) -> Orchestrator:
-    """Return the default orchestrator with Framework Structure Validation."""
+    """Return the default orchestrator with Structure + Module Contract validators."""
     orchestrator = Orchestrator()
     orchestrator.register(
         "framework-structure",
         make_framework_structure_runner(explicit_root=explicit_root),
+    )
+    orchestrator.register(
+        "module-contract",
+        make_module_contract_runner(explicit_root=explicit_root),
     )
     return orchestrator
 
@@ -40,7 +46,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         prog="python -m validation",
         description=(
             "AIOS validation. "
-            "Runs Framework Structure Validation by default."
+            "Runs Framework Structure Validation and Module Contract Validation "
+            "by default."
         ),
     )
     parser.add_argument(
