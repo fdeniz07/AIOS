@@ -1,10 +1,9 @@
-"""AIOS shared validation foundation (Phase 8.1.2).
+"""AIOS validation package.
 
-This package provides finding models, aggregation, orchestration and reporting.
-Domain validators (framework structure, Module contracts, documentation) are
-registered by later phases — they are not included here.
+Shared foundation (Phase 8.1.2) plus Framework Structure Validation (Phase 8.2).
 """
 
+from .framework_structure import validate_framework_structure
 from .models import (
     EXIT_EXECUTION_FAILURE,
     EXIT_OK,
@@ -14,7 +13,7 @@ from .models import (
     ValidationResult,
     aggregate_findings,
 )
-from .orchestrator import Orchestrator, ValidatorSpec
+from .orchestrator import Orchestrator, ValidatorAbortError, ValidatorSpec
 from .reporter import format_report
 
 __all__ = [
@@ -25,9 +24,11 @@ __all__ = [
     "Orchestrator",
     "Severity",
     "ValidationResult",
+    "ValidatorAbortError",
     "ValidatorSpec",
     "aggregate_findings",
     "format_report",
+    "validate_framework_structure",
 ]
 
 __version__ = "0.1.0"

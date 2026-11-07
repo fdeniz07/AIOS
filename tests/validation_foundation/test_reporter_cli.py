@@ -65,13 +65,14 @@ def test_format_report_execution_failure():
     assert "exit_code=2\n" in text
 
 
-def test_cli_main_no_validators_no_misleading_success(capsys):
-    code = validation_main.main([])
+def test_cli_main_registers_framework_structure_no_misleading_claims(capsys):
+    code = validation_main.main(["--root", str(REPO_ROOT)])
     captured = capsys.readouterr()
     assert code == 0
-    assert "No domain validators are registered" in captured.out
+    assert "framework-structure" in captured.out
+    assert "Framework Structure Validation" in captured.out
     assert "NOT performed" in captured.out
-    assert "not a comprehensive repository validation" in captured.out
+    assert "No domain validators are registered" not in captured.out
     assert "No findings." in captured.out
     assert "exit_code=0" in captured.out
     assert "validation passed" not in captured.out.lower()
@@ -80,13 +81,14 @@ def test_cli_main_no_validators_no_misleading_success(capsys):
 
 def test_python_m_validation_subprocess():
     proc = subprocess.run(
-        [sys.executable, "-m", "validation"],
+        [sys.executable, "-m", "validation", "--root", str(REPO_ROOT)],
         cwd=str(REPO_ROOT),
         capture_output=True,
         text=True,
         check=False,
     )
     assert proc.returncode == 0
-    assert "No domain validators are registered" in proc.stdout
+    assert "framework-structure" in proc.stdout
+    assert "Framework Structure Validation" in proc.stdout
     assert "NOT performed" in proc.stdout
     assert "exit_code=0" in proc.stdout

@@ -10,6 +10,14 @@ from .models import Finding, ValidationResult, aggregate_findings
 ValidatorCallable = Callable[[], Sequence[Finding]]
 
 
+class ValidatorAbortError(Exception):
+    """Validator requests execution failure while retaining findings (exit 2)."""
+
+    def __init__(self, message: str, findings: Sequence[Finding] = ()) -> None:
+        super().__init__(message)
+        self.findings: tuple[Finding, ...] = tuple(findings)
+
+
 @dataclass(frozen=True)
 class ValidatorSpec:
     """Named validator registration entry.
@@ -57,6 +65,11 @@ class Orchestrator:
         for spec in sorted(self._validators, key=lambda item: item.name):
             try:
                 batch = spec.run()
+            except ValidatorAbortError as exc:
+                return ValidationResult(
+                    findings=aggregate_findings([*collected, *exc.findings]),
+                    execution_error=str(exc),
+                )
             except Exception as exc:  # noqa: BLE001 — foundation boundary
                 message = f"validator {spec.name!r} failed: {type(exc).__name__}: {exc}"
                 return ValidationResult(
