@@ -40,7 +40,7 @@ Canonical instruction precedence (**L0–L7**): Framework Contract §7; operatio
 | Layer | Meaning |
 |-------|---------|
 | **Core** | Common engineering foundation and cross-domain principles |
-| **Module** | Reusable engineering capability (planned packages; adaptive recommendations as approved design) |
+| **Module** | Reusable engineering capability (six draft / experimental packages present; adoption is explicit) |
 | **Pack** | Optional domain- or use-case-specific extension (for example Education) |
 | **Consumer** | Product repository — owns ADRs, backlog, implementation and local policy |
 
@@ -170,19 +170,28 @@ Adaptive module **selection as automated tooling** is not implemented. Adaptive 
 
 ---
 
-## Planned Engineering Domains
+## Engineering Modules (current catalog)
 
-Intended Module domains (packages not populated yet):
+Six Engineering Module packages exist under `modules/` as documentation/content packages. Metadata (`module.yaml`) currently records **`status: draft`** and **`maturity: experimental`** for each.
 
-- Architecture Engineering
-- Development Engineering
-- Testing & Quality Engineering
-- Security Engineering
-- DevOps & Cloud Engineering
-- Data Engineering
-- Documentation & Governance
+| Module | Package id |
+|--------|------------|
+| Architecture Engineering | `architecture-engineering` |
+| Development Engineering | `development-engineering` |
+| Testing & Quality Engineering | `testing-quality-engineering` |
+| Security Engineering | `security-engineering` |
+| DevOps & Cloud Engineering | `devops-cloud-engineering` |
+| Data Engineering | `data-engineering` |
 
-These should land as reusable Module assets — not as consumer-specific project content.
+Important boundaries:
+
+- Packages **exist** and can be inspected in the repository.
+- They are **not** stable, installed, or automatically adopted.
+- They are **not** mandatory for Consumer repositories.
+- Module guidance remains **L6** by default; durable use requires explicit Consumer adoption into local policy (**L3** within scope).
+- Catalog presence is not a discovery engine, resolver, installer, or runtime.
+
+**Documentation Engineering** (sometimes phrased as Documentation & Governance) is **explicitly deferred** and is **not** part of this six-package catalog. Framework Governance remains Core-owned.
 
 ---
 

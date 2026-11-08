@@ -144,7 +144,8 @@ AIOS/
 ├── ROADMAP.md                   # Framework evolution phases
 ├── docs/FRAMEWORK_CONTRACT.md   # Authoritative architectural contract
 ├── docs/ADAPTIVE_*.md           # Phase 6 Adaptive Project Intelligence design docs
-├── rules/                       # Syncable governance rules (aiosctl source)
+├── docs/integrations/           # Coding-assistant integration guides
+├── rules/                       # Syncable governance rules (aiosctl sync source)
 ├── methodology/                 # RDIV, Architecture First, …
 ├── prompts/                     # Reusable prompts (discovery active; others partial)
 ├── packs/education/             # Optional education pack (partial)
@@ -153,13 +154,15 @@ AIOS/
 ├── modules/                     # Six draft / experimental Engineering Modules
 ├── validation/                  # Shared foundation and read-only validators
 ├── workflows/                   # Core workflow definitions
-├── scripts/aiosctl.py           # Rule sync CLI
+├── scripts/aiosctl.py           # Consumer-facing CLI (sync, version, doctor)
 ├── assets/                      # Branding and diagrams
 ├── lab/aios-demo-api/           # Demo app for CI smoke tests
 ├── knowledge/                   # Planned; currently empty
 ├── skills/                      # Initial Core skill and conventions
-├── tests/                       # Validation suites and demo API tests
-└── examples/                    # Planned adoption examples
+├── tests/                       # CLI tests, validation suites; demo API tests under lab/
+└── examples/                    # Documentation-only adoption examples
+    ├── 01-core-adoption/        # Core Adoption example
+    └── 02-module-guided-adoption/  # Module-Guided Adoption example
 ```
 
 Directory status varies; see [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md). Validation is read-only and reports findings; it does not repair or modify the repository.
@@ -221,11 +224,14 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 - Engineering methodologies under `methodology/`
 - Discovery prompt skeletons under `prompts/discovery/`
 - Generic architecture review prompt
-- `aiosctl sync` for copying `rules/*.md` → consumer `.agents/`
+- `aiosctl` Consumer-facing CLI (`scripts/aiosctl.py`): `sync`, `version`, `doctor`
+- `aiosctl sync` copies `rules/*.md` → consumer `.agents/` (compatibility contract)
+- Documentation-only adoption examples under `examples/` (Core Adoption; Module-Guided Adoption)
+- Coding-assistant integration guides under `docs/integrations/`
 - OSS docs: license, contributing, security, code of conduct
 - Optional preserved education manual: `packs/education/AGENTS.education.md`
 - Six Engineering Module packages in `modules/`, each draft / experimental (not automatically adopted)
-- Read-only repository validation CLI: `python -m validation` (Framework Structure, Module Contract, and Documentation Integrity validators)
+- Read-only repository validation entry point: `python -m validation` (independent of `aiosctl`; Framework Structure, Module Contract, and Documentation Integrity validators)
 - Shared Validation Foundation with deterministic findings, aggregation, orchestration, reporting and exit codes
 - Adaptive Project Intelligence **design documentation** (Phase 6 completed):
   - `docs/ADAPTIVE_PROJECT_CONTEXT.md`
@@ -239,14 +245,13 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 
 - Broader prompt library (many placeholder files)
 - Templates and checklists (several empty)
-- CI repository report + demo API tests
 - Optional packs beyond the preserved education AGENTS copy
 
 ### Available — Validation CI (Phase 8.5)
 
 GitHub Actions (`.github/workflows/ci.yml`) runs two independent framework validation jobs alongside the existing Demo API and repository-report jobs:
 
-- `framework-validation-tests` — pytest over `tests/validation_foundation`, `tests/validation_structure`, `tests/validation_module_contract`, and `tests/validation_documentation`
+- `framework-validation-tests` — pytest over `tests/cli`, `tests/validation_foundation`, `tests/validation_structure`, `tests/validation_module_contract`, and `tests/validation_documentation`
 - `framework-validation-cli` — `python -m validation` from the repository root on a clean checkout
 
 These jobs do not configure branch protection or required checks.
@@ -254,8 +259,7 @@ These jobs do not configure branch protection or required checks.
 ### Planned or deferred
 
 - Additional Skills and Knowledge content
-- `aiosctl` commands beyond `sync` (the validation CLI is a separate `python -m validation` entry point)
-- Deeper coding-agent integrations
+- `aiosctl` commands **`validate`** and **`init`** (not implemented; `python -m validation` is a separate entry point, not an `aiosctl` subcommand)
 - Adaptive recommendation **engine** / runtime (separate future approval; not part of Phase 6)
 
 See [`ROADMAP.md`](ROADMAP.md) for phased direction.
@@ -376,6 +380,8 @@ AIOS is **model-agnostic** and is designed to work with modern AI coding assista
 
 “Designed for” means governance documents are written to be assistant-neutral.
 
+Consumer-oriented setup notes for Cursor, GitHub Copilot, Claude Code and OpenAI Codex live under [`docs/integrations/`](docs/integrations/README.md). Windsurf is outside the current Phase 9 integration-guide set.
+
 It does **not** claim automated certification of every tool on every release.
 
 ---
@@ -432,15 +438,19 @@ This copies `rules/*.md` into `<project>/.agents/` and writes `AIOS_VERSION.md`.
 
 # Tooling Notes (`aiosctl`)
 
+`scripts/aiosctl.py` is the Consumer-facing CLI. It is distinct from `python -m validation`, which is an independent read-only repository validation entry point (not an `aiosctl` subcommand).
+
 | Item | Current behavior |
 |------|------------------|
-| Implemented command | `sync` |
-| Source | `rules/*.md` |
-| Destination | `<project>/.agents/` |
+| Implemented commands | `sync`, `version`, `doctor` |
+| Not implemented | `validate`, `init` |
+| `sync` source | `rules/*.md` |
+| `sync` destination | `<project>/.agents/` |
+| `sync` project selection | Explicit `--project` |
 | Skip logic | Content hash (unless `--force`) |
 | Orphan cleanup | Not deleted automatically |
+| Version marker | Writes `<project>/.agents/AIOS_VERSION.md` |
 | `aiosctl.yaml` | May list helper project names; **not read by the CLI today** |
-| Planned | `validate`, `doctor`, `init`, `version` |
 
 Compatibility with existing consumers depends on keeping the current sync paths and rule filenames stable.
 
@@ -492,13 +502,13 @@ High-level direction (details in [`ROADMAP.md`](ROADMAP.md)):
 0. Foundation and identity — **Completed**
 1. Framework contract and governance — **Completed**
 2. Architecture and Module foundation — **Completed**
-3. CLI improvements — `aiosctl sync` is implemented; additional CLI commands remain planned (see [`ROADMAP.md`](ROADMAP.md) Phase 3).
+3. CLI improvements — `aiosctl` implements `sync`, `version`, and `doctor`; `validate` and `init` remain not implemented (see [`ROADMAP.md`](ROADMAP.md) Phase 3).
 4. Workflow and checklist system — **Completed**
 5. Skills and Knowledge — **Completed:** the initial Core Skill definition was created and accepted (its artifact lifecycle remains `draft`); the Knowledge library has not been created and remains planned.
 6. Adaptive Project Intelligence — **Completed** (conceptual / documentation foundation; not an adaptive engine)
 7. Engineering Module catalog / packaging — **Completed** (six draft / experimental packages)
-8. Validation and automation — Validation Foundation and Framework Structure, Module Contract, and Documentation Integrity validators are implemented through Phase 8.4; Phase 8.5 adds GitHub Actions jobs `framework-validation-tests` and `framework-validation-cli`. See [`ROADMAP.md`](ROADMAP.md) for remaining Phase 8 direction.
-9. Ecosystem and integrations
+8. Validation and automation — Validation Foundation and Framework Structure, Module Contract, and Documentation Integrity validators are implemented through Phase 8.4; Phase 8.5 adds GitHub Actions jobs `framework-validation-tests` (including `tests/cli`) and `framework-validation-cli`.
+9. Ecosystem and integrations — adoption examples and coding-assistant integration guides are present under `examples/` and `docs/integrations/`
 
 Phases are directional, not dated commitments. Completed phases still do not imply unimplemented runtime features.
 
