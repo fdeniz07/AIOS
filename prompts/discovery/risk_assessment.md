@@ -2,32 +2,60 @@
 
 ## Purpose
 
-Identify architectural, structural, and organizational risks before making any modifications to a repository.
-
-The objective is to understand what could negatively affect maintainability, scalability, consistency, or long-term project success.
+Identify relevant risks before implementation or significant repository changes. Classify risks by impact and likelihood, cite evidence and uncertainty, and recommend mitigations—without accepting risk on behalf of the owner.
 
 ---
 
 ## When to Use
 
-Use this prompt after completing the Repository Analysis.
+- After Repository Analysis (preferred).
+- Before planning implementations or making architectural decisions.
+- Before large refactors, migrations, or Consumer adoption changes.
 
-Run it before planning implementations or making architectural decisions.
+## When Not to Use
+
+- Before enough repository context exists to ground the assessment.
+- As a substitute for security vulnerability disclosure processes.
+- To approve, reject, or accept residual risk for the Consumer or repository owner.
 
 ---
 
 ## Required Context
 
-- Repository Analysis has been completed.
-- The repository structure is understood.
-- No implementation has started yet.
-- The AIOS Framework is being followed.
+- Repository Analysis completed, or equivalent current understanding of structure and purpose.
+- Intended change or upcoming work described when known.
+- No implementation started for the assessed change (unless reassessing mid-work).
 
 ---
 
 ## Prompt
 
-(The validated prompt goes here.)
+Perform a risk assessment for this repository and the intended upcoming work (if provided).
+
+Base findings on repository evidence and the prior analysis. Separate **observed risks**, **hypotheses**, and **mitigation recommendations**. Do not modify files. Do not implement fixes. Do not invent owner risk-acceptance decisions.
+
+Evaluate at least these categories when relevant:
+
+1. Architectural and dependency risks
+2. Compatibility and migration risks
+3. Security and privacy implications
+4. Data integrity risks
+5. Testing and validation gaps
+6. Operational and deployment risks
+7. Documentation and governance inconsistencies
+8. Consumer-specific risks (ownership, sync, local policy) when AIOS Consumer adoption is in scope
+
+For each risk, state:
+
+- Description
+- Evidence and uncertainty
+- Impact (Critical / High / Medium / Low)
+- Likelihood (High / Medium / Low)
+- Possible consequences
+- Recommended mitigation
+- Whether resolution should precede further development
+
+If AIOS applies, respect Core / Module / Pack / Consumer boundaries and Consumer ownership of ADR and risk acceptance per [`docs/FRAMEWORK_CONTRACT.md`](../../docs/FRAMEWORK_CONTRACT.md) and [`AGENTS.md`](../../AGENTS.md).
 
 ---
 
@@ -37,20 +65,23 @@ Run it before planning implementations or making architectural decisions.
 - High Risks
 - Medium Risks
 - Low Risks
-
-For each identified risk:
-
-- Description
-- Why it is a risk
-- Possible consequences
-- Whether it should be resolved before further development
+- Cross-cutting themes / systemic issues
+- Open questions requiring owner input
+- Recommended pre-development mitigations (non-binding)
 
 ---
 
-## Notes
+## Constraints
 
-- Do not modify files.
-- Do not propose solutions.
-- Do not generate documentation.
-- Focus only on identifying and classifying risks.
-- Base the assessment on the current repository state.
+- Do not modify files or generate implementation patches in this pass.
+- Do not accept risk for the Consumer or repository owner.
+- Do not redefine L0–L7 or governance authority.
+- Do not claim a risk engine or automated compliance certification.
+- AI recommends; humans decide.
+
+## Related References
+
+- Discovery order: [`README.md`](README.md)
+- Framework Contract: [`docs/FRAMEWORK_CONTRACT.md`](../../docs/FRAMEWORK_CONTRACT.md)
+- Agent operating manual: [`AGENTS.md`](../../AGENTS.md)
+- Security reporting (vulnerabilities): [`SECURITY.md`](../../SECURITY.md)
