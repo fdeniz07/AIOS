@@ -242,11 +242,19 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 - CI repository report + demo API tests
 - Optional packs beyond the preserved education AGENTS copy
 
+### Available — Validation CI (Phase 8.5)
+
+GitHub Actions (`.github/workflows/ci.yml`) runs two independent framework validation jobs alongside the existing Demo API and repository-report jobs:
+
+- `framework-validation-tests` — pytest over `tests/validation_foundation`, `tests/validation_structure`, `tests/validation_module_contract`, and `tests/validation_documentation`
+- `framework-validation-cli` — `python -m validation` from the repository root on a clean checkout
+
+These jobs do not configure branch protection or required checks.
+
 ### Planned or deferred
 
 - Additional Skills and Knowledge content
 - `aiosctl` commands beyond `sync` (the validation CLI is a separate `python -m validation` entry point)
-- CI integration for the validation package
 - Deeper coding-agent integrations
 - Adaptive recommendation **engine** / runtime (separate future approval; not part of Phase 6)
 
@@ -451,7 +459,7 @@ The implemented validators are:
 | **Module Contract Validator** (Phase 8.3; [scope and rules](docs/MODULE_CONTRACT_VALIDATION_DESIGN.md)) | Discovers immediate Module package candidates and checks filesystem containment, `module.yaml` metadata and documented lifecycle / README requirements. |
 | **Documentation Integrity Validator** (Phase 8.4) | Scans repository Markdown for broken local links, target types, repository-boundary escapes, missing anchors and local images. Reports `DOC-001`–`DOC-006`; external URLs are skipped. |
 
-The three domain validators register with the shared Orchestrator and use the same reporter and exit-code contract. Documentation Integrity scans Markdown files recursively, excluding `.git` and without descending directory symlinks; it checks local references and does not fetch external URLs. Validation reports findings only: it does not modify files, repair structure, install or adopt Modules, resolve dependencies, or validate Packs. CI integration for this validation package remains deferred.
+The three domain validators register with the shared Orchestrator and use the same reporter and exit-code contract. Documentation Integrity scans Markdown files recursively, excluding `.git` and without descending directory symlinks; it checks local references and does not fetch external URLs. Validation reports findings only: it does not modify files, repair structure, install or adopt Modules, resolve dependencies, or validate Packs.
 
 Run from the repository root:
 
@@ -465,7 +473,7 @@ The CLI also supports an explicit framework root:
 python -m validation --root /path/to/AIOS
 ```
 
-The default run registers `documentation-integrity`, `framework-structure`, and `module-contract`; it prints a text report and exits with the shared `0` / `1` / `2` contract. `--root` selects an explicit framework root; `--help` lists the available option. This is repository contract validation, not an AI behavior or IDE conformance suite.
+The default run registers `documentation-integrity`, `framework-structure`, and `module-contract` (execution order by ascending name); it prints a text report and exits with the shared `0` / `1` / `2` contract. `--root` selects an explicit framework root; `--help` lists the available option. This is repository contract validation, not an AI behavior or IDE conformance suite.
 
 Validation tests are organized under `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, and `tests/validation_documentation/`. With the project test dependencies installed, run them with:
 
@@ -473,7 +481,7 @@ Validation tests are organized under `tests/validation_foundation/`, `tests/vali
 python -m pytest tests/validation_foundation tests/validation_structure tests/validation_module_contract tests/validation_documentation
 ```
 
-The demo API's tests are separate under `lab/aios-demo-api/`. The GitHub Actions demo smoke tests and repository report are separate from the validation CLI; the validators are not described as CI-integrated.
+The demo API's tests are separate under `lab/aios-demo-api/`. GitHub Actions also runs the Demo API smoke tests and repository-report jobs independently of the framework validation jobs `framework-validation-tests` and `framework-validation-cli`. Branch protection and required-check configuration are outside this documentation.
 
 ---
 
@@ -489,7 +497,7 @@ High-level direction (details in [`ROADMAP.md`](ROADMAP.md)):
 5. Skills and Knowledge — **Completed:** the initial Core Skill definition was created and accepted (its artifact lifecycle remains `draft`); the Knowledge library has not been created and remains planned.
 6. Adaptive Project Intelligence — **Completed** (conceptual / documentation foundation; not an adaptive engine)
 7. Engineering Module catalog / packaging — **Completed** (six draft / experimental packages)
-8. Validation and automation — Validation Foundation and Framework Structure, Module Contract, and Documentation Integrity validators are implemented through Phase 8.4. `ROADMAP.md` still presents Phase 8 as an overall direction and retains CI strengthening as planned work.
+8. Validation and automation — Validation Foundation and Framework Structure, Module Contract, and Documentation Integrity validators are implemented through Phase 8.4; Phase 8.5 adds GitHub Actions jobs `framework-validation-tests` and `framework-validation-cli`. See [`ROADMAP.md`](ROADMAP.md) for remaining Phase 8 direction.
 9. Ecosystem and integrations
 
 Phases are directional, not dated commitments. Completed phases still do not imply unimplemented runtime features.

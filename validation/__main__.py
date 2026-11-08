@@ -19,9 +19,9 @@ from .reporter import format_report
 
 _BANNER = """\
 AIOS validation
-Registered validators: framework-structure (Framework Structure Validation), \
-module-contract (Module Contract Validation), \
-documentation-integrity (Documentation Integrity Validation)
+Registered validators: documentation-integrity (Documentation Integrity Validation), \
+framework-structure (Framework Structure Validation), \
+module-contract (Module Contract Validation)
 Pack validation is NOT performed.
 """
 

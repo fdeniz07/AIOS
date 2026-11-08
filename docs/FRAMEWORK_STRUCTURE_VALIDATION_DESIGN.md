@@ -6,7 +6,7 @@
 
 **Depends on:** Phase 8.1.2 Shared Validation Foundation (`validation/`, [`VALIDATION_FOUNDATION.md`](VALIDATION_FOUNDATION.md))
 
-**Implementation note:** This document is design-only. Validator code is out of scope for the design-documentation phase.
+**Implementation note (historical):** This document was authored as design-only. The Framework Structure Validator was subsequently implemented. Later Phase 8 work also registered Module Contract and Documentation Integrity validators and added CI jobs; those extensions do not rewrite the Phase 8.2 decisions recorded below.
 
 **Terminology:** Prefer the terms *Framework root*, *candidate*, *required path*, *optional path*, *reserved path*, *finding*, *execution failure*, *link entry*, and *resolved target* consistently below.
 

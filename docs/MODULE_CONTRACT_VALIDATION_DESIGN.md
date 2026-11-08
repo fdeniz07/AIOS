@@ -1,8 +1,8 @@
 # Phase 8.3 — Module Contract Validation Design
 
-**Status:** Design proposal — final PO review revision (D1–D12 accepted; ready for design acceptance)
+**Status:** Accepted Phase 8.3 design (D1–D12); subsequently implemented
 
-**Authority:** Design-only. Derived from approved Module contracts, the Phase 8.3 Discovery & Contract Mapping report (observations), Phase 8.1.2 Shared Validation Foundation, Phase 8.2 Framework Structure Validation architecture, and explicit PO decisions recorded in §15.
+**Authority:** Design document. Derived from approved Module contracts, the Phase 8.3 Discovery & Contract Mapping report (observations), Phase 8.1.2 Shared Validation Foundation, Phase 8.2 Framework Structure Validation architecture, and explicit PO decisions recorded in §15.
 
 **Depends on:**
 
@@ -13,7 +13,7 @@
 - [`VALIDATION_FOUNDATION.md`](VALIDATION_FOUNDATION.md)
 - [`FRAMEWORK_STRUCTURE_VALIDATION_DESIGN.md`](FRAMEWORK_STRUCTURE_VALIDATION_DESIGN.md)
 
-**Implementation note:** This document defines the accepted design rules for a future implementation phase. Validator code, tests, CI, and governance-document edits remain out of scope until explicit PO **design acceptance** authorizes implementation. No unresolved blocking PO decisions remain for the MVP rule set (D1–D12).
+**Implementation note (historical):** This document defined the accepted design rules prior to implementation. The Module Contract Validator was subsequently implemented. Documentation Integrity Validation and CI wiring were added in later Phase 8 work; Pack validation remains out of scope. The D1–D12 decisions below are unchanged.
 
 **Terminology:** Prefer *Module package*, *Module candidate*, *module.yaml*, *catalog index*, *finding*, *execution failure*, *documented requirement*, *observation*, *design proposal*, and *PO-accepted* consistently.
 

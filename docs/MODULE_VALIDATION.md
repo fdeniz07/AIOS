@@ -209,18 +209,18 @@ Do **not** classify subjective architectural preferences (for example “must us
 
 ---
 
-## 10. Future CI policy
+## 10. CI policy
 
-Approved future behavior (not implemented by this document):
+Current Phase 8 CI behavior (GitHub Actions workflow `.github/workflows/ci.yml`):
 
-- CI **fails on Errors only**.
-- Warnings and Informational findings remain visible.
-- **No Module CI** before actual Modules exist.
-- Future Module validation must remain **separate** from `aiosctl sync`.
+- Framework validation tests run in job `framework-validation-tests`.
+- The validation CLI (`python -m validation`) runs in job `framework-validation-cli`.
+- CI **fails on Errors only** (exit code `1`) and on execution failures (exit code `2`).
+- Warnings and Informational findings remain visible and do not alone fail the job.
+- Module Contract Validation is included through the shared validation package; it remains **separate** from `aiosctl sync`.
 - Existing sync behavior and compatibility must **not** change.
-- Phase 8 may introduce broader automated contract tests.
 
-Do not implement CI workflows or CLI commands in this specification. A future `aiosctl module validate` (or equivalent) must not alter sync paths, filenames, or prune semantics.
+This section does not introduce new CI policies. Branch protection and required-check configuration remain outside this document. A future `aiosctl module validate` (or equivalent), if ever approved, must not alter sync paths, filenames, or prune semantics.
 
 ---
 
