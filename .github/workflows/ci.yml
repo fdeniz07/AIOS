@@ -15,7 +15,7 @@ jobs:
 
   repository-analysis:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
 
@@ -58,7 +58,7 @@ jobs:
 
   application-test:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
 
@@ -86,7 +86,7 @@ jobs:
 
     needs: repository-analysis
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
 
@@ -104,7 +104,7 @@ jobs:
 
   framework-validation-tests:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
 
@@ -135,7 +135,7 @@ jobs:
 
   framework-validation-cli:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     steps:
 
