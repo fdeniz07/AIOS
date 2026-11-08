@@ -462,10 +462,44 @@ Phase 7 packaging scope is closed. The following remain **later / separately app
 
 **Intent:** Verify framework integrity in CI and structural tests.
 
+**Status:** Completed
+
+Completed means Product Owner–accepted Phase 8.1.2–8.6 deliverables are present on `main`: Shared Validation Foundation; Framework Structure, Module Contract, and Documentation Integrity validators; CI integration; and final audit / documentation consistency. It does **not** deliver Module/Pack runtime, installer, dependency resolver, automatic remediation / auto-fixer, or expansion of `aiosctl` beyond the existing `sync` contract. Pack validation is not performed. The validation CLI (`python -m validation`) is a separate read-only entry point and does not replace Phase 3 `aiosctl sync`.
+
+### Completed substages
+
+The table uses the established Phase 8 identifiers as delivered. The first recorded completion is **8.1.2** (Shared Validation Foundation). Identifiers before **8.1.2** (for example **8.1** / **8.1.1**) are not listed and are **not** claimed as completed here.
+
+| Stage | Title | Status | Closure commit |
+|-------|-------|--------|----------------|
+| **8.1.2** | Shared Validation Foundation | **Completed** | `de84aa7` |
+| **8.2** | Framework Structure Validation | **Completed** | `d81e447` |
+| **8.3** | Module Contract Validation | **Completed** | `e43fe3c` |
+| **8.4** | Documentation Integrity Validation | **Completed** | `d2b03c1` |
+| **8.5** | CI Integration | **Completed** | `e3c6b52` |
+| **8.6** | Final Audit and Documentation Consistency | **Completed** | `a53f1d7` |
+
+### Delivered capabilities
+
+- Shared Validation Foundation (`Finding` / `ValidationResult`, deterministic aggregation and reporting, exit codes `0` / `1` / `2`, Orchestrator)
+- Read-only validators registered for `python -m validation`: `documentation-integrity`, `framework-structure`, and `module-contract`
+- Pytest coverage under `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, and `tests/validation_documentation/`
+- GitHub Actions jobs `framework-validation-tests` and `framework-validation-cli` in `.github/workflows/ci.yml` (independent of Demo API and repository-report jobs)
+
+### Preserved historical intent (satisfied)
+
 - Populate `tests/` for structure and contract checks
 - Strengthen CI beyond demo API smoke tests
 - Validate docs references and required entry points
 - Complement (do not replace) any local CLI validation from Phase 3
+
+### Out of scope for Phase 8 (unless separately approved)
+
+- Automatic remediation / auto-fixers
+- Pack validation
+- Module runtime, runtime/module-discovery registry (not the Phase 7 Module Catalog), resolver, or installer
+- New `aiosctl` commands
+- Adaptive recommendation engine
 
 ---
 
