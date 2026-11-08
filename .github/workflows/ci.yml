@@ -100,3 +100,59 @@ jobs:
           ls -la
           echo "-------------------------"
           cat repository-report.txt
+
+
+  framework-validation-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+
+      - name: Install Framework Dependencies
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install pytest
+
+      - name: Run Framework Validation Tests
+        run: |
+          python -m pytest \
+            tests/validation_foundation \
+            tests/validation_structure \
+            tests/validation_module_contract \
+            tests/validation_documentation \
+            -q --tb=short
+
+
+  framework-validation-cli:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: "pip"
+          cache-dependency-path: requirements.txt
+
+      - name: Install Framework Dependencies
+        run: |
+          python -m pip install -r requirements.txt
+
+      - name: Run Framework Validation CLI
+        run: |
+          python -m validation
