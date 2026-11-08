@@ -4,7 +4,7 @@ Version: 1.3.5
 
 Status: Active
 
-Last Updated: 2026-11-05
+Last Updated: 2026-11-08
 
 This document describes the **actual** repository layout and the status of each area.
 
@@ -69,8 +69,11 @@ AIOS/                          # Git repository root
 ├── .github/                   # active – community + CI
 ├── assets/                    # active – branding and diagrams
 ├── checklists/                # active – initial Core set (review, release); notebook education-specific
-├── docs/                      # active – framework documentation
+├── docs/                      # active – framework documentation, including Module contracts and coding-assistant integration guides
 │   ├── FRAMEWORK_CONTRACT.md  # authoritative architectural / governance contract
+│   ├── MODULE_METADATA.md
+│   ├── MODULE_LIFECYCLE.md
+│   ├── MODULE_VALIDATION.md
 │   ├── ADAPTIVE_PROJECT_CONTEXT.md
 │   ├── PROCESS_DEPTH_MODEL.md
 │   ├── ADAPTIVE_GUIDANCE_MODEL.md
@@ -78,13 +81,16 @@ AIOS/                          # Git repository root
 │   ├── ADAPTIVE_REFERENCE_SCENARIOS.md
 │   ├── ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md
 │   ├── WORKFLOW_CHECKLIST_CONVENTIONS.md
-│   └── SKILL_KNOWLEDGE_CONVENTIONS.md
-├── examples/                  # planned – empty domain folders
+│   ├── SKILL_KNOWLEDGE_CONVENTIONS.md
+│   └── integrations/          # coding-assistant guides (documentation only; not platform runtimes)
+├── examples/                  # active – two documentation-only adoption examples
+│   ├── 01-core-adoption/
+│   └── 02-module-guided-adoption/
 ├── generators/                # planned – empty
 ├── knowledge/                 # planned – empty (no Core Knowledge example; remains Planned)
 ├── lab/                       # demo – sample FastAPI app for CI
 ├── methodology/               # active
-├── modules/                   # partial – Phase 7 Engineering Module catalog foundation (thin index + six draft Modules; Documentation Engineering deferred)
+├── modules/                   # partial – catalog containing six draft / experimental Modules (Documentation Engineering deferred)
 │   ├── README.md              # thin catalog index (not a registry/resolver)
 │   ├── architecture-engineering/
 │   │   ├── module.yaml        # Module metadata (draft / experimental / 0.1.0)
@@ -114,10 +120,16 @@ AIOS/                          # Git repository root
 │       └── AGENTS.education.md# preserved historical education operating guidance
 ├── prompts/                   # partial – interaction artifacts (Skills are canonical capabilities when authored)
 ├── rules/                     # active – aiosctl sync SOURCE (Core + legacy education rules)
-├── scripts/                   # active – aiosctl CLI
+├── scripts/                   # active – CLI implementation
 ├── skills/                    # partial – initial Core Skill (repository_analysis.md; artifact lifecycle draft; not a catalog)
 ├── templates/                 # placeholder – empty template files
-├── tests/                     # planned – empty (framework tests not yet present)
+├── tests/                     # active – CLI and framework validation test suites
+│   ├── cli/
+│   ├── validation_foundation/
+│   ├── validation_structure/
+│   ├── validation_module_contract/
+│   └── validation_documentation/
+├── validation/                # active – shared validation foundation and read-only validators
 ├── workflows/                 # active – Phase 4 MVP (feature_development, release)
 ├── AGENTS.md                  # active – generic operating manual (L0–L7)
 ├── MANIFEST.md                # active – product contract
@@ -131,7 +143,7 @@ AIOS/                          # Git repository root
 ├── LICENSE                    # active – MIT
 ├── QUALITY_CHECKLIST.md       # placeholder
 ├── QUALITY_CONTROL.md         # partial – education-oriented checklist content
-└── aiosctl.yaml               # partial – helper config; not read by CLI yet
+└── aiosctl.yaml               # partial – informational / helper surface; not consumed by the CLI
 ```
 
 ---
@@ -140,11 +152,14 @@ AIOS/                          # Git repository root
 
 ### `docs/` — **active**
 
-Framework documentation.
+Framework documentation, including Module contracts and coding-assistant integration guides.
 
 | Path | Status | Notes |
 |------|--------|-------|
 | `docs/FRAMEWORK_CONTRACT.md` | active | Authoritative architectural and governance contract (boundaries, ownership, consumption models, L0–L7 precedence) |
+| `docs/MODULE_METADATA.md` | active | Module metadata contract (`module.yaml`) |
+| `docs/MODULE_LIFECYCLE.md` | active | Module lifecycle and maturity semantics |
+| `docs/MODULE_VALIDATION.md` | active | Module validation expectations (documentation contract; not an `aiosctl` command) |
 | `docs/ADAPTIVE_PROJECT_CONTEXT.md` | draft | Project Context and Task Context models for Adaptive Project Intelligence (design only; no engine) |
 | `docs/PROCESS_DEPTH_MODEL.md` | draft | Complexity Dimensions and Process Depth Classification for Adaptive Project Intelligence (design only; no engine) |
 | `docs/ADAPTIVE_GUIDANCE_MODEL.md` | draft | Adaptive Guidance conceptual model for Adaptive Project Intelligence (design specification; no runtime engine or automatic selection). |
@@ -153,6 +168,7 @@ Framework documentation.
 | `docs/ADAPTIVE_PROJECT_INTELLIGENCE_AUDIT.md` | draft | Documentation-level Adaptive Project Intelligence final audit specification and recorded Phase 6 documentation audit (**PASS WITH FINDINGS**; consistency and traceability only; not runtime/engine/CI verification). |
 | `docs/WORKFLOW_CHECKLIST_CONVENTIONS.md` | draft | Markdown-first Workflow/Checklist authoring conventions |
 | `docs/SKILL_KNOWLEDGE_CONVENTIONS.md` | draft | Markdown-first Skill/Knowledge authoring conventions |
+| `docs/integrations/` | active | Coding-assistant integration guides (documentation only). Do not implement platform runtimes or alter AIOS governance. |
 | `docs/releases/` | planned | Empty nested folder reserved for future release notes |
 
 Do not treat empty nested folders under `docs/` as implemented documentation products.
@@ -208,9 +224,15 @@ Education rules under `rules/` are **not** fully migrated into the pack yet.
 
 ### `scripts/` — **active**
 
+CLI implementation (`aiosctl`).
+
 | File | Status | Notes |
 |------|--------|-------|
-| `aiosctl.py` | active | Implements `sync` only (`validate`, `doctor`, `init`, `version` planned — not implemented) |
+| `aiosctl.py` | active | Implemented: `sync`, `version`, `doctor`. Not implemented: `validate`, `init`. |
+
+- **`aiosctl sync` compatibility contract (preserved):** copies `rules/*.md` → Consumer `.agents/`.
+- **`python -m validation`** is an independent repository validation entry point under `validation/`. It is **not** an `aiosctl` subcommand.
+- **`aiosctl.yaml`** remains an informational / helper surface and is **not** consumed by the CLI.
 
 ### `assets/` — **active**
 
@@ -279,15 +301,38 @@ Populated with the initial Core Skill definition `repository_analysis.md` (`id` 
 - Capability-specific Skills/Knowledge prefer Module-local placement **when Module packages exist** (prefer Module-local paths under existing packages such as `modules/architecture-engineering/`, `modules/development-engineering/`, `modules/testing-quality-engineering/`, `modules/security-engineering/`, `modules/devops-cloud-engineering/`, or `modules/data-engineering/`; do not invent undeclared Module trees).
 - Not a Skill runner, Knowledge retrieval/RAG engine, or automated recommendation service.
 
-### `generators/`, `tests/` — **planned**
+### `generators/` — **planned**
 
-Reserved empty directories for future generators and framework validation assets.
+Reserved empty directory for future generators.
 
-Module packages may exist under `modules/` separately. These directories are not Module discovery engines or automated recommendation services.
+Not a Module discovery engine or automated recommendation service.
 
-### `examples/` — **planned**
+### `tests/` — **active**
 
-Empty folders (`DevOps`, `German`, `Python`) reserved for future adoption examples.
+CLI and framework validation test suites. Suites are executed by the repository CI workflow (`.github/workflows/ci.yml`). Tests verify documentation and CLI behavior; they do **not** provide runtime functionality.
+
+| Path | Status | Notes |
+|------|--------|-------|
+| `tests/cli/` | active | `aiosctl` command tests (`sync`, `version`, `doctor`) |
+| `tests/validation_foundation/` | active | Shared validation foundation tests |
+| `tests/validation_structure/` | active | Framework structure validator tests |
+| `tests/validation_module_contract/` | active | Module contract validator tests |
+| `tests/validation_documentation/` | active | Documentation integrity validator tests |
+
+Demo API tests under `lab/aios-demo-api/` remain distinct from these framework validation suites.
+
+### `validation/` — **active**
+
+Shared validation foundation and read-only validators. Invoked via `python -m validation` (independent of `aiosctl`). Not a Module resolver, installer, or adaptive runtime.
+
+### `examples/` — **active**
+
+Documentation-only adoption examples. They do **not** implement automatic adoption, Module installation, dependency resolution, or runtime discovery.
+
+| Path | Status | Notes |
+|------|--------|-------|
+| `examples/01-core-adoption/` | active | Documentation-only Core adoption example |
+| `examples/02-module-guided-adoption/` | active | Documentation-only Module-guided adoption example |
 
 Not implemented consumer projects.
 
@@ -312,7 +357,8 @@ In **consumer** repositories, `.agents/` is the **destination** of `aiosctl sync
 | `MANIFEST.md` | active | Product scope and navigation |
 | `README.md` | active | Landing overview |
 | `ROADMAP.md` | active | Framework evolution phases |
-| `aiosctl.yaml` | partial | Optional project hints; **CLI does not read this file yet** |
+| `aiosctl.yaml` | partial | Informational / helper surface; **not consumed by the CLI** |
+| `QUALITY_CHECKLIST.md` | placeholder | Placeholder checklist file |
 | `QUALITY_CONTROL.md` | partial | Currently education/vocabulary oriented |
 | `warning.txt` | local helper | Ignored by `.gitignore`; not part of the published contract |
 
