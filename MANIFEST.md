@@ -1,10 +1,10 @@
 # AIOS Manifest
 
-Version: 1.2.0
+Version: 1.2.1
 
 Status: Active
 
-Last Updated: 2026-11-02
+Last Updated: 2026-11-08
 
 ---
 
@@ -75,7 +75,7 @@ Non-overridable safety, legal, security, privacy, licensing and compliance const
 - Reusable discovery / review prompts
 - Templates and checklists (as they mature)
 - Optional packs for specialized domains
-- Lightweight tooling such as `aiosctl sync`
+- Lightweight tooling via `scripts/aiosctl.py` (`sync`, `version`, `doctor`)
 - Documentation that explains how to adopt AIOS
 
 ### Out of scope (for AIOS Core)
@@ -136,7 +136,10 @@ See Framework Contract §8–§9.
 | Engineering methodologies | `methodology/` |
 | Discovery prompt pack (partial bodies) | `prompts/discovery/` |
 | Architecture review prompt | `prompts/review/architecture_review.md` |
-| Rule synchronization CLI | `scripts/aiosctl.py` (`sync`) |
+| `aiosctl` CLI | `scripts/aiosctl.py` — implemented commands: `sync`, `version`, `doctor` |
+| CLI regression tests | `tests/cli/` (covers `sync`, `version`, `doctor`) |
+| Independent validation CLI | `python -m validation` (separate from `aiosctl`; Framework Structure, Module Contract, Documentation Integrity) |
+| Validation pytest suites | `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, `tests/validation_documentation/` |
 | OSS baseline docs | `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`, `CODE_OF_CONDUCT.md` |
 | Optional education operating manual (preserved) | `packs/education/AGENTS.education.md` |
 
@@ -146,13 +149,22 @@ See Framework Contract §8–§9.
 |------------|-------|
 | Prompt library beyond discovery | Many files are empty placeholders |
 | Templates / checklists | Directories exist; several files empty |
-| CI | Repository report + demo API tests; not a full framework validator |
 | Visual / branding assets | Present under `assets/` |
 | Optional packs | Education pack partial; migration of education `rules/` still gated |
 
+### Tooling distinction (`aiosctl` versus `python -m validation`)
+
+| Entry point | Role today |
+|-------------|------------|
+| `scripts/aiosctl.py` | Consumer-facing CLI. Implemented: `sync`, `version`, `doctor`. **Not** implemented: `validate`, `init`. |
+| `python -m validation` | Independent read-only repository validation entry point (Validation Foundation). Not an `aiosctl` subcommand. |
+| `aiosctl.yaml` | May list helper project hints; **not consumed by the CLI today**. |
+
+`aiosctl sync` remains the compatibility-critical sync contract (see below). Prefer `python -m validation` for framework validators; do not treat it as `aiosctl validate`.
+
 ### Planned
 
-See `ROADMAP.md` for phased evolution (CLI, workflows, skills, knowledge, populated modules, validation, integrations).
+See `ROADMAP.md` for phased evolution. Remaining `aiosctl` commands **`validate`** and **`init`** are not implemented.
 
 Adaptive module **selection as automated tooling** is not implemented. Adaptive **recommendation** is an approved design principle.
 
@@ -202,10 +214,23 @@ AIOS must not silently overwrite consumer-owned decisions or artifacts.
 - Source glob and destination path are part of the compatibility surface
 - Synced files are AIOS-derived; they are not consumer ADRs
 - `aiosctl.yaml` may list helper project hints but is **not read by the CLI today**
-- Sync is selected with `--project`
+- Sync is selected with explicit `--project`
 - Orphan destination files are not deleted automatically
 
 Do not break this contract without a versioned migration plan for consumers.
+
+### CI (current)
+
+GitHub Actions (`.github/workflows/ci.yml`) currently runs:
+
+| Job | What it executes |
+|-----|------------------|
+| `repository-analysis` / `report-verification` | Repository report artifact |
+| `application-test` | Demo API tests under `lab/aios-demo-api/` |
+| `framework-validation-tests` | `pytest` over `tests/cli` and the validation test suites (`tests/validation_*`) |
+| `framework-validation-cli` | `python -m validation` (independent of `aiosctl`) |
+
+These jobs do not implement `aiosctl validate` or `aiosctl init`.
 
 ---
 
@@ -234,4 +259,4 @@ Distinguish conceptually:
 - **Module / Pack Version** — proposed for future populated packages
 - **Consumer Integration Version** — partial today via sync `AIOS_VERSION.md` (timestamp + source path)
 
-Document versions (for example Manifest `1.2.0`) describe document maturity and may differ from git tags. Prefer `ROADMAP.md`, this manifest and the Framework Contract over badge text when judging capability status.
+Document versions (for example Manifest `1.2.1`) describe document maturity and may differ from git tags. Prefer `ROADMAP.md`, this manifest and the Framework Contract over badge text when judging capability status.

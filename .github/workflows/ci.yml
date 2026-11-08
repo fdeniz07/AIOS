@@ -126,6 +126,7 @@ jobs:
       - name: Run Framework Validation Tests
         run: |
           python -m pytest \
+            tests/cli \
             tests/validation_foundation \
             tests/validation_structure \
             tests/validation_module_contract \
