@@ -2,7 +2,7 @@
 
 Status: Active
 
-Last Updated: 2026-11-05
+Last Updated: 2026-11-08
 
 This is the **AIOS framework** product roadmap.
 
@@ -178,19 +178,29 @@ These remain later-phase direction only — **not implemented** and not Phase 1 
 
 **Depends on:** Phase 2 Module contracts (especially metadata and validation strategy) for any Module-aware commands.
 
-Current (implemented): `aiosctl sync` copies `rules/*.md` → `<project>/.agents/`
+**Status:** Completed
 
-Proposed commands (**planned, not implemented**):
+Completed means Product Owner–accepted Phase 3 CLI deliverables are present. It does **not** mean every originally proposed command was implemented.
+
+### Implemented commands
+
+| Command | Status | Purpose |
+|---------|--------|---------|
+| `sync` | Implemented | Copies `rules/*.md` into the Consumer project's `.agents/` directory |
+| `version` | Implemented | Displays AIOS framework version information |
+| `doctor` | Implemented | Runs read-only AIOS environment diagnostics |
+
+### Not implemented
 
 - `validate`
-- `doctor`
 - `init`
-- `version`
-- Future Module-oriented discovery/validation helpers (for example list/info/validate) — only after Phase 2 schemas are approved
+- Future Module-oriented discovery and validation helpers (for example list/info/validate)
 
-Also planned: decide whether `aiosctl.yaml` should become a real config surface.
+### Clarifications
 
-**Compatibility rule:** do not break existing sync paths without a versioned migration. Sync behavior remains protected.
+- `python -m validation` is an independent repository validation entry point. It is **not** an `aiosctl` subcommand.
+- `aiosctl.yaml` remains a documentary / helper surface and is **not** consumed by the CLI.
+- The existing `aiosctl sync` compatibility contract remains protected: do not break existing sync paths without a versioned migration.
 
 ---
 
@@ -483,7 +493,7 @@ The table uses the established Phase 8 identifiers as delivered. The first recor
 
 - Shared Validation Foundation (`Finding` / `ValidationResult`, deterministic aggregation and reporting, exit codes `0` / `1` / `2`, Orchestrator)
 - Read-only validators registered for `python -m validation`: `documentation-integrity`, `framework-structure`, and `module-contract`
-- Pytest coverage under `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, and `tests/validation_documentation/`
+- Pytest coverage under `tests/cli/`, `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, and `tests/validation_documentation/`
 - GitHub Actions jobs `framework-validation-tests` and `framework-validation-cli` in `.github/workflows/ci.yml` (independent of Demo API and repository-report jobs)
 
 ### Preserved historical intent (satisfied)
@@ -507,9 +517,46 @@ The table uses the established Phase 8 identifiers as delivered. The first recor
 
 **Intent:** Improve adoption across coding agents and host projects.
 
-- Adoption examples under `examples/` (pointers or minimal samples)
-- Integration notes for major coding assistants
-- Community contribution of skills, workflows and Modules under approved contracts
+**Status:** Completed
+
+Completed means Product Owner–accepted Phase 9 documentation deliverables are present on `main`. It does **not** deliver automatic adoption, Module installation, dependency resolution, runtime discovery, or a coding-assistant runtime.
+
+### Adoption examples (documentation-only)
+
+| Example | Path |
+|---------|------|
+| Core Adoption | `examples/01-core-adoption/` |
+| Module-Guided Adoption | `examples/02-module-guided-adoption/` |
+
+Both examples are documentation-only. They do not implement automatic adoption, Module installation, dependency resolution, or runtime discovery. Draft Modules are not automatically adopted.
+
+### Coding-assistant integrations
+
+Shared index: [`docs/integrations/README.md`](docs/integrations/README.md)
+
+| Platform | Guide |
+|----------|--------|
+| Cursor | [`docs/integrations/CURSOR.md`](docs/integrations/CURSOR.md) |
+| GitHub Copilot | [`docs/integrations/GITHUB_COPILOT.md`](docs/integrations/GITHUB_COPILOT.md) |
+| Claude Code | [`docs/integrations/CLAUDE_CODE.md`](docs/integrations/CLAUDE_CODE.md) |
+| OpenAI Codex | [`docs/integrations/OPENAI_CODEX.md`](docs/integrations/OPENAI_CODEX.md) |
+
+Windsurf is outside the approved initial Phase 9 integration-guide scope.
+
+### Community contribution guidance
+
+- General contribution process in [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- Artifact-specific contribution checklists in [`docs/CONTRIBUTION_CHECKLISTS.md`](docs/CONTRIBUTION_CHECKLISTS.md)
+
+### Boundaries preserved
+
+- Platform configuration remains under Consumer control.
+- AIOS remains repository-driven guidance, not a coding-assistant runtime.
+- Integration guides do not introduce new governance or instruction-precedence rules.
+- Core / Module / Pack / Consumer boundaries remain unchanged.
+- No installer, resolver, runtime, or automatic adoption mechanism is introduced.
+
+Phase 9 is closed. Further platform integrations or adoption capabilities require separately approved scope.
 
 ---
 
