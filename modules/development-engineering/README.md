@@ -75,7 +75,7 @@ Out of scope:
 This Module is **`draft`** with maturity **`experimental`**.
 
 - The package remains **`draft`** / **`experimental`** and incomplete relative to a full Development Engineering guidance surface.
-- Included so far: `module.yaml`, this `README.md`, and one Module-local Skill (`implementation-change-hygiene`, artifact lifecycle `draft`).
+- Included so far: `module.yaml`, this `README.md`, and one Module-local Skill (`implementation-change-hygiene`, artifact lifecycle `draft`, Skill version `0.2.0`).
 - Checklists, Knowledge, Prompts, Workflows, templates, examples, and tests are **not** included in this version.
 - Not generally recommended for new durable Consumer adoption until the guidance surface is more complete.
 - Evaluate only with this incomplete state disclosed. The Skill’s `draft` status does **not** mean the Module is adopted, installed, enabled, stable, active, or mandatory. Module presence does **not** automatically adopt or activate its guidance.
@@ -109,12 +109,12 @@ Only capabilities that exist in this package are listed. Absence of other capabi
 
 | id | Title | Status | Definition |
 |----|-------|--------|------------|
-| `implementation-change-hygiene` | Implementation Change Hygiene | `draft` | [`skills/implementation_change_hygiene.md`](skills/implementation_change_hygiene.md) |
+| `implementation-change-hygiene` | Implementation Change Hygiene | `draft` (`0.2.0`) | [`skills/implementation_change_hygiene.md`](skills/implementation_change_hygiene.md) |
 
-**Implementation Change Hygiene** — evidence-based review of implementation **scope fidelity**, **change hygiene**, and **plan-to-diff consistency**. It is analytical and advisory: it does not replace the Core Feature Development Workflow, does not replace the Core Review Checklist, does not impose coding standards, and does not authorize repository modifications, commits, or releases.
+**Implementation Change Hygiene** — advisory guidance for implementation **scope fidelity**, **change hygiene**, and **plan-to-diff consistency** in two lightweight modes: `active-hygiene` (escort an already authorized in-scope task) and `review` (read-only hygiene review). It consumes approved scope/plan from Core Workflow; classifies discoveries as F1/F2/F3; and does **not** replace the Core Feature Development Workflow, Core Review Checklist, or coding standards, and does **not** authorize repository modifications, commits, releases, or out-of-scope edits (L1 ≠ permission outside approved scope).
 
 - Skill guidance remains **L6** by default unless a Consumer explicitly adopts relevant Module guidance as local policy (**L3**).
-- Skill `draft` ≠ Module adoption, installation, enablement, or stability guarantee.
+- Skill `draft` ≠ Module adoption, installation, enablement, automatic execution, or stability guarantee.
 - Consumer-owned ADRs, architecture, and product decisions remain **L2** / Consumer-owned.
 
 ### Not included in this version
