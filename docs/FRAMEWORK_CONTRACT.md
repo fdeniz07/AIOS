@@ -4,7 +4,7 @@ Version: 1.4.0
 
 Status: Approved
 
-Last Updated: 2026-11-02
+Last Updated: 2026-11-08
 
 Document type: Architecture contract
 
@@ -116,6 +116,8 @@ AIOS is **not**:
 
 ### Logical architecture tree
 
+Logical view of current AIOS boundaries and representative repository content. This is **not** a complete physical filesystem listing. Distinguish actual content from planned or conceptual items.
+
 ```text
 AIOS
 ├── Core                         # common engineering foundation
@@ -124,26 +126,35 @@ AIOS
 │   ├── rules/                   # current sync source (includes legacy education rules)
 │   ├── methodology/
 │   ├── prompts/                 # partial; discovery and some review assets
-│   └── scripts/aiosctl.py       # sync CLI (current)
+│   └── scripts/aiosctl.py       # CLI: sync, version, doctor implemented; validate / init not
 │
 ├── Packs                        # optional domain / use-case extensions
 │   └── education/               # partial; preserved education AGENTS today
 │
-├── Modules                      # planned reusable engineering capabilities
-│   └── <module-id>/             # not populated yet
+├── Modules                      # six draft / experimental packages (not generally stable)
+│   ├── architecture-engineering/
+│   ├── development-engineering/
+│   ├── testing-quality-engineering/
+│   ├── security-engineering/
+│   ├── devops-cloud-engineering/
+│   └── data-engineering/
+│                                # Documentation Engineering Module explicitly deferred (not packaged)
 │
-├── Shared capability areas      # mostly planned at repository root
-│   ├── knowledge/
-│   ├── skills/
-│   ├── workflows/
-│   ├── templates/
-│   ├── checklists/
-│   └── tests/
+├── Shared capability areas
+│   ├── knowledge/               # planned (empty)
+│   ├── skills/                  # partial — initial Core Skill (artifact lifecycle draft)
+│   ├── workflows/               # active — Phase 4 MVP
+│   ├── templates/               # placeholder
+│   ├── checklists/              # active — initial Core set
+│   ├── tests/                   # active — CLI + framework validation suites (not runtime)
+│   └── validation/              # active — shared foundation + read-only validators
 │
-├── Integrations                 # planned guidance for external tools/agents
-├── docs/                        # framework documentation (this contract)
+├── Integrations                 # docs/integrations/ — documentation-only guides (not platform runtimes)
+├── docs/                        # framework documentation (this contract; Module contracts; integrations)
 ├── lab/                         # demo only
-└── examples/                    # planned adoption examples
+└── examples/                    # documentation-only adoption examples (no auto-adoption / installer)
+    ├── 01-core-adoption/
+    └── 02-module-guided-adoption/
 ```
 
 ### Core / Module / Pack (approved distinction)
@@ -176,9 +187,9 @@ Relationship rules:
 |-------|----------------|----------------------------------|--------------------------|
 | Core identity docs | Present | Authoritative for framework intent | Continual refinement |
 | `rules/` contents | Mixed generic + education | Education items are migration candidates, not permanent Core identity | Pack-based education rules after approved migration |
-| Modules | Not populated; no `modules/` tree | Module Architecture Contract (Section 5); metadata field model in [`MODULE_METADATA.md`](MODULE_METADATA.md); adaptive recommend ≠ auto-apply | Populated modules, parsers/validators, catalog, tooling |
+| Modules | Six draft / experimental packages under `modules/` (thin catalog; Documentation Engineering deferred); Module Contract Validation is read-only via `python -m validation`; documentation-only adoption examples and platform integration guides exist | Module Architecture Contract (Section 5); metadata field model in [`MODULE_METADATA.md`](MODULE_METADATA.md); adaptive recommend ≠ auto-apply | Resolver, installer, package manager, autonomous selection engine, or automatic adoption; further Module content beyond current draft / skeleton packages |
 | Adaptive selection | Manual/human+agent judgment via docs | Architectural recommendation pipeline (Section 5) | Optional assisted discovery — not autonomous apply; engine needs separate approval |
-| Content placement | Root `methodology/` active; root `workflows/` holds initial Core Workflow definitions (Phase 4 MVP); root `checklists/` holds initial Core Checklist definitions; root `skills/` holds the initial Core Skill definition (`repository_analysis.md`; artifact lifecycle `draft` — not an exhaustive Skill catalog); root `knowledge/` remains empty; Skill/Knowledge authoring conventions exist (`Draft`) | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Further Core Skills and any Knowledge population under later Phase 5+ decisions; Module-local skills/knowledge with Module packages (Phase 7) |
+| Content placement | Root `methodology/` active; root `workflows/` holds initial Core Workflow definitions (Phase 4 MVP); root `checklists/` holds initial Core Checklist definitions; root `skills/` holds the initial Core Skill definition (`repository_analysis.md`; artifact lifecycle `draft` — not an exhaustive Skill catalog); two Module-local Skills exist (`architecture-boundary-review`, `implementation-change-hygiene`); root `knowledge/` remains empty; Skill/Knowledge authoring conventions exist (`Draft`); framework validation tests under `tests/` | Module-local assets by default; root shared only for genuine cross-cutting Core resources | Further Core Skills and any Knowledge population under later decisions; additional Module-local skills/knowledge beyond the two draft Skills |
 | Pack manifests | None required | Packs may later use an optional manifest; **not** mandatory in this contract | Evaluate `pack.yaml` need; schema deferred |
 
 ---
@@ -199,7 +210,7 @@ Core **must not** become a container for every methodology, technology, workflow
 - Product and structure manifests (`MANIFEST.md`, `PROJECT_STRUCTURE.md`)
 - Engineering methodologies under `methodology/` — **Core-owned reference content**, **L6 by default** (not automatically L4 binding rules)
 - Syncable governance rules under `rules/` **as they exist today** (L4 operating/governance defaults in an AIOS adoption context, subject to L0–L3)
-- Lightweight tooling entry point (`scripts/aiosctl.py`) — currently `sync` only
+- Lightweight tooling entry point (`scripts/aiosctl.py`) — `sync`, `version`, and `doctor` implemented; `validate` and `init` not implemented
 - Framework documentation such as this contract
 
 ### Core does not include
@@ -213,6 +224,15 @@ Core **must not** become a container for every methodology, technology, workflow
 
 ### Current implementation note
 
+| Command / entry point | Status |
+|-----------------------|--------|
+| `aiosctl sync` | Implemented — copies `rules/*.md` → Consumer `.agents/` (compatibility contract unchanged; Section 9) |
+| `aiosctl version` | Implemented |
+| `aiosctl doctor` | Implemented |
+| `aiosctl validate` | Not implemented |
+| `aiosctl init` | Not implemented |
+| `python -m validation` | Independent repository validation entry point under `validation/`; **not** an `aiosctl` subcommand |
+
 `rules/` currently also contains education-oriented files used by historical synced consumers. They remain for compatibility. They are **not** permanent Core identity; see Section 12. This contract does not migrate them.
 
 ---
@@ -221,7 +241,7 @@ Core **must not** become a container for every methodology, technology, workflow
 
 This section is the **Module Architecture Contract**. It defines conceptual architecture, boundaries, ownership, composition, content placement, adaptive recommendation rules, and constraints for Modules and Packs.
 
-**Status:** Approved architectural design. **Not** an implemented Module catalog, metadata runtime, installer, resolver, or adaptive engine.
+**Status:** Approved architectural design. Six draft / experimental Module packages exist under `modules/` as documentation/content. **Not** a metadata runtime, installer, resolver, package manager, or adaptive engine.
 
 **Architectural ownership versus governance precedence:** This section answers *where things live and who owns them*. Section 7 answers *which instruction wins when guidance conflicts* (L0–L7). Ownership does not rewrite precedence; precedence does not move files or ownership.
 
@@ -256,13 +276,13 @@ A Module:
 
 **Governance:** Module guidance is **non-binding by default (L6)**. When a consumer **explicitly adopts** Module guidance into its own local policy, that adopted policy is **consumer-owned at L3** within the adoption scope. Adoption must not be assumed or performed silently by AIOS.
 
-**Implementation status:** Modules are an approved architectural concept. No Module packages are populated by this document revision. No `modules/` tree is required to exist for this contract to be valid.
+**Implementation status:** Six Engineering Module packages are present under `modules/`: `architecture-engineering`, `development-engineering`, `testing-quality-engineering`, `security-engineering`, `devops-cloud-engineering`, and `data-engineering`. All six remain `draft` / `experimental`. Module architecture (this section), metadata ([`MODULE_METADATA.md`](MODULE_METADATA.md)), lifecycle ([`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md)), and validation expectations ([`MODULE_VALIDATION.md`](MODULE_VALIDATION.md)) are approved documentation. Package presence does **not** imply Consumer adoption or installation. No resolver, installer, package-manager runtime, or autonomous selection engine exists. Documentation Engineering remains explicitly deferred.
 
-#### Illustrative Module layout (proposal only — not a shipped tree)
+#### Illustrative Module layout (logical package shape)
 
 ```text
 modules/<module-id>/
-├── module.yaml      # field model: MODULE_METADATA.md (no Module packages populated yet)
+├── module.yaml      # field model: MODULE_METADATA.md
 ├── README.md        # human/agent entry point (expected when a Module exists)
 ├── knowledge/       # optional — Module-specific
 ├── skills/          # optional — Module-specific
@@ -273,7 +293,7 @@ modules/<module-id>/
 └── tests/           # optional
 ```
 
-Not every Module needs every directory. The approved **`module.yaml` field model** is defined in [`MODULE_METADATA.md`](MODULE_METADATA.md). Module **lifecycle and governance** are defined in [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md). **Future Module validation expectations** (layers, severities, CI fail-on-Error, sync separation) are defined in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md) — not implemented as tooling by this contract. Phase 2.4 dependency and compatibility **design** is completed and embedded (see Section 5.9); machine-readable Module relationship metadata and catalog population remain deferred.
+Not every Module needs every directory. The approved **`module.yaml` field model** is defined in [`MODULE_METADATA.md`](MODULE_METADATA.md). Module **lifecycle and governance** are defined in [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md). Conceptual Module validation layers (severities, CI fail-on-Error, sync separation) are defined in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); Phase 8 implements a subset of read-only framework validation (see Section 5.9) and does **not** claim that every conceptual validation layer is fully implemented. Phase 2.4 dependency and compatibility **design** is completed and embedded (see Section 5.9); machine-readable Module relationship metadata remains deferred.
 
 ### 5.3 Packs
 
@@ -401,12 +421,20 @@ This Module Architecture Contract **does not change** the approved precedence mo
 - No resolver, installer, or package-manager runtime exists or is authorized.
 - A separate `MODULE_DEPENDENCY.md` is **intentionally not required**; decisions are embedded here and in Module Metadata / Validation docs.
 
-**Still deferred (future work — distinct from completed Phase 2.4 design):**
+**Phase 8 framework validation — existing implementation (distinct from future Module tooling):**
 
+- Shared validation foundation under `validation/`
+- Read-only validators: Framework Structure Validation, Module Contract Validation, and Documentation Integrity Validation
+- Corresponding validation test suites under `tests/` with CI integration
+- Independent entry point: `python -m validation` (not an `aiosctl` subcommand; sync unchanged)
+
+**Still deferred (future work — distinct from completed Phase 2.4 design and Phase 8 read-only validation):**
+
+- Comprehensive validation of all Module package content beyond the implemented Module Contract checks
 - Machine-readable Module-to-Module relationship metadata and any additive metadata extension that would enable relationship graphs (until a concrete use case justifies Product Owner approval)
 - Circular-dependency **tooling** checks that require such a machine-readable relationship graph
-- Implementation of Module validators, schemas, CLI validate commands, or Module CI jobs (no Modules yet; sync unchanged)
-- Actual Module catalog population (Phase 7)
+- Resolver and installer functionality
+- A future `aiosctl module validate` command or equivalent (`aiosctl validate` remains not implemented)
 - Pack manifest schema (`pack.yaml`)
 - Adaptive engine implementation
 - Migration of Education content or other existing resources
@@ -443,14 +471,17 @@ Authoring conventions for Skill and Knowledge **definitions** (Markdown-first me
 | Workflows | `workflows/` | Implemented (Phase 4 MVP: Feature Development, Release) |
 | Knowledge | `knowledge/` | Planned (authoring conventions exist and remain Draft; no Core Knowledge examples) |
 | Skills | `skills/` | Implemented (initial Core Skill definition: `repository_analysis.md`; artifact lifecycle `draft`; conventions remain Draft; not an exhaustive catalog) |
-| Validation suite | `tests/` | Planned |
-| Demo tests | `lab/aios-demo-api/` | Demo |
+| Framework validation tests | `tests/` | Active — CLI and framework validation test suites (`tests/cli/`, `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, `tests/validation_documentation/`); executed by repository CI; not runtime functionality |
+| Validation foundation | `validation/` | Active — shared foundation and read-only validators; invoked via `python -m validation` |
+| Coding-assistant integrations | `docs/integrations/` | Active — documentation-only guides (Cursor, GitHub Copilot, Claude Code, OpenAI Codex); not platform runtime adapters |
+| Adoption examples | `examples/` | Active — two documentation-only examples (`01-core-adoption/`, `02-module-guided-adoption/`); no automatic adoption, installer, or resolver |
+| Demo tests | `lab/aios-demo-api/` | Demo — separate from framework validation suites |
 
 Default placement follows Section 5.5: Module-specific knowledge, skills and workflows live **inside Modules**; root shared directories hold only genuinely cross-cutting Core resources. Templates and checklists may live in shared root areas and/or inside Packs or Modules. They must not store consumer-specific filled documents.
 
-Integrations today: README-level compatibility notes only. Dedicated adapters are not implemented.
+Integrations today: documentation-only guides under `docs/integrations/`. Dedicated platform-specific runtime adapters are not implemented.
 
-Validation today: CI report + demo API tests — not a full framework contract validator. `aiosctl validate` is not implemented.
+Validation today: Phase 8 read-only framework validation (`python -m validation`) plus corresponding test suites and CI jobs. Demo API tests under `lab/aios-demo-api/` remain distinct. `aiosctl validate` is not implemented.
 
 ---
 
@@ -739,15 +770,16 @@ Direction: [`../ROADMAP.md`](../ROADMAP.md). Expectations only:
 | Contract maintenance | Update this file when boundaries change |
 | `AGENTS.md` alignment | Keep §2 operationalization synchronized with this Section 7 L0–L7 model |
 | Education migration | Only under Section 12 gates |
-| Module Architecture Contract | Section 5 remains conceptual architecture; metadata / lifecycle / validation docs are referenced, not duplicated |
-| Module metadata | Field model approved; parsers and real `module.yaml` files not implemented |
+| Module Architecture Contract | Section 5 remains the architectural contract; metadata / lifecycle / validation docs are referenced, not duplicated |
+| Module metadata | Field model approved; six draft `module.yaml` files exist; metadata runtime / parser productization beyond current validation remains separate |
 | Module lifecycle | Governance approved in [`MODULE_LIFECYCLE.md`](MODULE_LIFECYCLE.md); no lifecycle automation implemented |
-| Module validation | Expectations approved in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); no validator/CI/Module tooling implemented yet |
-| Module deps / catalog / CLI | Phase 2.4 **design** completed (no metadata v1 deps; conceptual constraints binding); machine-readable relationship metadata deferred; catalog (7) and CLI (3) remain future work; sync preserved |
-| Modules (implementation) | Populate later under approved contracts; keep adaptive recommend ≠ auto-apply; no autonomous selection engine unless separately approved and documented |
-| CLI | Preserve sync; Module validation must stay separate from sync; add Module-aware commands only when implemented |
+| Module validation expectations | Conceptual layers remain in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); not all layers are fully implemented |
+| Modules (Phase 7 foundation) | Six draft / experimental packages present under `modules/`; Documentation Engineering deferred; adaptive recommend ≠ auto-apply; no autonomous selection engine |
+| Framework validation (Phase 8) | Shared foundation, read-only validators, test suites, and CI integration exist via `python -m validation`; further Module-content validation and resolver/installer tooling remain future work |
+| Coding-assistant integrations (Phase 9) | Four documentation-only guides under `docs/integrations/`; two documentation-only adoption examples under `examples/`; no platform runtime adapters or automatic adoption |
+| Module deps / future CLI | Phase 2.4 **design** completed (no metadata v1 deps; conceptual constraints binding); machine-readable relationship metadata deferred; `aiosctl validate` / Module-aware CLI commands remain future work; sync preserved |
+| CLI | Preserve sync; Module validation stays separate from sync (`python -m validation`); add Module-aware `aiosctl` commands only when implemented |
 | Versioning | Formalize Framework / Module-Pack / Consumer Integration versions |
-| Framework validation (Phase 8) | Broader automated contract tests may complement Module validation |
 
 Always separate:
 
@@ -763,17 +795,18 @@ Always separate:
 |-----------|----------------|--------------|
 | AIOS Core | Common engineering foundation | Active (mixed rules legacy) |
 | Packs | Optional domain/use-case extensions | Partial |
-| Modules | Reusable engineering capabilities | Architecture approved (Section 5); metadata / lifecycle / validation docs approved; packages not populated |
+| Modules | Reusable engineering capabilities | Architecture approved (Section 5); metadata / lifecycle / validation docs approved; six draft / experimental packages present; not a resolver/installer/runtime |
 | Adaptive selection | Context-based recommend/explain pipeline | Approved design; not automated; engine not implemented |
 | Knowledge | What / why | Planned (conventions Draft; no Core Knowledge example; catalog not populated) |
-| Skills | How | Implemented (initial Core Skill definition; artifact lifecycle `draft`; conventions remain Draft; not an exhaustive catalog) |
+| Skills | How | Implemented (initial Core Skill definition; artifact lifecycle `draft`; conventions remain Draft; not an exhaustive catalog); two Module-local Skills exist as drafts |
 | Agents | Role profiles | Partial |
 | Workflows | Multi-step processes | Implemented (Phase 4 MVP; RDIV remains methodology guidance) |
-| Integrations | External tool guidance | Partial |
+| Integrations | External tool guidance | Active documentation-only guides under `docs/integrations/` (four platforms); not platform runtime adapters |
+| Adoption examples | Documentation-only adoption guidance | Active — `examples/01-core-adoption/`, `examples/02-module-guided-adoption/` |
 | Templates | Artifact skeletons | Placeholder |
 | Checklists | Verification lists | Implemented (initial Core set; not an exhaustive catalog) |
-| Module validation | Future Module checks | Expectations in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); not implemented |
-| Framework validation | Contract / CI checks | Demo API CI today; broader tests planned (Phase 8) |
+| Module validation expectations | Conceptual Module checks | Expectations in [`MODULE_VALIDATION.md`](MODULE_VALIDATION.md); not all conceptual layers implemented |
+| Framework validation | Read-only contract / CI checks | Phase 8 implemented — `validation/`, test suites under `tests/`, CI integration, `python -m validation`; demo API tests remain separate |
 
 ---
 
