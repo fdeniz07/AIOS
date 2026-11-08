@@ -96,7 +96,7 @@ AIOS teaches assistants through engineering structure: rules, methods, reviews a
 <img src="assets/images/architecture.png" alt="Architecture">
 </p>
 
-AIOS sits between your repository and your AI coding assistant as a **governance and method layer**.
+AIOS sits between your repository and your AI coding assistant as a **governance and method layer**. Its architecture separates the shared **Core**, reusable **Modules**, optional domain **Packs**, and the **Consumer** repository that owns its product and local decisions.
 
 Before rushing to code, assistants are expected to:
 
@@ -114,6 +114,8 @@ Product manifest: [`MANIFEST.md`](MANIFEST.md)
 Authoritative framework contract: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md)
 
 Agent operating manual (operationalizes the contract): [`AGENTS.md`](AGENTS.md)
+
+The Core supplies shared operating guidance, methods, documentation and lightweight tooling. Modules package reusable engineering capabilities; current catalog packages are drafts, not installed or mandatory features. Packs provide optional domain guidance. Consumer repositories retain ownership of product requirements, implementation, ADRs and local policies. This framework does not install, resolve, adopt or execute Modules or Packs for consumers.
 
 ### Adaptive Project Intelligence (Phase 6 — completed design)
 
@@ -147,18 +149,20 @@ AIOS/
 ├── prompts/                     # Reusable prompts (discovery active; others partial)
 ├── packs/education/             # Optional education pack (partial)
 ├── templates/                   # Placeholders for reusable templates
-├── checklists/                  # Partial quality checklists
+├── checklists/                  # Core checklists
+├── modules/                     # Six draft / experimental Engineering Modules
+├── validation/                  # Shared foundation and read-only validators
+├── workflows/                   # Core workflow definitions
 ├── scripts/aiosctl.py           # Rule sync CLI
 ├── assets/                      # Branding and diagrams
 ├── lab/aios-demo-api/           # Demo app for CI smoke tests
-├── knowledge/                   # Planned
-├── skills/                      # Planned
-├── workflows/                   # Planned
-├── tests/                       # Planned (framework tests)
+├── knowledge/                   # Planned; currently empty
+├── skills/                      # Initial Core skill and conventions
+├── tests/                       # Validation suites and demo API tests
 └── examples/                    # Planned adoption examples
 ```
 
-Empty directories are **planned or reserved**, not shipped engines.
+Directory status varies; see [`PROJECT_STRUCTURE.md`](PROJECT_STRUCTURE.md). Validation is read-only and reports findings; it does not repair or modify the repository.
 
 ---
 
@@ -186,7 +190,8 @@ Full definition: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §7 
 AIOS is designed to analyze project context and **recommend** relevant engineering Modules.
 
 - The project owner retains decision authority.
-- Modules are recommendations unless explicitly adopted as consumer local policy.
+- Module guidance is L6 advice by default; if a Consumer explicitly adopts it as local policy, that policy is Consumer-owned at L3.
+- Pack guidance is L5 only within a Consumer's explicitly adopted Pack scope.
 - Phase 6 documents the Adaptive Project Intelligence **design** (context, process depth, guidance, governance, scenarios, documentation audit).
 - This repository does **not** ship an autonomous module-selection or adaptive recommendation **engine** today.
 
@@ -219,6 +224,9 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 - `aiosctl sync` for copying `rules/*.md` → consumer `.agents/`
 - OSS docs: license, contributing, security, code of conduct
 - Optional preserved education manual: `packs/education/AGENTS.education.md`
+- Six Engineering Module packages in `modules/`, each draft / experimental (not automatically adopted)
+- Read-only repository validation CLI: `python -m validation` (Framework Structure, Module Contract, and Documentation Integrity validators)
+- Shared Validation Foundation with deterministic findings, aggregation, orchestration, reporting and exit codes
 - Adaptive Project Intelligence **design documentation** (Phase 6 completed):
   - `docs/ADAPTIVE_PROJECT_CONTEXT.md`
   - `docs/PROCESS_DEPTH_MODEL.md`
@@ -234,13 +242,11 @@ Details: [`docs/FRAMEWORK_CONTRACT.md`](docs/FRAMEWORK_CONTRACT.md) §8–§9.
 - CI repository report + demo API tests
 - Optional packs beyond the preserved education AGENTS copy
 
-### Planned
+### Planned or deferred
 
-- Workflow library under `workflows/`
-- Skills and knowledge libraries
-- Richer `aiosctl` commands (`validate`, `doctor`, `init`, `version`)
-- Framework contract tests under `tests/`
-- Engineering domain modules
+- Additional Skills and Knowledge content
+- `aiosctl` commands beyond `sync` (the validation CLI is a separate `python -m validation` entry point)
+- CI integration for the validation package
 - Deeper coding-agent integrations
 - Adaptive recommendation **engine** / runtime (separate future approval; not part of Phase 6)
 
@@ -261,11 +267,12 @@ See [`ROADMAP.md`](ROADMAP.md) for phased direction.
 | **prompts/** | Reusable prompt assets | Partial |
 | **packs/** | Optional domain packs (adopted = L5) | Partial |
 | **Adaptive Project Intelligence docs** | Context, depth, guidance, governance, scenarios, documentation audit | Available (Phase 6 design; not a runtime) |
-| **Modules** | Reusable engineering capabilities | Planned (adaptive recommendations approved as design) |
-| **workflows/** | End-to-end flows | Planned |
-| **skills/** | Reusable engineering skills | Planned |
-| **knowledge/** | Shared reference knowledge | Planned |
-| **tests/** | Framework validation | Planned |
+| **Modules** | Reusable engineering capabilities | Six draft / experimental packages; no installer or resolver |
+| **workflows/** | End-to-end flows | Initial Core workflow definitions available |
+| **skills/** | Reusable engineering skills | Initial Core skill available; further catalog planned |
+| **knowledge/** | Shared reference knowledge | Planned; currently empty |
+| **validation/** | Read-only framework, Module contract, and documentation checks | Foundation and three validators implemented through Phase 8.4 |
+| **tests/** | Automated checks | Validation foundation, structure, Module contract, and documentation integrity suites; demo API tests |
 | **lab/** | Demo API for CI | Demo only |
 
 ---
@@ -433,20 +440,40 @@ Compatibility with existing consumers depends on keeping the current sync paths 
 
 # Validation
 
-What exists today:
+AIOS provides a read-only validation package. Its shared [Validation Foundation](docs/VALIDATION_FOUNDATION.md) defines a common `Finding` / `ValidationResult` model, deterministic aggregation and reporting, and exit codes (`0` = no errors, `1` = validation errors, `2` = execution failure). The explicit [Orchestrator](validation/orchestrator.py) runs registered validators in name order and combines their findings; it is not a plugin loader or dynamic registry.
 
-- Manual / convention-based validation by following `AGENTS.md` and methodologies
-- GitHub Actions CI that:
-  - writes a simple repository file-count report
-  - runs pytest for `lab/aios-demo-api`
+The implemented validators are:
 
-What is **not** claimed:
+| Component | Scope |
+|-----------|-------|
+| **Validation Foundation** (Phase 8.1.2; [design and contract](docs/VALIDATION_FOUNDATION.md)) | Shared findings, aggregation, orchestration, reporter and CLI infrastructure. |
+| **Framework Structure Validator** (Phase 8.2; [scope and rules](docs/FRAMEWORK_STRUCTURE_VALIDATION_DESIGN.md)) | Checks required framework paths and their types, root selection and the documented conditional `.github/` path. Optional and reserved paths remain optional. |
+| **Module Contract Validator** (Phase 8.3; [scope and rules](docs/MODULE_CONTRACT_VALIDATION_DESIGN.md)) | Discovers immediate Module package candidates and checks filesystem containment, `module.yaml` metadata and documented lifecycle / README requirements. |
+| **Documentation Integrity Validator** (Phase 8.4) | Scans repository Markdown for broken local links, target types, repository-boundary escapes, missing anchors and local images. Reports `DOC-001`–`DOC-006`; external URLs are skipped. |
 
-- A full automated AI behavior test framework
-- Certified conflict-detection middleware
-- Guaranteed enforcement inside third-party IDEs
+The three domain validators register with the shared Orchestrator and use the same reporter and exit-code contract. Documentation Integrity scans Markdown files recursively, excluding `.git` and without descending directory symlinks; it checks local references and does not fetch external URLs. Validation reports findings only: it does not modify files, repair structure, install or adopt Modules, resolve dependencies, or validate Packs. CI integration for this validation package remains deferred.
 
-Consumer learning repositories have been used to exercise AIOS conventions in practice; treat that as adoption experience, not as a formal conformance suite.
+Run from the repository root:
+
+```bash
+python -m validation
+```
+
+The CLI also supports an explicit framework root:
+
+```bash
+python -m validation --root /path/to/AIOS
+```
+
+The default run registers `documentation-integrity`, `framework-structure`, and `module-contract`; it prints a text report and exits with the shared `0` / `1` / `2` contract. `--root` selects an explicit framework root; `--help` lists the available option. This is repository contract validation, not an AI behavior or IDE conformance suite.
+
+Validation tests are organized under `tests/validation_foundation/`, `tests/validation_structure/`, `tests/validation_module_contract/`, and `tests/validation_documentation/`. With the project test dependencies installed, run them with:
+
+```bash
+python -m pytest tests/validation_foundation tests/validation_structure tests/validation_module_contract tests/validation_documentation
+```
+
+The demo API's tests are separate under `lab/aios-demo-api/`. The GitHub Actions demo smoke tests and repository report are separate from the validation CLI; the validators are not described as CI-integrated.
 
 ---
 
@@ -454,15 +481,16 @@ Consumer learning repositories have been used to exercise AIOS conventions in pr
 
 High-level direction (details in [`ROADMAP.md`](ROADMAP.md)):
 
-0. Foundation and identity
-1. Framework contract
-2. CLI improvements
-3. Workflow and checklist system
-4. Skills and Knowledge
-5. Adaptive Project Intelligence — **Completed** (conceptual / documentation foundation; not an adaptive engine)
-6. Engineering modules
-7. Validation and automation
-8. Ecosystem and integrations
+0. Foundation and identity — **Completed**
+1. Framework contract and governance — **Completed**
+2. Architecture and Module foundation — **Completed**
+3. CLI improvements — `aiosctl sync` is implemented; additional CLI commands remain planned (see [`ROADMAP.md`](ROADMAP.md) Phase 3).
+4. Workflow and checklist system — **Completed**
+5. Skills and Knowledge — **Completed:** the initial Core Skill definition was created and accepted (its artifact lifecycle remains `draft`); the Knowledge library has not been created and remains planned.
+6. Adaptive Project Intelligence — **Completed** (conceptual / documentation foundation; not an adaptive engine)
+7. Engineering Module catalog / packaging — **Completed** (six draft / experimental packages)
+8. Validation and automation — Validation Foundation and Framework Structure, Module Contract, and Documentation Integrity validators are implemented through Phase 8.4. `ROADMAP.md` still presents Phase 8 as an overall direction and retains CI strengthening as planned work.
+9. Ecosystem and integrations
 
 Phases are directional, not dated commitments. Completed phases still do not imply unimplemented runtime features.
 
