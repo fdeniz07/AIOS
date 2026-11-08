@@ -5,6 +5,7 @@
 <p align="center">
 
 ![Version](https://img.shields.io/badge/version-v1.0.0-blue?style=for-the-badge)
+[![CI](https://github.com/fdeniz07/AIOS/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fdeniz07/AIOS/actions/workflows/ci.yml)
 ![License](https://img.shields.io/github/license/fdeniz07/AIOS?style=for-the-badge)
 ![GitHub stars](https://img.shields.io/github/stars/fdeniz07/AIOS?style=for-the-badge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/fdeniz07/AIOS?style=for-the-badge)
