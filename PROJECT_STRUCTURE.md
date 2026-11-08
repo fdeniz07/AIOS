@@ -68,7 +68,7 @@ AIOS/                          # Git repository root
 ├── .agents/                   # planned locally; also the sync DESTINATION name in consumers
 ├── .github/                   # active – community + CI
 ├── assets/                    # active – branding and diagrams
-├── checklists/                # active – initial Core set (review, release); notebook education-specific
+├── checklists/                # active – initial Core set (review, release, quality); notebook education-specific
 ├── docs/                      # active – framework documentation, including Module contracts and coding-assistant integration guides
 │   ├── FRAMEWORK_CONTRACT.md  # authoritative architectural / governance contract
 │   ├── MODULE_METADATA.md
@@ -141,7 +141,6 @@ AIOS/                          # Git repository root
 ├── SECURITY.md                # active
 ├── CODE_OF_CONDUCT.md         # active
 ├── LICENSE                    # active – MIT
-├── QUALITY_CHECKLIST.md       # placeholder
 ├── QUALITY_CONTROL.md         # partial – education-oriented checklist content
 └── aiosctl.yaml               # partial – informational / helper surface; not consumed by the CLI
 ```
@@ -256,7 +255,7 @@ Directory is active with the Phase 4 Core set. Not a workflow execution engine.
 
 ### `checklists/` — **active** (initial Core set)
 
-Active directory with initial Core checklists (`review.md`, `release_checklist.md`). `notebook_creation.md` remains education-specific and separate from Core identity. Directory activity does not change individual checklist artifact lifecycles.
+Active directory with initial Core checklists (`review.md`, `release_checklist.md`, and optional `quality.md` — documentation/process hygiene aid). `notebook_creation.md` remains education-specific and separate from Core identity. Directory activity does not change individual checklist artifact lifecycles.
 
 ### `knowledge/` — **planned** (empty)
 
@@ -358,7 +357,6 @@ In **consumer** repositories, `.agents/` is the **destination** of `aiosctl sync
 | `README.md` | active | Landing overview |
 | `ROADMAP.md` | active | Framework evolution phases |
 | `aiosctl.yaml` | partial | Informational / helper surface; **not consumed by the CLI** |
-| `QUALITY_CHECKLIST.md` | placeholder | Placeholder checklist file |
 | `QUALITY_CONTROL.md` | partial | Currently education/vocabulary oriented |
 | `warning.txt` | local helper | Ignored by `.gitignore`; not part of the published contract |
 
