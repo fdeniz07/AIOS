@@ -2,7 +2,7 @@
 
 Status: Partial
 
-Last Updated: 2026-11-02
+Last Updated: 2026-11-08
 
 ---
 
@@ -103,13 +103,22 @@ Where historical wording conflicts with Core L0–L7 or consumer ADRs, follow Co
 ### Present today
 
 - This README (Pack entry point)
-- Preserved historical [`AGENTS.education.md`](AGENTS.education.md)
+- Preserved historical [`AGENTS.education.md`](AGENTS.education.md) (**unchanged** historical Pack material)
+- Education Pack templates under [`templates/`](templates/) (documentation artifacts only):
+  - [`article_template.md`](templates/article_template.md)
+  - [`book_template.md`](templates/book_template.md)
+  - [`cheatsheet_template.md`](templates/cheatsheet_template.md)
+  - [`lab_template.md`](templates/lab_template.md)
+  - [`notebook_template.md`](templates/notebook_template.md)
+  - [`quiz_template.md`](templates/quiz_template.md)
+  - [`tutorial_template.md`](templates/tutorial_template.md)
+
+These seven templates belong to the **Education Pack**. They are Markdown documentation structures, **not** executable generators, runtimes, or installers. Their presence does **not** activate the Education Pack. Consumer adoption remains **explicit**. Pack status remains **Partial**.
 
 ### Not implemented yet
 
 - Pack metadata / schema (for example `pack.yaml`)
 - Migration of education-oriented files that still live under Core `rules/` for sync compatibility
-- A filled education notebook/content template set (`templates/notebook_template.md` remains an empty placeholder in Core)
 - Autonomous Pack discovery or adoption engine
 
 Do not treat planned Pack capabilities as shipped features.
