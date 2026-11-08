@@ -1,10 +1,11 @@
 """AIOS validation package.
 
 Shared foundation (Phase 8.1.2), Framework Structure Validation (Phase 8.2),
-and Module Contract Validation (Phase 8.3).
+Module Contract Validation (Phase 8.3), and Documentation Integrity (Phase 8.4).
 
-``validate_module_contract`` is loaded lazily so importing foundation / structure
-symbols does not require PyYAML until Module Contract Validation is used.
+``validate_module_contract`` and ``validate_documentation_integrity`` are loaded
+lazily so importing foundation / structure symbols does not require optional
+runtime dependencies until those validators are used.
 """
 
 from __future__ import annotations
@@ -36,6 +37,7 @@ __all__ = [
     "ValidatorSpec",
     "aggregate_findings",
     "format_report",
+    "validate_documentation_integrity",
     "validate_framework_structure",
     "validate_module_contract",
 ]
@@ -48,4 +50,8 @@ def __getattr__(name: str) -> Any:
         from .module_contract import validate_module_contract
 
         return validate_module_contract
+    if name == "validate_documentation_integrity":
+        from .documentation_integrity import validate_documentation_integrity
+
+        return validate_documentation_integrity
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

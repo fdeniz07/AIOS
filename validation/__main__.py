@@ -1,7 +1,7 @@
 """CLI entry point: ``python -m validation``.
 
 Independent of ``python scripts/aiosctl.py``.
-Registers Framework Structure Validation and Module Contract Validation.
+Registers Framework Structure, Module Contract, and Documentation Integrity.
 """
 
 from __future__ import annotations
@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 from typing import Optional, Sequence
 
+from .documentation_integrity import make_documentation_integrity_runner
 from .framework_structure import make_framework_structure_runner
 from .module_contract import make_module_contract_runner
 from .orchestrator import Orchestrator
@@ -19,8 +20,9 @@ from .reporter import format_report
 _BANNER = """\
 AIOS validation
 Registered validators: framework-structure (Framework Structure Validation), \
-module-contract (Module Contract Validation)
-Documentation integrity and Pack validation are NOT performed.
+module-contract (Module Contract Validation), \
+documentation-integrity (Documentation Integrity Validation)
+Pack validation is NOT performed.
 """
 
 
@@ -28,8 +30,12 @@ def build_default_orchestrator(
     *,
     explicit_root: Optional[Path] = None,
 ) -> Orchestrator:
-    """Return the default orchestrator with Structure + Module Contract validators."""
+    """Return the default orchestrator with all registered domain validators."""
     orchestrator = Orchestrator()
+    orchestrator.register(
+        "documentation-integrity",
+        make_documentation_integrity_runner(explicit_root=explicit_root),
+    )
     orchestrator.register(
         "framework-structure",
         make_framework_structure_runner(explicit_root=explicit_root),
@@ -46,8 +52,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         prog="python -m validation",
         description=(
             "AIOS validation. "
-            "Runs Framework Structure Validation and Module Contract Validation "
-            "by default."
+            "Runs Framework Structure Validation, Module Contract Validation, "
+            "and Documentation Integrity Validation by default."
         ),
     )
     parser.add_argument(

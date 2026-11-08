@@ -25,8 +25,10 @@ def test_cli_registers_module_contract(capsys, tmp_path: Path):
     assert code == 0
     assert "module-contract" in out
     assert "framework-structure" in out
+    assert "documentation-integrity" in out
     assert "Module Contract Validation" in out
-    assert "Documentation integrity" in out
+    assert "Documentation Integrity Validation" in out
+    assert "Pack validation" in out
     assert "NOT performed" in out
     assert "No domain validators are registered" not in out
     assert "exit_code=0" in out
@@ -43,6 +45,7 @@ def test_cli_real_repo_subprocess():
     assert proc.returncode == 0, proc.stdout + proc.stderr
     assert "module-contract" in proc.stdout
     assert "framework-structure" in proc.stdout
+    assert "documentation-integrity" in proc.stdout
     assert "exit_code=0" in proc.stdout
 
 

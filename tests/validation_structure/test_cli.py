@@ -20,9 +20,11 @@ def test_cli_default_registers_framework_structure(capsys, minimal_root: Path, m
     out = capsys.readouterr().out
     assert "framework-structure" in out
     assert "module-contract" in out
+    assert "documentation-integrity" in out
     assert "Framework Structure Validation" in out
     assert "Module Contract Validation" in out
-    assert "Documentation integrity" in out
+    assert "Documentation Integrity Validation" in out
+    assert "Pack validation" in out
     assert "NOT performed" in out
     assert "No domain validators are registered" not in out
     assert code == 0

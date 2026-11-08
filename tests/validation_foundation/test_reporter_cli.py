@@ -71,9 +71,11 @@ def test_cli_main_registers_framework_structure_no_misleading_claims(capsys):
     assert code == 0
     assert "framework-structure" in captured.out
     assert "module-contract" in captured.out
+    assert "documentation-integrity" in captured.out
     assert "Framework Structure Validation" in captured.out
     assert "Module Contract Validation" in captured.out
-    assert "Documentation integrity" in captured.out
+    assert "Documentation Integrity Validation" in captured.out
+    assert "Pack validation" in captured.out
     assert "NOT performed" in captured.out
     assert "No domain validators are registered" not in captured.out
     assert "No findings." in captured.out
@@ -93,7 +95,9 @@ def test_python_m_validation_subprocess():
     assert proc.returncode == 0
     assert "framework-structure" in proc.stdout
     assert "module-contract" in proc.stdout
+    assert "documentation-integrity" in proc.stdout
     assert "Framework Structure Validation" in proc.stdout
     assert "Module Contract Validation" in proc.stdout
+    assert "Documentation Integrity Validation" in proc.stdout
     assert "NOT performed" in proc.stdout
     assert "exit_code=0" in proc.stdout

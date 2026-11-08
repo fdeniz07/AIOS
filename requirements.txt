@@ -1,3 +1,4 @@
 # Framework validation runtime dependencies (python -m validation, tests/).
 # Lab demo dependencies remain isolated under lab/aios-demo-api/requirements.txt.
 PyYAML>=6.0
+markdown-it-py>=3.0
